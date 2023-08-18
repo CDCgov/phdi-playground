@@ -119,29 +119,6 @@ jobs:
           client-id: ${{ secrets.CLIENT_ID }}
           tenant-id: ${{ secrets.TENANT_ID }}
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-      
-      - name: Setup Python Environment
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
-
-      - name: Install python dependencies
-        working-directory: ./serverless-functions
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt --target=".python_packages/lib/site-packages"
-
-      - name: Get publish profile
-        env:
-          TF_ENV: ${{ needs.terraform.outputs.tf_env }}
-          SHORT_CID: ${{ needs.terraform.outputs.short_cid }}
-          LOCATION: ${{ secrets.LOCATION }}
-          RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
-        run: |
-          az config set defaults.location=$LOCATION defaults.group=$RESOURCE_GROUP_NAME
-          echo 'PUBLISH_PROFILE<<EOF' >> $GITHUB_ENV
-          az functionapp deployment list-publishing-profiles --name $TF_ENV-read-source-data-$SHORT_CID --xml >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
   
   end-to-end:
     name: End-to-end tests
