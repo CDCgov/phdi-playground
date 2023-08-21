@@ -191,6 +191,10 @@ resource "helm_release" "helm_clusters" {
   name          = "phdi-${terraform.workspace}-${each.key}"
   chart         = "${each.key}-chart"
   recreate_pods = true
+  set { 
+    name  = "storage_account_url"
+    value = azurerm_storage_account.phi.primary_blob_endpoint 
+  }
 
   set {
     name  = "image.tag"
