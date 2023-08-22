@@ -74,17 +74,17 @@ resource "azurerm_key_vault_secret" "smarty_auth_token" {
   key_vault_id = azurerm_key_vault.phdi_key_vault.id
 }
 
-resource "azurerm_key_vault_secret" "record_linkage_url" {
-  name         = "record-linkage-url"
-  value        = "https://phdi-${terraform.workspace}-record-linkage.${azurerm_container_app_environment.phdi.default_domain}"
-  key_vault_id = azurerm_key_vault.phdi_key_vault.id
-}
+# resource "azurerm_key_vault_secret" "record_linkage_url" {
+#   name         = "record-linkage-url"
+#   value        = "https://phdi-${terraform.workspace}-record-linkage.${azurerm_container_app_environment.phdi.default_domain}"
+#   key_vault_id = azurerm_key_vault.phdi_key_vault.id
+# }
 
-resource "azurerm_key_vault_secret" "ingestion-url" {
-  name         = "ingestion-url"
-  value        = "https://phdi-${terraform.workspace}-ingestion.${azurerm_container_app_environment.phdi.default_domain}"
-  key_vault_id = azurerm_key_vault.phdi_key_vault.id
-}
+# resource "azurerm_key_vault_secret" "ingestion-url" {
+#   name         = "ingestion-url"
+#   value        = "https://phdi-${terraform.workspace}-ingestion.${azurerm_container_app_environment.phdi.default_domain}"
+#   key_vault_id = azurerm_key_vault.phdi_key_vault.id
+# }
 
 # Pull images from GitHub Container Registry and push to Azure Container Registry
 locals {
@@ -254,13 +254,13 @@ resource "azurerm_role_assignment" "pipeline_runner_fhir_contributor" {
   principal_id         = azurerm_user_assigned_identity.pipeline_runner.principal_id
 }
 
-##### User Assigned Identity #####
+#### User Assigned Identity #####
 
-# resource "azurerm_user_assigned_identity" "pipeline_runner" {
-#   location            = var.location
-#   name                = "phdi-${terraform.workspace}-pipeline-runner"
-#   resource_group_name = var.resource_group_name
-# }
+resource "azurerm_user_assigned_identity" "pipeline_runner" {
+  location            = var.location
+  name                = "phdi-${terraform.workspace}-pipeline-runner"
+  resource_group_name = var.resource_group_name
+}
 
 ##### Communication Service #####
 
