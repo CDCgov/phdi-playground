@@ -21,3 +21,21 @@ provider "azurerm" {
   use_oidc = true
   features {}
 }
+
+resource "azurerm_storage_account" "tfstate" {
+  name                     = "phditfstate${substr(var.client_id, 0, 8)}"
+  resource_group_name      = var.resource_group_name
+  location                 = var.location
+  account_tier             = "Standard"
+  account_kind             = "StorageV2"
+  account_replication_type = "GRS"
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "azurerm_storage_container" "tfstate" {
+  name                 = "tfstate"
+  storage_account_name = azurerm_storage_account.tfstate.name
+}
