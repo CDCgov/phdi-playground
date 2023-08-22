@@ -12,6 +12,6 @@ module "shared" {
   # log_analytics_workspace_id = module.read_source_data.log_analytics_workspace_id
 }
 
-output "record_linkage_container_url" {
-  value = module.shared.record_linkage_container_url
-}
+# output "record_linkage_container_url" {
+#   value = module.shared.record_linkage_container_url
+# }
