@@ -38,6 +38,7 @@ jobs:
         run: |
           for d in $TERRAFORM_DIRS
           do
+            echo "I am here"
             echo "Initializing $d";
             (cd $d && terraform init -backend=false)
           done
