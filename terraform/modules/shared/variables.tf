@@ -33,10 +33,10 @@ variable "object_id" {
   description = "Object ID"
 }
 
-variable "log_analytics_workspace_id" {
-  type        = string
-  description = "Log Analytics Workspace ID."
-}
+# variable "log_analytics_workspace_id" {
+#   type        = string
+#   description = "Log Analytics Workspace ID."
+# }
 
 variable "k8s_vnet_address_space" {
   type        = string
