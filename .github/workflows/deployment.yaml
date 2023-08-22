@@ -120,10 +120,10 @@ jobs:
           client-id: ${{ secrets.CLIENT_ID }}
           tenant-id: ${{ secrets.TENANT_ID }}
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-  
+
   end-to-end:
     name: End-to-end tests
-    needs: 
+    needs:
       - terraform
       - azure-cli
     if: ${{ needs.terraform.outputs.tf_env == 'dev' }}
