@@ -7,12 +7,12 @@ locals {
   listener_name                  = "${azurerm_virtual_network.aks_vnet.name}-httplstn"
   request_routing_rule_name      = "${azurerm_virtual_network.aks_vnet.name}-rqrt"
 
-  aks_vnet_name           = "phdi-${terraform.workspace}-aks-vnet"
-  aks_subnet_name         = "phdi-${terraform.workspace}-aks-subnet"
-  aks_cluster_name        = "phdi-${terraform.workspace}-aks-cluster"
-  aks_dns_prefix          = "phdi-${terraform.workspace}"
-  app_gateway_name        = "phdi-${terraform.workspace}-aks-appgw"
-  app_gateway_subnet_name = "phdi-${terraform.workspace}-aks-appgw-subnet"
+  aks_vnet_name           = "phdi-playground-${terraform.workspace}-aks-vnet"
+  aks_subnet_name         = "phdi-playground-${terraform.workspace}-aks-subnet"
+  aks_cluster_name        = "phdi-playground-${terraform.workspace}-aks-cluster"
+  aks_dns_prefix          = "phdi-playground-${terraform.workspace}"
+  app_gateway_name        = "phdi-playground-${terraform.workspace}-aks-appgw"
+  app_gateway_subnet_name = "phdi-playground-${terraform.workspace}-aks-appgw-subnet"
 
   services = toset([
     "fhir-converter",
@@ -24,7 +24,7 @@ locals {
 
 # Service Principal
 resource "azuread_application" "aks" {
-  display_name = "phdi-${terraform.workspace}-aks"
+  display_name = "phdi-playground-${terraform.workspace}-aks"
   owners       = [data.azuread_client_config.current.object_id]
 }
 
@@ -105,12 +105,12 @@ resource "azurerm_virtual_network" "aks_vnet" {
 
 # Public Ip 
 resource "azurerm_public_ip" "aks" {
-  name                = "phdi-${terraform.workspace}-aks-pip"
+  name                = "phdi-playground-${terraform.workspace}-aks-pip"
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Static"
   sku                 = "Standard"
-  domain_name_label   = "phdi-${terraform.workspace}"
+  domain_name_label   = "phdi-playground-${terraform.workspace}"
 }
 
 resource "azurerm_application_gateway" "network" {
@@ -255,7 +255,7 @@ resource "helm_release" "agic" {
 resource "helm_release" "building_blocks" {
   for_each      = local.services
   repository    = "https://cdcgov.github.io/phdi-charts/"
-  name          = "phdi-${terraform.workspace}-${each.key}"
+  name          = "phdi-playground-${terraform.workspace}-${each.key}"
   chart         = "${each.key}-chart"
   recreate_pods = true
   depends_on    = [helm_release.agic]
