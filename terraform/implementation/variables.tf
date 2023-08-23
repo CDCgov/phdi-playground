@@ -83,7 +83,7 @@ variable "aks_agent_count" {
 variable "aks_agent_vm_size" {
   type        = string
   description = "VM size"
-  default     = "Standard_B2s"
+  default     = "Standard_D2_v2"
 }
 
 variable "aks_service_cidr" {
