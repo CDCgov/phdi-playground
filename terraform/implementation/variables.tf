@@ -77,7 +77,7 @@ variable "aks_agent_os_disk_size" {
 variable "aks_agent_count" {
   type        = number
   description = "The number of agent nodes for the cluster."
-  default     = 1
+  default     = 3
 }
 
 variable "aks_agent_vm_size" {
