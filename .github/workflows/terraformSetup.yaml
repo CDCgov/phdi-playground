@@ -1,3 +1,4 @@
+---
 name: Terraform Setup
 
 on:
@@ -22,7 +23,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: "Azure login"
+      - name: Azure login
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.CLIENT_ID }}
