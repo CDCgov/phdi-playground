@@ -1,10 +1,11 @@
+---
 name: Deployment
 
 on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Environment to deploy to"
+        description: Environment to deploy to
         type: environment
         required: true
   # add back in when ready to add the terraform
@@ -28,7 +29,9 @@ jobs:
     outputs:
       tf_env: ${{ steps.set-environment.outputs.tf_env }}
       short_cid: ${{ steps.set-environment.outputs.short_cid }}
-      record_linkage_container_url: ${{ steps.terraform.outputs.record_linkage_container_url }}
+      record_linkage_container_url:
+        ${{ steps.terraform.outputs.record_linkage_container_url
+        }}
     steps:
       - name: Check Out Changes
         uses: actions/checkout@v3
@@ -36,7 +39,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: "Azure login"
+      - name: Azure login
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.CLIENT_ID }}
@@ -114,16 +117,16 @@ jobs:
       - name: Check Out Changes
         uses: actions/checkout@v3
 
-      - name: "Azure login"
+      - name: Azure login
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.CLIENT_ID }}
           tenant-id: ${{ secrets.TENANT_ID }}
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-  
+
   end-to-end:
     name: End-to-end tests
-    needs: 
+    needs:
       - terraform
       - azure-cli
     if: ${{ needs.terraform.outputs.tf_env == 'dev' }}
