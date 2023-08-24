@@ -1,10 +1,11 @@
+---
 name: Destroy environment
 
 on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Environment to destroy"
+        description: Environment to destroy
         type: environment
         required: true
 
@@ -31,7 +32,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: "Azure login"
+      - name: Azure login
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.CLIENT_ID }}

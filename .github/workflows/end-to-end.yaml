@@ -1,10 +1,11 @@
+---
 name: End-to-end test
 
 on:
   workflow_call:
     inputs:
       environment:
-        description: "Environment in which to conduct end to end testing."
+        description: Environment in which to conduct end to end testing.
         type: string
         required: true
 
