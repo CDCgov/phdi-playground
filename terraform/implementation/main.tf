@@ -285,21 +285,10 @@ metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    # You must replace this email address with your own.
-    # Let's Encrypt uses this to contact you about expiring
-    # certificates, and issues related to your account.
     email: nclyde@skylight.digital
-    # ACME server URL for Let’s Encrypt’s staging environment.
-    # The staging environment won't issue trusted certificates but is
-    # used to ensure that the verification process is working properly
-    # before moving to production
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      # Secret resource used to store the account's private key.
-      name: phdi-playground-issuer-account-key-prod
-    # Enable the HTTP-01 challenge provider
-    # you prove ownership of a domain by ensuring that a particular
-    # file is present at the domain
+      name: phdi-playground-issuer-account-key
     solvers:
       - http01:
           ingress:
