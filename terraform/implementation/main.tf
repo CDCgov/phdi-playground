@@ -17,6 +17,7 @@ locals {
   services = toset([
     "fhir-converter",
     "ingestion",
+    "ingress",
     "message-parser",
     "validation",
   ])
@@ -212,6 +213,13 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
 # Helm
 
+provider "kubernetes" {
+  host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
+  client_certificate     = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)
+  client_key             = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
+}
+
 provider "helm" {
   kubernetes {
     host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
@@ -248,6 +256,52 @@ resource "helm_release" "agic" {
       }))
     })}"
   ]
+}
+
+# Cert Manager
+
+resource "helm_release" "cert_manager" {
+  name             = "cert-manager"
+  repository       = "https://charts.jetstack.io"
+  chart            = "cert-manager"
+  namespace        = "cert-manager"
+  create_namespace = true
+  depends_on       = [azurerm_kubernetes_cluster.k8s]
+
+  set {
+    name  = "installCRDs"
+    value = true
+  }
+}
+
+resource "kubernetes_manifest" "cert_manager_issuer" {
+  depends_on = [helm_release.cert_manager]
+
+  manifest = {
+    "apiVersion" = "cert-manager.io/v1"
+    "kind"       = "ClusterIssuer"
+    "metadata" = {
+      "name" = "letsencrypt-staging"
+    }
+    "spec" = {
+      "acme" = {
+        "email" = "nclyde@skylight.digital"
+        "privateKeySecretRef" = {
+          "name" = "phdi-playground-issuer-account-key-staging"
+        }
+        "server" = "https://acme-staging-v02.api.letsencrypt.org/directory"
+        "solvers" = [
+          {
+            "http01" = {
+              "ingress" = {
+                "class" = "azure/application-gateway"
+              }
+            }
+          },
+        ]
+      }
+    }
+  }
 }
 
 # Helm Releases
