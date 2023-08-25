@@ -331,4 +331,9 @@ resource "helm_release" "building_blocks" {
     name  = "smartyToken"
     value = var.smarty_auth_token
   }
+
+  set {
+    name  = "ingressHostname"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
+  }
 }
