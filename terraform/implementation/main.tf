@@ -213,7 +213,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
 # Helm
 
-provider "kubernetes" {
+provider "kubectl" {
   host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
   client_certificate     = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)
   client_key             = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)
@@ -274,34 +274,36 @@ resource "helm_release" "cert_manager" {
   }
 }
 
-resource "kubernetes_manifest" "cert_manager_issuer" {
+resource "kubectl_manifest" "cert_manager_issuer" {
   depends_on = [helm_release.cert_manager]
 
-  manifest = {
-    "apiVersion" = "cert-manager.io/v1"
-    "kind"       = "ClusterIssuer"
-    "metadata" = {
-      "name" = "letsencrypt-staging"
-    }
-    "spec" = {
-      "acme" = {
-        "email" = "nclyde@skylight.digital"
-        "privateKeySecretRef" = {
-          "name" = "phdi-playground-issuer-account-key-staging"
-        }
-        "server" = "https://acme-staging-v02.api.letsencrypt.org/directory"
-        "solvers" = [
-          {
-            "http01" = {
-              "ingress" = {
-                "class" = "azure/application-gateway"
-              }
-            }
-          },
-        ]
-      }
-    }
-  }
+  yaml_body = <<YAML
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt uses this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: nclyde@skylight.digital
+    # ACME server URL for Let’s Encrypt’s staging environment.
+    # The staging environment won't issue trusted certificates but is
+    # used to ensure that the verification process is working properly
+    # before moving to production
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource used to store the account's private key.
+      name: phdi-playground-issuer-account-key-staging
+    # Enable the HTTP-01 challenge provider
+    # you prove ownership of a domain by ensuring that a particular
+    # file is present at the domain
+    solvers:
+      - http01:
+          ingress:
+            class: azure/application-gateway
+YAML
 }
 
 # Helm Releases
