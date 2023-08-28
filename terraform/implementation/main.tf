@@ -17,6 +17,7 @@ locals {
   services = toset([
     "fhir-converter",
     "ingestion",
+    "ingress",
     "message-parser",
     "validation",
   ])
@@ -212,6 +213,14 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
 # Helm
 
+provider "kubectl" {
+  host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
+  client_certificate     = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)
+  client_key             = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
+  load_config_file       = false
+}
+
 provider "helm" {
   kubernetes {
     host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
@@ -250,6 +259,43 @@ resource "helm_release" "agic" {
   ]
 }
 
+# Cert Manager
+
+resource "helm_release" "cert_manager" {
+  name             = "cert-manager"
+  repository       = "https://charts.jetstack.io"
+  chart            = "cert-manager"
+  namespace        = "cert-manager"
+  create_namespace = true
+  depends_on       = [azurerm_kubernetes_cluster.k8s]
+
+  set {
+    name  = "installCRDs"
+    value = true
+  }
+}
+
+resource "kubectl_manifest" "cert_manager_issuer" {
+  depends_on = [helm_release.cert_manager]
+
+  yaml_body = <<YAML
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email: nclyde@skylight.digital
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: phdi-playground-issuer-account-key
+    solvers:
+      - http01:
+          ingress:
+            class: azure/application-gateway
+YAML
+}
+
 # Helm Releases
 
 resource "helm_release" "building_blocks" {
@@ -273,5 +319,10 @@ resource "helm_release" "building_blocks" {
   set {
     name  = "smartyToken"
     value = var.smarty_auth_token
+  }
+
+  set {
+    name  = "ingressHostname"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
   }
 }
