@@ -1,0 +1,845 @@
+{
+    "properties": {
+        "lenses": {
+            "0": {
+                "order": 0,
+                "parts": {
+                    "0": {
+                        "position": {
+                            "x": 0,
+                            "y": 0,
+                            "colSpan": 6,
+                            "rowSpan": 4
+                        },
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "name": "options",
+                                    "value": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "TotalRequests",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Total Requests"
+                                                    }
+                                                },
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "FailedRequests",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Failed Requests"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Sum Total Requests and Sum Failed Requests for phdi-playground-dev-aks-appgw",
+                                            "titleKind": 1,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                }
+                                            },
+                                            "timespan": {
+                                                "relative": {
+                                                    "duration": 86400000
+                                                },
+                                                "showUTCTime": false,
+                                                "grain": 1
+                                            }
+                                        }
+                                    },
+                                    "isOptional": true
+                                },
+                                {
+                                    "name": "sharedTimeRange",
+                                    "isOptional": true
+                                }
+                            ],
+                            "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                            "settings": {
+                                "content": {
+                                    "options": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "TotalRequests",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Total Requests"
+                                                    }
+                                                },
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "FailedRequests",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Failed Requests"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Total Requests and Failed Requests for App Gateway",
+                                            "titleKind": 2,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                },
+                                                "disablePinning": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "1": {
+                        "position": {
+                            "x": 6,
+                            "y": 0,
+                            "colSpan": 6,
+                            "rowSpan": 4
+                        },
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "name": "options",
+                                    "value": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "ApplicationGatewayTotalTime",
+                                                    "aggregationType": 4,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Application Gateway Total Time"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Avg Application Gateway Total Time for phdi-playground-dev-aks-appgw",
+                                            "titleKind": 1,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                }
+                                            },
+                                            "timespan": {
+                                                "relative": {
+                                                    "duration": 86400000
+                                                },
+                                                "showUTCTime": false,
+                                                "grain": 1
+                                            }
+                                        }
+                                    },
+                                    "isOptional": true
+                                },
+                                {
+                                    "name": "sharedTimeRange",
+                                    "isOptional": true
+                                }
+                            ],
+                            "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                            "settings": {
+                                "content": {
+                                    "options": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "ApplicationGatewayTotalTime",
+                                                    "aggregationType": 4,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Application Gateway Total Time"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Average Total Request Time for App Gateway",
+                                            "titleKind": 2,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                },
+                                                "disablePinning": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "2": {
+                        "position": {
+                            "x": 0,
+                            "y": 4,
+                            "colSpan": 6,
+                            "rowSpan": 4
+                        },
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "name": "options",
+                                    "value": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "BackendResponseStatus",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Backend Response Status"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Sum Backend Response Status for phdi-playground-dev-aks-appgw by HttpStatus where Backend Pool = 'pool-default-fhir-converter-service-8080-bp-8080'",
+                                            "titleKind": 1,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                }
+                                            },
+                                            "filterCollection": {
+                                                "filters": [
+                                                    {
+                                                        "key": "BackendPool",
+                                                        "operator": 0,
+                                                        "values": [
+                                                            "pool-default-fhir-converter-service-8080-bp-8080"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "grouping": {
+                                                "dimension": "HttpStatusGroup",
+                                                "sort": 2,
+                                                "top": 10
+                                            },
+                                            "timespan": {
+                                                "relative": {
+                                                    "duration": 86400000
+                                                },
+                                                "showUTCTime": false,
+                                                "grain": 1
+                                            }
+                                        }
+                                    },
+                                    "isOptional": true
+                                },
+                                {
+                                    "name": "sharedTimeRange",
+                                    "isOptional": true
+                                }
+                            ],
+                            "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                            "settings": {
+                                "content": {
+                                    "options": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "BackendResponseStatus",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Backend Response Status"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "FHIR Converter Service Response Status Totals",
+                                            "titleKind": 2,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                },
+                                                "disablePinning": true
+                                            },
+                                            "grouping": {
+                                                "dimension": "HttpStatusGroup",
+                                                "sort": 2,
+                                                "top": 10
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": {
+                                "BackendPool": {
+                                    "model": {
+                                        "operator": "equals",
+                                        "values": [
+                                            "pool-default-fhir-converter-service-8080-bp-8080"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "3": {
+                        "position": {
+                            "x": 6,
+                            "y": 4,
+                            "colSpan": 6,
+                            "rowSpan": 4
+                        },
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "name": "options",
+                                    "value": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "BackendResponseStatus",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Backend Response Status"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Sum Backend Response Status for phdi-playground-dev-aks-appgw by HttpStatus where Backend Pool = 'pool-default-ingestion-service-8080-bp-8080'",
+                                            "titleKind": 1,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                }
+                                            },
+                                            "filterCollection": {
+                                                "filters": [
+                                                    {
+                                                        "key": "BackendPool",
+                                                        "operator": 0,
+                                                        "values": [
+                                                            "pool-default-ingestion-service-8080-bp-8080"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "grouping": {
+                                                "dimension": "HttpStatusGroup",
+                                                "sort": 2,
+                                                "top": 10
+                                            },
+                                            "timespan": {
+                                                "relative": {
+                                                    "duration": 86400000
+                                                },
+                                                "showUTCTime": false,
+                                                "grain": 1
+                                            }
+                                        }
+                                    },
+                                    "isOptional": true
+                                },
+                                {
+                                    "name": "sharedTimeRange",
+                                    "isOptional": true
+                                }
+                            ],
+                            "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                            "settings": {
+                                "content": {
+                                    "options": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "BackendResponseStatus",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Backend Response Status"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Ingestion Service Response Status Totals",
+                                            "titleKind": 2,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                },
+                                                "disablePinning": true
+                                            },
+                                            "grouping": {
+                                                "dimension": "HttpStatusGroup",
+                                                "sort": 2,
+                                                "top": 10
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": {
+                                "BackendPool": {
+                                    "model": {
+                                        "operator": "equals",
+                                        "values": [
+                                            "pool-default-ingestion-service-8080-bp-8080"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "4": {
+                        "position": {
+                            "x": 0,
+                            "y": 8,
+                            "colSpan": 6,
+                            "rowSpan": 4
+                        },
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "name": "options",
+                                    "value": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "BackendResponseStatus",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Backend Response Status"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Sum Backend Response Status for phdi-playground-dev-aks-appgw by HttpStatus where Backend Pool = 'pool-default-validation-service-8080-bp-8080'",
+                                            "titleKind": 1,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                }
+                                            },
+                                            "filterCollection": {
+                                                "filters": [
+                                                    {
+                                                        "key": "BackendPool",
+                                                        "operator": 0,
+                                                        "values": [
+                                                            "pool-default-validation-service-8080-bp-8080"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "grouping": {
+                                                "dimension": "HttpStatusGroup",
+                                                "sort": 2,
+                                                "top": 10
+                                            },
+                                            "timespan": {
+                                                "relative": {
+                                                    "duration": 86400000
+                                                },
+                                                "showUTCTime": false,
+                                                "grain": 1
+                                            }
+                                        }
+                                    },
+                                    "isOptional": true
+                                },
+                                {
+                                    "name": "sharedTimeRange",
+                                    "isOptional": true
+                                }
+                            ],
+                            "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                            "settings": {
+                                "content": {
+                                    "options": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "BackendResponseStatus",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Backend Response Status"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Validation Service Response Status Totals",
+                                            "titleKind": 2,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                },
+                                                "disablePinning": true
+                                            },
+                                            "grouping": {
+                                                "dimension": "HttpStatusGroup",
+                                                "sort": 2,
+                                                "top": 10
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": {
+                                "BackendPool": {
+                                    "model": {
+                                        "operator": "equals",
+                                        "values": [
+                                            "pool-default-validation-service-8080-bp-8080"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "5": {
+                        "position": {
+                            "x": 6,
+                            "y": 8,
+                            "colSpan": 6,
+                            "rowSpan": 4
+                        },
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "name": "options",
+                                    "value": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "BackendResponseStatus",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Backend Response Status"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Sum Backend Response Status for phdi-playground-dev-aks-appgw by HttpStatus where Backend Pool = 'pool-default-message-parser-service-8080-bp-8080'",
+                                            "titleKind": 1,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                }
+                                            },
+                                            "filterCollection": {
+                                                "filters": [
+                                                    {
+                                                        "key": "BackendPool",
+                                                        "operator": 0,
+                                                        "values": [
+                                                            "pool-default-message-parser-service-8080-bp-8080"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "grouping": {
+                                                "dimension": "HttpStatusGroup",
+                                                "sort": 2,
+                                                "top": 10
+                                            },
+                                            "timespan": {
+                                                "relative": {
+                                                    "duration": 86400000
+                                                },
+                                                "showUTCTime": false,
+                                                "grain": 1
+                                            }
+                                        }
+                                    },
+                                    "isOptional": true
+                                },
+                                {
+                                    "name": "sharedTimeRange",
+                                    "isOptional": true
+                                }
+                            ],
+                            "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                            "settings": {
+                                "content": {
+                                    "options": {
+                                        "chart": {
+                                            "metrics": [
+                                                {
+                                                    "resourceMetadata": {
+                                                        "id": "/subscriptions/${subscription_id}/resourceGroups/${resource_group_name}/providers/Microsoft.Network/applicationGateways/${app_gateway_name}"
+                                                    },
+                                                    "name": "BackendResponseStatus",
+                                                    "aggregationType": 1,
+                                                    "namespace": "microsoft.network/applicationgateways",
+                                                    "metricVisualization": {
+                                                        "displayName": "Backend Response Status"
+                                                    }
+                                                }
+                                            ],
+                                            "title": "Message Parser Service Response Status Totals",
+                                            "titleKind": 2,
+                                            "visualization": {
+                                                "chartType": 2,
+                                                "legendVisualization": {
+                                                    "isVisible": true,
+                                                    "position": 2,
+                                                    "hideSubtitle": false
+                                                },
+                                                "axisVisualization": {
+                                                    "x": {
+                                                        "isVisible": true,
+                                                        "axisType": 2
+                                                    },
+                                                    "y": {
+                                                        "isVisible": true,
+                                                        "axisType": 1
+                                                    }
+                                                },
+                                                "disablePinning": true
+                                            },
+                                            "grouping": {
+                                                "dimension": "HttpStatusGroup",
+                                                "sort": 2,
+                                                "top": 10
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": {
+                                "BackendPool": {
+                                    "model": {
+                                        "operator": "equals",
+                                        "values": [
+                                            "pool-default-message-parser-service-8080-bp-8080"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "model": {
+                "timeRange": {
+                    "value": {
+                        "relative": {
+                            "duration": 24,
+                            "timeUnit": 1
+                        }
+                    },
+                    "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+                },
+                "filterLocale": {
+                    "value": "en-us"
+                },
+                "filters": {
+                    "value": {
+                        "MsPortalFx_TimeRange": {
+                            "model": {
+                                "format": "utc",
+                                "granularity": "auto",
+                                "relative": "24h"
+                            },
+                            "displayCache": {
+                                "name": "UTC Time",
+                                "value": "Past 24 hours"
+                            },
+                            "filteredPartIds": [
+                                "StartboardPart-MonitorChartPart-94792451-d50b-40ca-8a3c-edc268de35e8",
+                                "StartboardPart-MonitorChartPart-94792451-d50b-40ca-8a3c-edc268de35ea",
+                                "StartboardPart-MonitorChartPart-94792451-d50b-40ca-8a3c-edc268de35ec",
+                                "StartboardPart-MonitorChartPart-94792451-d50b-40ca-8a3c-edc268de35ee",
+                                "StartboardPart-MonitorChartPart-94792451-d50b-40ca-8a3c-edc268de35f0",
+                                "StartboardPart-MonitorChartPart-94792451-d50b-40ca-8a3c-edc268de35f2"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "name": "Application Gateway Metrics (dev)",
+    "type": "Microsoft.Portal/dashboards",
+    "location": "INSERT LOCATION",
+    "tags": {
+        "hidden-title": "Application Gateway Metrics (dev)"
+    },
+    "apiVersion": "2015-08-01-preview"
+}
