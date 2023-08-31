@@ -14,6 +14,12 @@ locals {
   app_gateway_name        = "phdi-playground-${terraform.workspace}-aks-appgw"
   app_gateway_subnet_name = "phdi-playground-${terraform.workspace}-aks-appgw-subnet"
 
+  app_gateway_metrics_dashboard_config = jsondecode(templatefile("dashboard.json", {
+    app_gateway_name    = local.app_gateway_name,
+    resource_group_name = var.resource_group_name,
+    subscription_id     = var.subscription_id,
+  }))
+
   services = toset([
     "fhir-converter",
     "ingestion",
@@ -325,4 +331,19 @@ resource "helm_release" "building_blocks" {
     name  = "ingressHostname"
     value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
   }
+}
+
+# Metrics Dashboard
+
+resource "azurerm_portal_dashboard" "pipeline_metrics" {
+  name                = "app-gateway-metrics-${terraform.workspace}"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  depends_on          = [azurerm_application_gateway.network, helm_release.building_blocks]
+
+  tags = {
+    source = "terraform"
+  }
+
+  dashboard_properties = jsonencode(local.app_gateway_metrics_dashboard_config.properties)
 }
