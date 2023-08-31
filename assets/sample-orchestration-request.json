@@ -1,13 +1,12 @@
 {
-  "xml_message": "",
-  "xml_message_type": "ecr",
+  "message": "",
+  "message_type": "ecr",
   "configurations": {
     "validation": {
       "include_error_types": "error"
     },
     "convert_to_fhir": {
-      "root_template": "EICR",
-      "message_type": "ecr"
+      "root_template": "EICR"
     },
     "standardization_and_geocoding": {
       "geocode_method": "smarty",
