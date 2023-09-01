@@ -1,6 +1,4 @@
 {
-  "message": "",
-  "message_type": "ecr",
   "configurations": {
     "validation": {
       "include_error_types": "error"
