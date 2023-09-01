@@ -379,6 +379,7 @@ data "kubectl_path_documents" "keda" {
 }
 
 resource "kubectl_manifest" "keda" {
-  count     = length(data.kubectl_path_documents.keda.documents)
-  yaml_body = data.kubectl_path_documents.keda.documents[count.index]
+  depends_on = [helm_release.keda]
+  count      = length(data.kubectl_path_documents.keda.documents)
+  yaml_body  = data.kubectl_path_documents.keda.documents[count.index]
 }
