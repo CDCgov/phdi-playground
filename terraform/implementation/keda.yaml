@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: azure-monitor-secrets
+data:
+  activeDirectoryClientId: ${clientId}
+  activeDirectoryClientPassword: ${clientPassword}
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-monitor-trigger-auth
+spec:
+  secretTargetRef:
+    - parameter: activeDirectoryClientId
+      name: azure-monitor-secrets
+      key: activeDirectoryClientId
+    - parameter: activeDirectoryClientPassword
+      name: azure-monitor-secrets
+      key: activeDirectoryClientPassword
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: azure-monitor-scaler
+spec:
+  scaleTargetRef:
+    name: phdi-playground-dev-ingestion-ingestion-app
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+    - type: azure-monitor
+      metadata:
+        resourceURI: Microsoft.Network/applicationGateways/${applicationGatewayName}
+        tenantId: ${tenantId}
+        subscriptionId: ${subscriptionId}
+        resourceGroupName: ${resourceGroupName}
+        metricName: TotalRequests
+        metricNamespace: microsoft.network/applicationgateways
+        metricFilter: BackendSettingsPool eq 'pool-default-ingestion-service-8080-bp-8080~bp-default-ingestion-service-8080-8080-ingress'
+        metricAggregationInterval: "0:1:0"
+        metricAggregationType: Total
+        targetValue: "20"
+      authenticationRef:
+        name: azure-monitor-trigger-auth

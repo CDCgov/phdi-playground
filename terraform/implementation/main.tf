@@ -69,6 +69,12 @@ resource "azurerm_role_assignment" "app_gateway_subnet_network_contributor" {
   principal_id         = azuread_service_principal.aks.object_id
 }
 
+resource "azurerm_role_assignment" "monitoring_reader" {
+  scope                = data.azurerm_resource_group.rg.id
+  role_definition_name = "Monitoring Reader"
+  principal_id         = azuread_service_principal.aks.object_id
+}
+
 # SSH Key
 resource "random_pet" "ssh_key_name" {
   prefix    = "ssh"
@@ -187,6 +193,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   location            = var.location
   resource_group_name = var.resource_group_name
   dns_prefix          = local.aks_dns_prefix
+  depends_on          = [azurerm_application_gateway.network]
 
   default_node_pool {
     name            = "agentpool"
@@ -339,11 +346,39 @@ resource "azurerm_portal_dashboard" "pipeline_metrics" {
   name                = "app-gateway-metrics-${terraform.workspace}"
   resource_group_name = var.resource_group_name
   location            = var.location
-  depends_on          = [azurerm_application_gateway.network, helm_release.building_blocks]
+  depends_on          = [helm_release.building_blocks]
 
   tags = {
     source = "terraform"
   }
 
   dashboard_properties = jsonencode(local.app_gateway_metrics_dashboard_config.properties)
+}
+
+# Auto-Scaling
+
+resource "helm_release" "keda" {
+  name             = "keda"
+  repository       = "https://kedacore.github.io/charts"
+  chart            = "kedacore/keda"
+  namespace        = "keda"
+  create_namespace = true
+  depends_on       = [azurerm_kubernetes_cluster.k8s]
+}
+
+data "kubectl_path_documents" "keda" {
+  pattern = "./keda.yaml"
+  vars = {
+    clientId               = "${azuread_service_principal.aks.application_id}"
+    clientPassword         = "${azuread_service_principal_password.aks.value}"
+    subscriptionId         = "${var.subscription_id}"
+    tenantId               = "${data.azurerm_client_config.current.tenant_id}"
+    resourceGroupName      = "${var.resource_group_name}"
+    applicationGatewayName = "${local.app_gateway_name}"
+  }
+}
+
+resource "kubectl_manifest" "keda" {
+  count     = length(data.kubectl_path_documents.keda.documents)
+  yaml_body = data.kubectl_path_documents.keda.documents[count.index]
 }
