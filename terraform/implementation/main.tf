@@ -360,7 +360,7 @@ resource "azurerm_portal_dashboard" "pipeline_metrics" {
 resource "helm_release" "keda" {
   name             = "keda"
   repository       = "https://kedacore.github.io/charts"
-  chart            = "kedacore/keda"
+  chart            = "keda"
   namespace        = "keda"
   create_namespace = true
   depends_on       = [azurerm_kubernetes_cluster.k8s]
