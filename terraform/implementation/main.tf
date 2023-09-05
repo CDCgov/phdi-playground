@@ -361,20 +361,17 @@ resource "helm_release" "keda" {
   depends_on       = [azurerm_kubernetes_cluster.k8s]
 }
 
-data "kubectl_path_documents" "keda" {
-  pattern = "./keda.yaml"
-  vars = {
-    clientId               = "${base64encode(azuread_service_principal.aks.application_id)}"
-    clientPassword         = "${base64encode(azuread_service_principal_password.aks.value)}"
-    subscriptionId         = "${var.subscription_id}"
-    tenantId               = "${data.azurerm_client_config.current.tenant_id}"
-    resourceGroupName      = "${var.resource_group_name}"
-    applicationGatewayName = "${local.app_gateway_name}"
-  }
+resource "kubectl_manifest" "keda_secret" {
+  depends_on = [helm_release.keda, azuread_service_principal.aks, azuread_service_principal_password.aks]
+  yaml_body  = data.kubectl_path_documents.keda_secret.documents
 }
 
-resource "kubectl_manifest" "keda" {
-  depends_on = [helm_release.keda]
-  count      = length(data.kubectl_path_documents.keda.documents)
-  yaml_body  = data.kubectl_path_documents.keda.documents[count.index]
+resource "kubectl_manifest" "keda_trigger" {
+  depends_on = [kubectl_manifest.keda_secret]
+  yaml_body  = data.kubectl_path_documents.keda_trigger.documents
+}
+
+resource "kubectl_manifest" "keda_scaled_object" {
+  depends_on = [kubectl_manifest.keda_trigger]
+  yaml_body  = data.kubectl_path_documents.keda_scaled_object.documents
 }

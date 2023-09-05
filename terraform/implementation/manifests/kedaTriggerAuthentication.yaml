@@ -1,0 +1,12 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-monitor-trigger-auth
+spec:
+  secretTargetRef:
+    - parameter: activeDirectoryClientId
+      name: azure-monitor-secrets
+      key: activeDirectoryClientId
+    - parameter: activeDirectoryClientPassword
+      name: azure-monitor-secrets
+      key: activeDirectoryClientPassword
