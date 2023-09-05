@@ -369,8 +369,8 @@ resource "helm_release" "keda" {
 data "kubectl_path_documents" "keda" {
   pattern = "./keda.yaml"
   vars = {
-    clientId               = "${azuread_service_principal.aks.application_id}"
-    clientPassword         = "${azuread_service_principal_password.aks.value}"
+    clientId               = "${base64encode(azuread_service_principal.aks.application_id)}"
+    clientPassword         = "${base64encode(azuread_service_principal_password.aks.value)}"
     subscriptionId         = "${var.subscription_id}"
     tenantId               = "${data.azurerm_client_config.current.tenant_id}"
     resourceGroupName      = "${var.resource_group_name}"
