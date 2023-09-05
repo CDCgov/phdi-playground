@@ -363,15 +363,15 @@ resource "helm_release" "keda" {
 
 resource "kubectl_manifest" "keda_secret" {
   depends_on = [helm_release.keda, azuread_service_principal.aks, azuread_service_principal_password.aks]
-  yaml_body  = data.kubectl_path_documents.keda_secret.documents
+  yaml_body  = data.kubectl_path_documents.keda_secret.documents[0]
 }
 
 resource "kubectl_manifest" "keda_trigger" {
   depends_on = [kubectl_manifest.keda_secret]
-  yaml_body  = data.kubectl_path_documents.keda_trigger.documents
+  yaml_body  = data.kubectl_path_documents.keda_trigger.documents[0]
 }
 
 resource "kubectl_manifest" "keda_scaled_object" {
   depends_on = [kubectl_manifest.keda_trigger]
-  yaml_body  = data.kubectl_path_documents.keda_scaled_object.documents
+  yaml_body  = data.kubectl_path_documents.keda_scaled_object.documents[0]
 }
