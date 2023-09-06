@@ -1,7 +1,7 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: azure-monitor-scaler
+  name: phdi-playground-dev-${serviceName}-scaler
 spec:
   scaleTargetRef:
     name: phdi-playground-dev-${serviceName}-${serviceName}-app
