@@ -13,10 +13,6 @@ on:
 jobs:
   lint-frontend:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./front-end
     steps:
       - name: Checkout
         uses: actions/checkout@v3
