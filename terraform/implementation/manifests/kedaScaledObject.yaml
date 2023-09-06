@@ -14,11 +14,11 @@ spec:
         tenantId: ${tenantId}
         subscriptionId: ${subscriptionId}
         resourceGroupName: ${resourceGroupName}
-        metricName: TotalRequests
-        metricNamespace: microsoft.network/applicationgateways
+        metricName: AvgRequestCountPerHealthyHost
+        metricNamespace: Microsoft.Network/applicationgateways
         metricFilter: BackendSettingsPool eq 'pool-default-ingestion-service-8080-bp-8080~bp-default-ingestion-service-8080-8080-ingress'
         metricAggregationInterval: "0:1:0"
-        metricAggregationType: Total
+        metricAggregationType: Average
         targetValue: "20"
       authenticationRef:
         name: azure-monitor-trigger-auth
