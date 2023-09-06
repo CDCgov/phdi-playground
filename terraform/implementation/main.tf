@@ -188,7 +188,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   location            = var.location
   resource_group_name = var.resource_group_name
   dns_prefix          = local.aks_dns_prefix
-  depends_on          = [azurerm_application_gateway.network]
 
   default_node_pool {
     name            = "agentpool"
@@ -341,7 +340,7 @@ resource "azurerm_portal_dashboard" "pipeline_metrics" {
   name                = "app-gateway-metrics-${terraform.workspace}"
   resource_group_name = var.resource_group_name
   location            = var.location
-  depends_on          = [helm_release.building_blocks]
+  depends_on          = [azurerm_application_gateway.network, helm_release.building_blocks]
 
   tags = {
     source = "terraform"
