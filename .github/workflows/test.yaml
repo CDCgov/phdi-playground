@@ -10,6 +10,11 @@ on:
     branches:
       - main
 
+defaults:
+  run:
+    shell: bash
+    working-directory: ./front-end
+    
 jobs:
   lint-frontend:
     runs-on: ubuntu-latest
