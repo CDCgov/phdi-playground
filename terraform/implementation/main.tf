@@ -69,12 +69,13 @@ resource "azurerm_role_assignment" "app_gateway_subnet_network_contributor" {
   principal_id         = azuread_service_principal.aks.object_id
 }
 
-# SSH Key
-resource "random_pet" "ssh_key_name" {
-  prefix    = "ssh"
-  separator = ""
+resource "azurerm_role_assignment" "monitoring_reader" {
+  scope                = data.azurerm_resource_group.rg.id
+  role_definition_name = "Monitoring Reader"
+  principal_id         = azuread_service_principal.aks.object_id
 }
 
+# SSH Key
 resource "azapi_resource_action" "ssh_public_key_gen" {
   type        = "Microsoft.Compute/sshPublicKeys@2022-11-01"
   resource_id = azapi_resource.ssh_public_key.id
@@ -86,7 +87,7 @@ resource "azapi_resource_action" "ssh_public_key_gen" {
 
 resource "azapi_resource" "ssh_public_key" {
   type      = "Microsoft.Compute/sshPublicKeys@2022-11-01"
-  name      = random_pet.ssh_key_name.id
+  name      = "phdi-playground-${terraform.workspace}-ssh-key"
   location  = var.location
   parent_id = data.azurerm_resource_group.rg.id
 }
@@ -177,6 +178,23 @@ resource "azurerm_application_gateway" "network" {
     backend_address_pool_name  = local.backend_address_pool_name
     backend_http_settings_name = local.http_setting_name
     priority                   = 1
+  }
+
+  lifecycle {
+    ignore_changes = [
+      tags,
+      ssl_certificate,
+      trusted_root_certificate,
+      frontend_port,
+      backend_address_pool,
+      backend_http_settings,
+      http_listener,
+      url_path_map,
+      request_routing_rule,
+      probe,
+      redirect_configuration,
+      ssl_policy,
+    ]
   }
 }
 
@@ -346,4 +364,31 @@ resource "azurerm_portal_dashboard" "pipeline_metrics" {
   }
 
   dashboard_properties = jsonencode(local.app_gateway_metrics_dashboard_config.properties)
+}
+
+# Auto-Scaling
+
+resource "helm_release" "keda" {
+  name             = "keda"
+  repository       = "https://kedacore.github.io/charts"
+  chart            = "keda"
+  namespace        = "keda"
+  create_namespace = true
+  depends_on       = [azurerm_kubernetes_cluster.k8s]
+}
+
+resource "kubectl_manifest" "keda_secret" {
+  depends_on = [helm_release.keda, azuread_service_principal.aks, azuread_service_principal_password.aks]
+  yaml_body  = data.kubectl_path_documents.keda_secret.documents[0]
+}
+
+resource "kubectl_manifest" "keda_trigger" {
+  depends_on = [kubectl_manifest.keda_secret]
+  yaml_body  = data.kubectl_path_documents.keda_trigger.documents[0]
+}
+
+resource "kubectl_manifest" "keda_scaled_object" {
+  for_each   = local.services
+  depends_on = [kubectl_manifest.keda_trigger]
+  yaml_body  = data.kubectl_path_documents.keda_scaled_object[each.key].documents[0]
 }

@@ -1,0 +1,24 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: phdi-playground-dev-${serviceName}-scaler
+spec:
+  scaleTargetRef:
+    name: phdi-playground-dev-${serviceName}-${serviceName}-app
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+    - type: azure-monitor
+      metadata:
+        resourceURI: Microsoft.Network/applicationGateways/${applicationGatewayName}
+        tenantId: ${tenantId}
+        subscriptionId: ${subscriptionId}
+        resourceGroupName: ${resourceGroupName}
+        metricName: AvgRequestCountPerHealthyHost
+        metricNamespace: Microsoft.Network/applicationgateways
+        metricFilter: BackendSettingsPool eq 'pool-default-${serviceName}-service-8080-bp-8080~bp-default-${serviceName}-service-8080-8080-ingress'
+        metricAggregationInterval: "0:1:0"
+        metricAggregationType: Average
+        targetValue: "20"
+      authenticationRef:
+        name: azure-monitor-trigger-auth
