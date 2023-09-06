@@ -179,6 +179,23 @@ resource "azurerm_application_gateway" "network" {
     backend_http_settings_name = local.http_setting_name
     priority                   = 1
   }
+
+  lifecycle {
+    ignore_changes = [
+      tags,
+      ssl_certificate,
+      trusted_root_certificate,
+      frontend_port,
+      backend_address_pool,
+      backend_http_settings,
+      http_listener,
+      url_path_map,
+      request_routing_rule,
+      probe,
+      redirect_configuration,
+      ssl_policy,
+    ]
+  }
 }
 
 #### Kubernetes Service ####
