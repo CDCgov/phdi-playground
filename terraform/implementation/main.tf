@@ -371,6 +371,7 @@ resource "kubectl_manifest" "keda_trigger" {
 }
 
 resource "kubectl_manifest" "keda_scaled_object" {
+  for_each   = local.services
   depends_on = [kubectl_manifest.keda_trigger]
-  yaml_body  = data.kubectl_path_documents.keda_scaled_object.documents[0]
+  yaml_body  = data.kubectl_path_documents.keda_scaled_object[each.key].documents[0]
 }

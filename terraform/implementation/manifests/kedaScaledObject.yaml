@@ -4,7 +4,7 @@ metadata:
   name: azure-monitor-scaler
 spec:
   scaleTargetRef:
-    name: phdi-playground-dev-ingestion-ingestion-app
+    name: phdi-playground-dev-${serviceName}-${serviceName}-app
   minReplicaCount: 1
   maxReplicaCount: 10
   triggers:
@@ -16,7 +16,7 @@ spec:
         resourceGroupName: ${resourceGroupName}
         metricName: AvgRequestCountPerHealthyHost
         metricNamespace: Microsoft.Network/applicationgateways
-        metricFilter: BackendSettingsPool eq 'pool-default-ingestion-service-8080-bp-8080~bp-default-ingestion-service-8080-8080-ingress'
+        metricFilter: BackendSettingsPool eq 'pool-default-${serviceName}-service-8080-bp-8080~bp-default-${serviceName}-service-8080-8080-ingress'
         metricAggregationInterval: "0:1:0"
         metricAggregationType: Average
         targetValue: "20"

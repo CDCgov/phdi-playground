@@ -31,11 +31,13 @@ data "kubectl_path_documents" "keda_trigger" {
 }
 
 data "kubectl_path_documents" "keda_scaled_object" {
-  pattern = "./manifests/kedaScaledObject.yaml"
+  for_each = local.services
+  pattern  = "./manifests/kedaScaledObject.yaml"
   vars = {
     subscriptionId         = "${var.subscription_id}"
     tenantId               = "${data.azurerm_client_config.current.tenant_id}"
     resourceGroupName      = "${var.resource_group_name}"
     applicationGatewayName = "${local.app_gateway_name}"
+    serviceName            = each.key
   }
 }
