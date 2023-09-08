@@ -12,13 +12,13 @@ terraform {
       source  = "azure/azapi"
       version = "= 1.8.0"
     }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "= 2.10.1"
-    }
     kubectl = {
       source  = "gavinbunney/kubectl"
       version = ">= 1.14.0"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "= 2.10.1"
     }
     random = {
       source  = "hashicorp/random"
