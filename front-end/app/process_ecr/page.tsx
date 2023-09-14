@@ -1,7 +1,7 @@
 'use client'
 import { Button, StepIndicator, StepIndicatorStep } from '@trussworks/react-uswds'
 
-export default function ProcessECR(){
+export default function ProcessECR() {
     return (
         <div className="margin-3">
             <h1>Processing your eCR</h1>

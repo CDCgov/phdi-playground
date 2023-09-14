@@ -1,18 +1,18 @@
 'use client'
-import { 
-    Modal, 
-    ButtonGroup, 
-    ModalFooter, 
-    ModalHeading, 
-    ModalToggleButton, 
+import {
+    Modal,
+    ButtonGroup,
+    ModalFooter,
+    ModalHeading,
+    ModalToggleButton,
     ModalRef,
-    Select, 
+    Select,
     Label,
     Table
 } from '@trussworks/react-uswds'
 import React, { useRef } from 'react'
 
-export default function ecrViewer(){
+export default function ecrViewer() {
     const modalRef = useRef<ModalRef>(null)
     const options = []
     const data = [
@@ -33,14 +33,14 @@ export default function ecrViewer(){
     const getTableBody = () => {
         return (
             <tbody>
-            {data.map(function(data, i){
-                return (
-                    <tr>
-                        <th scope="row">{data.document_title}</th>
-                        <td>{data.year}</td>
-                    </tr>
-                );
-            })}
+                {data.map(function (data, i) {
+                    return (
+                        <tr>
+                            <th scope="row">{data.document_title}</th>
+                            <td>{data.year}</td>
+                        </tr>
+                    );
+                })}
             </tbody>
         )
     }
@@ -57,10 +57,10 @@ export default function ecrViewer(){
                     caption="This table uses the fullWidth prop to increase to 100% width"
                     fullWidth>
                     <thead>
-                    <tr>
-                        <th scope="col">Document title</th>
-                        <th scope="col">Year</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">Document title</th>
+                            <th scope="col">Year</th>
+                        </tr>
                     </thead>
                     {getTableBody()}
                 </Table>
@@ -73,7 +73,7 @@ function exportModal() {
     const modalRef = useRef<ModalRef>(null)
     return (
         <>
-        <ModalToggleButton modalRef={modalRef} opener>
+            <ModalToggleButton modalRef={modalRef} opener>
                 Export
             </ModalToggleButton>
             <Modal
@@ -89,7 +89,7 @@ function exportModal() {
                     <Select
                         id="input-select"
                         name="input-select"
-                        >
+                    >
                         <React.Fragment key=".0">
                             <option>
                                 - Select -{' '}
@@ -111,7 +111,7 @@ function exportModal() {
                     <Select
                         id="input-select"
                         name="input-select"
-                        >
+                    >
                         <React.Fragment key=".0">
                             <option>
                                 - Select -{' '}
@@ -130,16 +130,16 @@ function exportModal() {
                 </div>
                 <ModalFooter>
                     <ButtonGroup>
-                    <ModalToggleButton modalRef={modalRef} closer>
-                        Download
-                    </ModalToggleButton>
-                    <ModalToggleButton
-                        modalRef={modalRef}
-                        closer
-                        unstyled
-                        className="padding-105 text-center">
-                        Go back
-                    </ModalToggleButton>
+                        <ModalToggleButton modalRef={modalRef} closer>
+                            Download
+                        </ModalToggleButton>
+                        <ModalToggleButton
+                            modalRef={modalRef}
+                            closer
+                            unstyled
+                            className="padding-105 text-center">
+                            Go back
+                        </ModalToggleButton>
                     </ButtonGroup>
                 </ModalFooter>
             </Modal>
