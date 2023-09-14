@@ -3,7 +3,7 @@ import { ProcessList, ProcessListItem, ProcessListHeading, Button } from '@truss
 
 export default function upload_tutorial(){
     return (
-        <>
+        <div className="margin-3">
             <h1>eCR Viewer Tool</h1>
             <p>Easily see only the information you need in an eCR</p>
             <ProcessList>
@@ -50,6 +50,6 @@ export default function upload_tutorial(){
                 </ProcessListItem>
             </ProcessList>
             <Button type="button">Get Started</Button>
-        </>
+        </div>
     )
 }

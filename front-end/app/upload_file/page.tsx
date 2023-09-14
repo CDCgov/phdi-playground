@@ -11,7 +11,7 @@ export default function UploadFile(){
         console.log(fileToUpload)
     }
 
-    return <div>
+    return <div className="margin-3">
         <FormGroup>
             <Label htmlFor="file-input-single">Input accepts a single file</Label>
             <FileInput id="file-input-single" name="file-input-single" onChange={(addFile)}/>

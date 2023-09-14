@@ -15,8 +15,38 @@ import React, { useRef } from 'react'
 export default function ecrViewer(){
     const modalRef = useRef<ModalRef>(null)
     const options = []
+    const data = [
+        {
+            document_title: 'Declaration of Independence',
+            year: '1776'
+        },
+        {
+            document_title: 'Bill of Rights',
+            year: '1791'
+        },
+        {
+            document_title: 'Emancipation Proclamation',
+            year: '1863'
+        },
+    ]
+
+    const getTableBody = () => {
+        return (
+            <tbody>
+            {data.map(function(data, i){
+                return (
+                    <tr>
+                        <th scope="row">{data.document_title}</th>
+                        <td>{data.year}</td>
+                    </tr>
+                );
+            })}
+            </tbody>
+        )
+    }
+
     return (
-        <>
+        <div className='margin-3'>
             <h1>eCR Viewer</h1>
             <div>
                 {exportModal()}
@@ -32,27 +62,10 @@ export default function ecrViewer(){
                         <th scope="col">Year</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">Declaration of Independence</th>
-                        <td>1776</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Bill of Rights</th>
-                        <td>1791</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Declaration of Sentiments</th>
-                        <td>1848</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Emancipation Proclamation</th>
-                        <td>1863</td>
-                    </tr>
-                    </tbody>
+                    {getTableBody()}
                 </Table>
             </div>
-        </>
+        </div>
     )
 }
 

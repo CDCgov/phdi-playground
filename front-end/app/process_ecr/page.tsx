@@ -3,7 +3,7 @@ import { Button, StepIndicator, StepIndicatorStep } from '@trussworks/react-uswd
 
 export default function ProcessECR(){
     return (
-        <>
+        <div className="margin-3">
             <h1>Processing your eCR</h1>
 
             <StepIndicator counters="default" headingLevel="h4">
@@ -13,6 +13,6 @@ export default function ProcessECR(){
                 <StepIndicatorStep label="Message Parser BB" status="incomplete" />
             </StepIndicator>
             <Button type="button">Continue</Button>
-        </>
+        </div>
     )
 }
