@@ -35,7 +35,7 @@ export default function ecrViewer() {
             <tbody>
                 {data.map(function (data, i) {
                     return (
-                        <tr>
+                        <tr key={data.document_title}>
                             <th scope="row">{data.document_title}</th>
                             <td>{data.year}</td>
                         </tr>
@@ -49,7 +49,7 @@ export default function ecrViewer() {
         <div className='margin-3'>
             <h1>eCR Viewer</h1>
             <div>
-                {exportModal()}
+                {ExportModal()}
             </div>
             <div>
                 <Table
@@ -69,7 +69,7 @@ export default function ecrViewer() {
     )
 }
 
-function exportModal() {
+function ExportModal() {
     const modalRef = useRef<ModalRef>(null)
     return (
         <>
