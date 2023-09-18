@@ -12,7 +12,7 @@ import {
 } from '@trussworks/react-uswds'
 import React, { useRef } from 'react'
 
-export default function ecrViewer() {
+export default function ECRViewer() {
     const modalRef = useRef<ModalRef>(null)
     const options = []
     const data = [
