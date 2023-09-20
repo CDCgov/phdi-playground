@@ -8,3 +8,11 @@
 .usa-button {
     background-color: #005ea2;
 }
+
+.usa-modal__close {
+    background-color: rgba(0,0,0,0);
+}
+
+.usa-button--unstyled {
+    background-color: rgba(0,0,0,0);
+}
