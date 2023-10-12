@@ -1,6 +1,6 @@
-import UploadFile from "../app/upload_file/page";
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
+import UploadFile from "../pages/upload_file"
 
 describe("Upload File", () => {
   it("renders a upload file page", () => {

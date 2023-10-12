@@ -1,4 +1,3 @@
-'use client'
 import { FileInput, FormGroup, Label, Button } from '@trussworks/react-uswds'
 import { useState } from 'react';
 
