@@ -1,5 +1,7 @@
 import { FileInput, FormGroup, Label, Button } from '@trussworks/react-uswds'
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+
 
 
 export default function UploadFile() {
@@ -8,7 +10,8 @@ export default function UploadFile() {
     const process_url = 'http://localhost:8080/process'
     const [file, setFile] = useState<File | null>(null);
     const addFile = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setFile(event.target.files?.item(0) || null);
+        console.log('hi')
+        // setFile(event.target.files?.item(0) || null);
     }
 
     const handleSubmit = async (e: any) => {
@@ -24,8 +27,12 @@ export default function UploadFile() {
                     body: formData,
                 });
                 const data = await response.json();
-                //We will do something with the data high fidelity version.
                 console.log(data);
+                const router = useRouter();
+                router.push({
+                    pathname: '/export', // Adjust the pathname as needed
+                    query: { data }, // Pass the data as a query parameter
+                });
             } catch (error) {
                 console.error('Error uploading file', error);
             }
@@ -33,6 +40,7 @@ export default function UploadFile() {
     };
 
     return <div className="margin-3">
+        <input type='file'></input>
         <FormGroup>
             <Label htmlFor="file-input-single">Input accepts a single file</Label>
             <FileInput id="file-input-single" className="testing"
