@@ -1,6 +1,8 @@
 'use client'
 import { FileInput, FormGroup, Label, Button } from '@trussworks/react-uswds'
 import { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import SingleFileInput from '../components/SingleInput';
 
 
 export default function UploadFile() {
@@ -35,21 +37,21 @@ export default function UploadFile() {
     };
 
     return <div className="margin-3">
+        <SingleFileInput
+            id="upload-patients-file-input"
+            name="upload-patients-file-input"
+            ariaLabel="Choose CSV file"
+            ariaInvalid={false}
+            required
+            onChange={addFile}
+        />
         {/* <FormGroup>
             <Label htmlFor="file-input-single">Input accepts a single file</Label>
-            <FileInput id="file-input-single" className="testing"
-                name="file-input-single" onChange={(addFile)}
-            />
-            <Button type="button" onClick={handleSubmit}>Upload</Button>
+            <FileInput id="file-input-single" name="file-input-single" />
         </FormGroup> */}
-        <div className="usa-form-group">
-            <label className="usa-label" >Input accepts a single file</label>
-            <input
-                id="file-input-single"
-                className="usa-file-input"
-                type="file"
-                name="file-input-single"
-            />
-        </div>
+        {/* <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Default file input example</Form.Label>
+            <Form.Control type="file" />
+        </Form.Group> */}
     </div>
 }
