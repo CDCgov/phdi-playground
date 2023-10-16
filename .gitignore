@@ -101,3 +101,5 @@ terraform.tfstate.backup
 *.tfvars
 .vscode/settings.json
 credentials.json
+
+/front-end/.next
