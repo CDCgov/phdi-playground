@@ -1,9 +1,13 @@
 'use client'
+import { useData } from '@/utils/DataContext';
 import { FileInput, FormGroup, Label, Button } from '@trussworks/react-uswds'
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 
 export default function UploadFile() {
+    const { setData } = useData();
+    const router = useRouter();
     // We will change this and put it in a constants 
     // file when orchestration is published
     const process_url = 'http://localhost:8080/process'
@@ -25,8 +29,10 @@ export default function UploadFile() {
                     body: formData,
                 });
                 const data = await response.json();
+                setData(data);
                 //We will do something with the data high fidelity version.
                 console.log(data);
+                router.push('/export')
             } catch (error) {
                 console.error('Error uploading file', error);
             }
