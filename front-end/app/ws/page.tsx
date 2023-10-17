@@ -7,22 +7,23 @@ function Ws() {
   const [formData, setFormData] = useState({}); // State for form data
   const [progress, setProgress] = useState(0); // State for progress
   const [socket, setSocket] = useState(null);
-  //  const fileInputRef = useRef(); // Define the ref
+   const fileInputRef = useRef(); // Define the ref
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+    };
 
   const handleSubmit = () => {
     // Send form data to the server via a WebSocket
     const formData = new FormData();
   // Add the file data to the FormData object (assuming you have a file input with the name "file")
     
-    const file = fileInputRef.current.files[0];
+
     formData.append("file", file);
-    console.log(JSON.stringify(fileToUpload))
-    socket.send(JSON.stringify(formData));
+    socket.send(file);
   };
 
   useEffect(() => {
@@ -44,14 +45,14 @@ function Ws() {
     };
   }, []);
   let fileToUpload: any = null
-  const addFile = (event: any): void => {
-      console.log("adding file", event.target.files[0])
-      fileToUpload = event.target.files[0];
-  }
+  // const addFile = (event: any): void => {
+  //     console.log("adding file", event.target.files[0])
+  //     fileToUpload = event.target.files[0];
+  // }
 
-  const uploadFile = (e: any): void => {
-      console.log(fileToUpload)
-  }
+  // const uploadFile = (e: any): void => {
+  //     console.log(fileToUpload)
+  // }
 
   if(progress === 0){
       return (
@@ -61,7 +62,7 @@ function Ws() {
                 <FileInput
                   id="file-input-single"
                   name="file-input-single"
-                  onChange={(addFile)}
+                  onChange={(handleFileChange)}
                   itemRef='fileInputRef'
                 />
                 <Button type="button" disabled={fileToUpload} onClick={handleSubmit}>Upload</Button>
