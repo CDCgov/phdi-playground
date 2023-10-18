@@ -25,6 +25,7 @@ locals {
     "ingestion",
     "ingress",
     "message-parser",
+    "orchestration",
     "validation",
   ])
 }
@@ -348,6 +349,26 @@ resource "helm_release" "building_blocks" {
   set {
     name  = "ingressHostname"
     value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
+  }
+
+  set {
+    name  = "fhir-converter-url"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
+  }
+
+  set {
+    name  = "ingestion-url"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion"
+  }
+
+  set {
+    name  = "message-parser-url"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser"
+  }
+
+  set {
+    name  = "validation-url"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
   }
 }
 
