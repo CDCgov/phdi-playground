@@ -20,10 +20,19 @@ function Ws() {
     // Send form data to the server via a WebSocket
     const formData = new FormData();
   // Add the file data to the FormData object (assuming you have a file input with the name "file")
-    
 
+      console.log("What is file?", file)
+
+    const fileReader = new FileReader()
     formData.append("file", file);
-    socket.send(file);
+    console.log("#######################################################")
+
+      formData.forEach((value, key) => {
+          console.log(key, value)})
+      console.log("#######################################################")
+     // const ABfile = fileReader.readAsArrayBuffer(file)
+
+    socket.send(file)
   };
 
   useEffect(() => {
