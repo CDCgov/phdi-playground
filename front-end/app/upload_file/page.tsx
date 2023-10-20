@@ -39,13 +39,15 @@ export default function UploadFile() {
         }
     };
 
-    return <div className="margin-3">
-        <FormGroup>
-            <Label htmlFor="file-input-single">Input accepts a single file</Label>
-            <FileInput id="file-input-single"
-                name="file-input-single" onChange={(addFile)}
-            />
-            <Button type="button" onClick={handleSubmit}>Upload</Button>
-        </FormGroup>
-    </div>
+    return (
+        <div className="margin-3">
+            <FormGroup>
+                <Label htmlFor="file-input-single">Input accepts a single file</Label>
+                <FileInput id="file-input-single"
+                    name="file-input-single" onChange={(addFile)}
+                />
+                <Button type="button" onClick={handleSubmit}>Upload</Button>
+            </FormGroup>
+        </div>
+    )
 }
