@@ -1,7 +1,4 @@
 import {
-    ButtonGroup,
-    Select,
-    Label,
     Table
 } from '@trussworks/react-uswds'
 import _ from 'lodash';
@@ -11,7 +8,7 @@ export default function ECRTable({ ecrData }) {
 
     console.log(ecrData);
 
-    const getTableBody = (data: {}) => {
+    const getTableBody = (data: any) => {
         return (
             <tbody>
                 {options.map(function (option) {
