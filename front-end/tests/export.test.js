@@ -7,7 +7,17 @@ import ExportPage from '../app/export/page'; // Adjust the import path as needed
 jest.mock('../utils/DataContext', () => ({
     useData: () => ({
         data: {
-            "name": "this is a test"
+            "processed_values": {
+                "message": "Parsing succeeded!",
+                "parsed_values": {
+                    "patient_id": "95a52bd2-2a17-4888-af52-be3472c94e0e",
+                    "person_id": null,
+                    "last_name": "BEAKER",
+                    "first_name": "CATEST",
+                    "birth_date": "2016-01-27",
+                    "gender": "female"
+                }
+            }
         },
     }),
 }));
