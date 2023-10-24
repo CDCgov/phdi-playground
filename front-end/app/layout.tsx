@@ -1,6 +1,8 @@
 import "./global.scss"
 import Header from "./header"
 import Footer from "./footer"
+import { DataProvider } from "@/utils/DataContext"
+
 
 export const metadata = {
   title: 'Next.js',
@@ -17,7 +19,9 @@ export default function RootLayout({
       <body>
         <Header />
         <div className="grid-container maxw-desktop-lg main-body">
-          {children}
+         <DataProvider>
+           {children}
+         </DataProvider>
         </div>
         <Footer />
         </body>
