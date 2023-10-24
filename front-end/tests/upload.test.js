@@ -1,10 +1,27 @@
 import UploadFile from "../app/upload_file/page";
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { DataProvider } from '../utils/DataContext'
+
+import { act } from "react-dom/test-utils";
+
+
+jest.mock("next/navigation", () => ({
+  useRouter() {
+    return {
+      prefetch: () => null,
+      push: jest.fn(), // Add the push method
+    };
+  }
+}));
 
 describe("Upload File", () => {
   it("renders a upload file page", () => {
-    render(<UploadFile />);
+    render(
+      <DataProvider>
+        <UploadFile />
+      </DataProvider>
+    );
     expect(screen.getByText('Input accepts a single file')).toBeInTheDocument();
   });
 });
@@ -26,18 +43,27 @@ describe('UploadFile Component', () => {
         json: () => Promise.resolve({ success: true }),
       })
     );
-    const { getByText, queryByTestId } = render(<UploadFile />);
+    const { getByText, queryByTestId } = await act(async () => render(
+      <DataProvider>
+        <UploadFile />
+      </DataProvider>)
+    );
 
     const fileInput = queryByTestId('file-input-input')
     const file = new File(['test content'], 'test.txt', { type: 'text/plain' });
     const fileList = createFileList([file]);
 
-    fireEvent.change(fileInput, {
-      target: { files: fileList },
-    })
+    await act(async () => {
+      fireEvent.change(fileInput, {
+        target: { files: fileList },
+      });
+    });
+
 
     const uploadButton = getByText('Upload');
-    fireEvent.click(uploadButton);
+    await act(async () => {
+      fireEvent.click(uploadButton);
+    });
 
     // Assert that the handleSubmit function has been called
     expect(global.fetch).toHaveBeenCalledWith('http://localhost:8080/process', {
