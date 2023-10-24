@@ -28,11 +28,6 @@ jobs:
     name: Run Jest Tests
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./front-end
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -41,7 +36,9 @@ jobs:
       with:
         node-version: 14
     - name: Install dependencies
+      working-directory: ./front-end
       run: npm install
 
     - name: Run Jest Tests
+      working-directory: ./front-end
       run: npm run test
