@@ -67,4 +67,18 @@
   min-height: 40rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  //styleName: H1;
+  h1{
+    font-family: Public Sans,sans-serif!important;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 50px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  
+  .width-lg{
+    width: 100%;
+    max-width: 100%;
+  }
 }
