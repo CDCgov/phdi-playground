@@ -25,7 +25,6 @@ locals {
     "ingestion",
     "ingress",
     "message-parser",
-    "orchestration",
     "validation",
   ])
 }
