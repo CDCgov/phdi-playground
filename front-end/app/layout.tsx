@@ -1,4 +1,8 @@
-import "./global.css"
+import "./global.scss"
+import Header from "./header"
+import Footer from "./footer"
+import { DataProvider } from "@/utils/DataContext"
+
 
 export const metadata = {
   title: 'Next.js',
@@ -12,7 +16,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        <div className="grid-container maxw-desktop-lg main-body">
+         <DataProvider>
+           {children}
+         </DataProvider>
+        </div>
+        <Footer />
+        </body>
     </html>
   )
 }

@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@trussworks/react-uswds/lib/uswds.css';
+@import '@trussworks/react-uswds/lib/index.css';
+
+.usa-button {
+    background-color: #005ea2;
+}
+
+.usa-modal__close {
+    background-color: rgba(0,0,0,0);
+}
+
+.usa-button--unstyled {
+    background-color: rgba(0,0,0,0);
+}
+
+
+@media (min-width: 64em) {
+  .usa-header--basic .usa-navbar {
+    position: relative;
+    width: 50%;
+  }
+}
+
+
+.footer-primary {
+  div{
+    background: #162E51;
+    color: white !important;
+    min-height: 84px;
+    a {
+      color: white !important;
+    }
+  }
+  .usa_footer-trademark {
+    font-family: Public Sans,sans-serif!important;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: right;
+  }
+
+}
+
+
+.hover\:text-base-lightest:hover, .text-base-lightest {
+  color: #f0f0f0 !important;
+}
+
+.usa-nav-container {
+    max-width: 88rem!important;
+}
+
+.main-body{
+  min-height: 40rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
