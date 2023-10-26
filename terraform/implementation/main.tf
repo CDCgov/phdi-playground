@@ -372,6 +372,39 @@ resource "helm_release" "building_blocks" {
   }
 }
 
+resource "helm_release" "orchestration_service" {
+  repository    = "https://cdcgov.github.io/phdi-charts/"
+  name          = "phdi-playground-${terraform.workspace}-orchestration"
+  chart         = "orchestration"
+  recreate_pods = true
+  depends_on    = [helm_release.agic]
+
+  set {
+    name  = "image.tag"
+    value = "latest"
+  }
+
+  set {
+    name  = "fhir-converter-url"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
+  }
+
+  set {
+    name  = "ingestion-url"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion"
+  }
+
+  set {
+    name  = "message-parser-url"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser"
+  }
+
+  set {
+    name  = "validation-url"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
+  }
+}
+
 # Metrics Dashboard
 
 resource "azurerm_portal_dashboard" "pipeline_metrics" {
