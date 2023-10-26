@@ -22,7 +22,7 @@ describe("Upload File", () => {
         <UploadFile />
       </DataProvider>
     );
-    expect(screen.getByText('Input accepts a single file')).toBeInTheDocument();
+    expect(screen.getByText('Upload your eCR')).toBeInTheDocument();
   });
 });
 
@@ -49,7 +49,7 @@ describe('UploadFile Component', () => {
       </DataProvider>)
     );
 
-    const fileInput = queryByTestId('file-input-input')
+    const fileInput = queryByTestId('upload-file-input')
     const file = new File(['test content'], 'test.txt', { type: 'text/plain' });
     const fileList = createFileList([file]);
 
@@ -60,7 +60,7 @@ describe('UploadFile Component', () => {
     });
 
 
-    const uploadButton = getByText('Upload');
+    const uploadButton = getByText('Continue');
     await act(async () => {
       fireEvent.click(uploadButton);
     });

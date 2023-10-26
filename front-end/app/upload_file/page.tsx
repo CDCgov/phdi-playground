@@ -1,8 +1,10 @@
 'use client'
 import { useData } from '@/utils/DataContext';
-import { FileInput, FormGroup, Label, Button } from '@trussworks/react-uswds'
+import { FileInput, FormGroup, Alert, Button } from '@trussworks/react-uswds'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import SingleFileInput from '@/components/SingleFileInput/SingleFileInput';
+
 
 
 export default function UploadFile() {
@@ -41,12 +43,25 @@ export default function UploadFile() {
 
     return (
         <div className="margin-3">
+            <h1 className='font-sans-xl text-bold'>Upload your eCR</h1>
+            <p className="font-sans-lg text-light">Select an eCR .zip file to process</p>
+            <div className="usa-alert usa-alert--info usa-alert--no-icon maxw-tablet">
+                <div className="usa-alert__body padding-0">
+                    <p className="usa-alert__text font-sans-xs text-bold">
+                        This tool is only for test data. Please do not upload patient data to this site.
+                    </p>
+                </div>
+            </div>
             <FormGroup>
-                <Label htmlFor="file-input-single">Input accepts a single file</Label>
-                <FileInput id="file-input-single"
-                    name="file-input-single" onChange={(addFile)}
+                <SingleFileInput
+                    id="upload-file-input"
+                    name="upload-file-input"
+                    ariaLabel="Choose .zip file"
+                    ariaInvalid={false}
+                    required
+                    onChange={addFile}
                 />
-                <Button type="button" onClick={handleSubmit}>Upload</Button>
+                <Button className="margin-top-4" disabled={!file} type="button" onClick={handleSubmit}>Continue</Button>
             </FormGroup>
         </div>
     )
