@@ -22,7 +22,7 @@ describe("Upload File", () => {
         <UploadFile />
       </DataProvider>
     );
-    expect(screen.getByText('Input accepts a single file')).toBeInTheDocument();
+    expect(screen.getByText('Upload your eCR')).toBeInTheDocument();
   });
 });
 
@@ -60,7 +60,7 @@ describe('UploadFile Component', () => {
     });
 
 
-    const uploadButton = getByText('Upload');
+    const uploadButton = getByText('Continue');
     await act(async () => {
       fireEvent.click(uploadButton);
     });
