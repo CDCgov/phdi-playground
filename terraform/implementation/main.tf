@@ -375,7 +375,7 @@ resource "helm_release" "ingress_controller" {
   name          = "phdi-playground-${terraform.workspace}-ingress-temp"
   chart         = "ingress-chart"
   recreate_pods = true
-  version       = "0.1.7"
+  version       = "0.1.8"
   depends_on    = [helm_release.agic]
 
   set {
