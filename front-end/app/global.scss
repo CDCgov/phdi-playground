@@ -17,6 +17,14 @@
     background-color: rgba(0,0,0,0);
 }
 
+.usa-file-input {
+  max-width: 40rem;
+}
+
+.usa-alert .usa-alert__body {
+  margin-left: 0.5rem ;
+  padding-left: 0.5rem ;
+}
 
 @media (min-width: 64em) {
   .usa-header--basic .usa-navbar {
