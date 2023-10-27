@@ -372,7 +372,7 @@ resource "helm_release" "building_blocks" {
 
 resource "helm_release" "ingress_controller" {
   repository    = "https://cdcgov.github.io/phdi-charts/"
-  name          = "phdi-playground-${terraform.workspace}-ingress"
+  name          = "phdi-playground-${terraform.workspace}-ingress-temp"
   chart         = "ingress-chart"
   recreate_pods = true
   version       = "0.1.7"
