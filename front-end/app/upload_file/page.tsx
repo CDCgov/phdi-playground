@@ -40,27 +40,6 @@ export default function UploadFile() {
         }
     };
 
-    const test = () => {
-        return (
-            <div className="usa-accordion">
-                <button
-                    type="button"
-                    className="usa-accordion__button usa-banner__button"
-                    aria-expanded="false"
-                    aria-controls="gov-banner-default-default"
-                >
-                    <span className="usa-banner__button-text">Here’s how you know</span>
-                </button>
-                <div
-                    className="usa-accordion__content"
-                    id="gov-banner-default-default"
-                >
-                    <div>Hi</div>
-                </div>
-            </div>
-        )
-    }
-
     return (
         <div className="margin-3">
             <h1 className='font-sans-xl text-bold'>Upload your eCR</h1>
