@@ -38,6 +38,7 @@ function LinkAccordion() {
                 className={`usa-banner__button ${isAccordionOpen ? 'active' : ''} margin-left-0`}
                 aria-expanded={isAccordionOpen ? 'true' : 'false'}
                 aria-controls="gov-banner-default-default"
+                data-testid="accordion-button"
                 onClick={toggleAccordion}
             >
                 <span className="usa-banner__button-text">What are the .zip file requirements</span>

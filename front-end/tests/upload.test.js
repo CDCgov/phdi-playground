@@ -49,7 +49,7 @@ describe('UploadFile Component', () => {
       </DataProvider>)
     );
 
-    const fileInput = queryByTestId('upload-file-input')
+    const fileInput = queryByTestId('file-input-input')
     const file = new File(['test content'], 'test.txt', { type: 'text/plain' });
     const fileList = createFileList([file]);
 
