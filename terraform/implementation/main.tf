@@ -23,7 +23,6 @@ locals {
   services = toset([
     "fhir-converter",
     "ingestion",
-    "ingress",
     "message-parser",
     "validation",
   ])
@@ -370,6 +369,26 @@ resource "helm_release" "building_blocks" {
     value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
   }
 }
+
+resource "helm_release" "ingress_controller" {
+  repository    = "https://cdcgov.github.io/phdi-charts/"
+  name          = "phdi-playground-${terraform.workspace}-ingress"
+  chart         = "ingress-chart"
+  recreate_pods = true
+  version       = "0.1.7"
+  depends_on    = [helm_release.agic]
+
+  set {
+    name  = "image.tag"
+    value = "latest"
+  }
+
+  set {
+    name  = "ingressHostname"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
+  }
+}
+
 
 resource "helm_release" "orchestration_service" {
   repository    = "https://cdcgov.github.io/phdi-charts/"
