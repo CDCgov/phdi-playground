@@ -6,16 +6,17 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import SingleFileInput from '@/components/SingleFileInput/SingleFileInput';
 import LinkAccordion from '@/components/LinkAccordion/LinkAccordion';
-
-
+import * as changeCase from "change-case";
+import { v4 } from 'uuid';
 
 export default function UploadFile() {
-  const process_url = 'ws://localhost:8080/process-ws'
+  const router = useRouter();
+  const url = 'ws://localhost:8080/process-ws'
   const [formData, setFormData] = useState({}); // State for form data
-  const [progress, setProgress] = useState(0); // State for progress
+  const [progress, setProgress] = useState(""); // State for progress
   const [socket, setSocket] = useState(null);
   const fileInputRef = useRef(); // Define the ref
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState({name: ''});
 
   const handleSubmit = async (e: any) => {
       e.preventDefault();
@@ -46,8 +47,10 @@ export default function UploadFile() {
     const ws = new WebSocket(url);
 
     ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setProgress(data["progress"]);
+      console.log('new message')
+      // const data = JSON.parse(event.data);
+      // console.log(data)
+      setProgress(event.data);
     };
 
     ws.onclose = () => {
@@ -60,10 +63,87 @@ export default function UploadFile() {
       ws.close(); // Close the WebSocket when the component unmounts
     };
   }, []);
+
+
+  const stepHtml = (data: any) => {
+      let html: any[] = []
+      if(data["steps"]){
+        data["steps"].forEach((step: any )=> {
+          let stub = step["endpoint"].split('/').pop();
+          let complete = ""
+          let serviceName = changeCase.sentenceCase(step["service"])
+            .replace("Fhir", "FHIR")
+          if(stub){
+            complete = isComplete(step, data) ? 
+              "usa-step-indicator__segment--complete" : "";
+          }
+          html.push(
+            <li className={'usa-step-indicator__segment ' + complete} key={v4()}>
+              <span className="usa-step-indicator__segment-label">{serviceName}<span className="usa-sr-only">${complete ? "complete" : ""}</span></span>
+            </li>
+          )
+        });
+      }
+      return html;
+  }
+
+  const isComplete = (step: any, data: any) => {
+    let stub = step["endpoint"].split('/').pop();
+    return data[stub] && data[stub]["status_code"] == 200 
+  }
+
+  const checkComplete = (data: any) => {
+    if(!data || !data['steps']){
+      return false;
+    }
+    for(let step of data["steps"]){
+      if(!isComplete(step, data)){
+        console.log('step', false)
+        return false;
+      }
+    };
+    console.log('complete', true)
+    return true
+  }
+
+  const progressHtml = () =>{
+    let progressJSON = JSON.parse(progress);
+    let complete = checkComplete(progressJSON)
+    return (
+      <>
+        <h1>Processing your eCR</h1>
+        <p>
+          View the progress of your eCR through our pipeline
+        </p>
+        <div className="usa-alert usa-alert--warning">
+          <div className="usa-alert__body">
+            <h4 className="usa-alert__heading">Your eCR is still processing</h4>
+            <p className="usa-alert__text">
+              We are processing the file you uploaded ({file["name"] ? file["name"] : ''}). Click the 'Cancel' button to process a different file.
+            </p>
+          </div>
+        </div>
+        <div className="usa-step-indicator usa-step-indicator--counters margin-top-3" aria-label="progress">
+          <ol className="usa-step-indicator__segments">
+            {stepHtml(progressJSON)}
+          </ol>
+        </div>
+        <div className='margin-top-4'>
+          <button type="button" className="usa-button--outline usa-button" onClick={()=>location.reload()}>Cancel</button>
+          <button
+            type="button"
+            className="usa-button"
+            onClick={()=>location.reload()}
+            disabled={checkComplete(progressJSON) ? false : true}
+          >
+            Continue
+          </button>
+        </div>
+      </>
+    )
+  }
     if(progress){
-      return (
-        {progress}
-      )
+      return progressHtml()
     } else {
       return (
           <div>

@@ -81,4 +81,11 @@
     width: 100%;
     max-width: 100%;
   }
+  .usa-button--outline{
+    background-color: white !important;
+    &:hover {
+      background-color: #005ea2 !important;
+      color: white;
+    }
+  }
 }
