@@ -4,6 +4,7 @@ import { FileInput, FormGroup, Alert, Button } from '@trussworks/react-uswds'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SingleFileInput from '@/components/SingleFileInput/SingleFileInput';
+import LinkAccordion from '@/components/LinkAccordion/LinkAccordion';
 
 
 
@@ -32,14 +33,33 @@ export default function UploadFile() {
                 });
                 const data = await response.json();
                 setData(data);
-                //We will do something with the data high fidelity version.
-                console.log(data);
                 router.push('/export')
             } catch (error) {
                 console.error('Error uploading file', error);
             }
         }
     };
+
+    const test = () => {
+        return (
+            <div className="usa-accordion">
+                <button
+                    type="button"
+                    className="usa-accordion__button usa-banner__button"
+                    aria-expanded="false"
+                    aria-controls="gov-banner-default-default"
+                >
+                    <span className="usa-banner__button-text">Here’s how you know</span>
+                </button>
+                <div
+                    className="usa-accordion__content"
+                    id="gov-banner-default-default"
+                >
+                    <div>Hi</div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="margin-3">
@@ -53,15 +73,13 @@ export default function UploadFile() {
                 </div>
             </div>
             <FormGroup>
-                <SingleFileInput
-                    id="upload-file-input"
-                    name="upload-file-input"
-                    ariaLabel="Choose .zip file"
-                    ariaInvalid={false}
-                    required
-                    onChange={addFile}
+                <FileInput id="file-input-single"
+                    name="file-input-single" onChange={(addFile)}
                 />
-                <Button className="margin-top-4" disabled={!file} type="button" onClick={handleSubmit}>Continue</Button>
+                <div className="margin-top-205">
+                    <LinkAccordion></LinkAccordion>
+                </div>
+                <Button className="margin-top-3" disabled={!file} type="button" onClick={handleSubmit}>Continue</Button>
             </FormGroup>
         </div>
     )
