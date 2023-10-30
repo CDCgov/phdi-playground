@@ -23,7 +23,6 @@ locals {
   services = toset([
     "fhir-converter",
     "ingestion",
-    "message-parser",
     "validation",
   ])
 }
@@ -367,6 +366,19 @@ resource "helm_release" "building_blocks" {
   set {
     name  = "validation-url"
     value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
+  }
+}
+
+resource "helm_release" "message_parser_release" {
+  repository    = "https://cdcgov.github.io/phdi-charts/"
+  name          = "phdi-playground-${terraform.workspace}-message-parser"
+  chart         = "message-parser-chart"
+  recreate_pods = true
+  depends_on    = [helm_release.agic]
+
+  set {
+    name  = "image.tag"
+    value = "v1.1.1"
   }
 }
 
