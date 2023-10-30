@@ -391,9 +391,8 @@ resource "helm_release" "ingress_controller" {
 
 
 resource "helm_release" "orchestration_service" {
-  repository    = "https://cdcgov.github.io/phdi-charts/"
   name          = "phdi-playground-${terraform.workspace}-orchestration"
-  chart         = "orchestration"
+  chart         = "./TEMP_orchestration-0.1.6.tgz"
   recreate_pods = true
   depends_on    = [helm_release.agic]
 
