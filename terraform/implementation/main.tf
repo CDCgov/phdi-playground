@@ -403,23 +403,23 @@ resource "helm_release" "orchestration_service" {
   }
 
   set {
-    name  = "fhir-converter-url"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
+    name  = "fhirConverterUrl"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter/"
   }
 
   set {
-    name  = "ingestion-url"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion"
+    name  = "ingestionUrl"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion/"
   }
 
   set {
-    name  = "message-parser-url"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser"
+    name  = "messageParserUrl"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser/"
   }
 
   set {
-    name  = "validation-url"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
+    name  = "validationUrl"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation/"
   }
 }
 
