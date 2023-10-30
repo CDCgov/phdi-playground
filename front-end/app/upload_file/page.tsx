@@ -3,7 +3,6 @@ import { useData } from '@/utils/DataContext';
 import { FileInput, FormGroup, Alert, Button } from '@trussworks/react-uswds'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import SingleFileInput from '@/components/SingleFileInput/SingleFileInput';
 import LinkAccordion from '@/components/LinkAccordion/LinkAccordion';
 
 
