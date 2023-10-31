@@ -40,25 +40,27 @@ export default function UploadFile() {
     };
 
     return (
-        <div className="margin-3">
-            <h1 className='font-sans-xl text-bold'>Upload your eCR</h1>
-            <p className="font-sans-lg text-light">Select an eCR .zip file to process</p>
-            <div className="usa-alert usa-alert--info usa-alert--no-icon maxw-tablet">
-                <div className="usa-alert__body padding-0">
-                    <p className="usa-alert__text font-sans-xs text-bold">
-                        This tool is only for test data. Please do not upload patient data to this site.
-                    </p>
+        <div className="display-flex flex-justify-center margin-top-5">
+            <div>
+                <h1 className='font-sans-xl text-bold margin-top'>Upload your eCR</h1>
+                <p className="font-sans-lg text-light">Select an eCR .zip file to process</p>
+                <div className="usa-alert usa-alert--info usa-alert--no-icon maxw-tablet">
+                    <div className="usa-alert__body padding-0">
+                        <p className="usa-alert__text font-sans-xs text-bold">
+                            This tool is only for test data. Please do not upload patient data to this site.
+                        </p>
+                    </div>
                 </div>
+                <FormGroup>
+                    <FileInput id="file-input-single"
+                        name="file-input-single" onChange={(addFile)}
+                    />
+                    <div className="margin-top-205">
+                        <LinkAccordion></LinkAccordion>
+                    </div>
+                    <Button className="margin-top-3" disabled={!file} type="button" onClick={handleSubmit}>Continue</Button>
+                </FormGroup>
             </div>
-            <FormGroup>
-                <FileInput id="file-input-single"
-                    name="file-input-single" onChange={(addFile)}
-                />
-                <div className="margin-top-205">
-                    <LinkAccordion></LinkAccordion>
-                </div>
-                <Button className="margin-top-3" disabled={!file} type="button" onClick={handleSubmit}>Continue</Button>
-            </FormGroup>
         </div>
     )
 }
