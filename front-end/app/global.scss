@@ -88,4 +88,44 @@
       color: white;
     }
   }
+
 }
+
+.no-content::before{
+  content: "" !important;
+}
+
+.parse-icon::before{
+  background-image: url("/parsing.svg");
+  background-position: 50% 25%;
+}
+
+.geolocation-icon::before {
+  background-image: url("/geolocatting.svg");
+  background-position: 50% 25%;
+}
+
+.exporting-icon::before {
+  background-image: url("/exporting-data-fields.svg");
+  background-position: 50% 25%;
+}
+
+.standardizing-icon::before {
+  background-image: url("/standardizing.svg");
+  background-position: 50% 25%;
+}
+
+.fhir-icon::before {
+  background-image: url("/converting-to-fhir.svg");
+  background-position: 50% 25%;
+}
+
+.usa-step-indicator__segment--complete::before{
+  background-color: #162E51 !important;
+}
+
+.usa-step-indicator-in-progress::before{
+  background-color: #005ea2 !important;
+  box-shadow: inset 0 0 0 0.25rem #005ea2, 0 0 0 0.25rem #fff !important;
+}
+
