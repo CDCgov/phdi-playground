@@ -369,7 +369,7 @@ resource "helm_release" "building_blocks" {
   }
 }
 
-resource "helm_release" "message_parser_release" {
+resource "helm_release" "emma_special_parsing_release" {
   repository    = "https://cdcgov.github.io/phdi-charts/"
   name          = "phdi-playground-${terraform.workspace}-message-parser"
   chart         = "message-parser-chart"
