@@ -54,8 +54,6 @@ export default function UploadFile() {
       classStr = step.progressState  === "complete" ? "usa-step-indicator__segment--complete" : "";
       classStr += step.progressState === "in-progress" ? 
         " usa-step-indicator-in-progress" : "";
-      console.log("step", step)
-      console.log("iconClass", step.iconClass)
       classStr += step.progressState !== 'incomplete' ? 
         ` ${step.iconClass}`: '';
       return classStr;
