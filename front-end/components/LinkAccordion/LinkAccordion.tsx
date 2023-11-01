@@ -41,7 +41,7 @@ function LinkAccordion() {
                 data-testid="accordion-button"
                 onClick={toggleAccordion}
             >
-                <span className="usa-banner__button-text">What are the .zip file requirements</span>
+                <span className="usa-banner__button-text font-sans-xs">What are the .zip file requirements</span>
 
             </button>
             {isAccordionOpen ? content() : null}
