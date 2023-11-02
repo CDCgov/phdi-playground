@@ -357,19 +357,11 @@ spec:
 YAML
 }
 
-# Helm Releases
-
-# validation-chart
-# orchestration
-# message-parser-chart
-# ingress-chart
-# ingestion-chart
-# fhir-converter-chart
 
 resource "helm_release" "building_blocks" {
   for_each        = var.services_to_chart
   repository      = "https://cdcgov.github.io/phdi-charts/"
-  name            = "phdi-playground-${terraform.workspace}-${each.key}-new"
+  name            = "phdi-playground-${terraform.workspace}-${each.key}"
   chart           = each.value
   depends_on      = [helm_release.agic]
   force_update    = true
@@ -393,7 +385,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "ingressHostname"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
+    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
   }
 
   set {
@@ -416,71 +408,6 @@ resource "helm_release" "building_blocks" {
     value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
   }
 }
-
-#resource "helm_release" "emma_special_parsing_release" {
-#  repository    = "https://cdcgov.github.io/phdi-charts/"
-#  name          = "phdi-playground-${terraform.workspace}-message-parser"
-#  chart         = "message-parser-chart"
-#  recreate_pods = true
-#  depends_on    = [helm_release.agic]
-#
-#  set {
-#    name  = "image.tag"
-#    value = "v1.1.1"
-#  }
-#}
-
-#resource "helm_release" "ingress_controller" {
-#  repository    = "https://cdcgov.github.io/phdi-charts/"
-#  name          = "phdi-playground-${terraform.workspace}-ingress-temp"
-#  chart         = "ingress-chart"
-#  recreate_pods = true
-#  version       = "0.1.8"
-#  depends_on    = [helm_release.agic]
-#
-#  set {
-#    name  = "image.tag"
-#    value = "latest"
-#  }
-#
-#  set {
-#    name  = "ingressHostname"
-#    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
-#  }
-#}
-
-
-#resource "helm_release" "orchestration_service" {
-#  name          = "phdi-playground-${terraform.workspace}-orchestration"
-#  chart         = "./TEMP_orchestration-0.1.6.tgz"
-#  recreate_pods = true
-#  depends_on    = [helm_release.agic]
-#
-#  set {
-#    name  = "image.tag"
-#    value = "latest"
-#  }
-#
-#  set {
-#    name  = "fhirConverterUrl"
-#    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
-#  }
-#
-#  set {
-#    name  = "ingestionUrl"
-#    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion"
-#  }
-#
-#  set {
-#    name  = "messageParserUrl"
-#    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser"
-#  }
-#
-#  set {
-#    name  = "validationUrl"
-#    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
-#  }
-#}
 
 # Metrics Dashboard
 
