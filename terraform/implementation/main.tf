@@ -368,7 +368,7 @@ YAML
 resource "helm_release" "building_blocks" {
   for_each        = var.services_to_chart
   repository      = "https://cdcgov.github.io/phdi-charts/"
-  name            = "phdi-playground-${terraform.workspace}-${each.key}-newRelease"
+  name            = "phdi-playground-${terraform.workspace}-${each.key}-new"
   chart           = each.value
   depends_on      = [helm_release.agic]
   force_update    = true
