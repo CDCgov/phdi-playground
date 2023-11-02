@@ -25,7 +25,43 @@ locals {
     "ingestion",
     "validation",
   ])
+
+  # what would be nice to do in this file
+  # - Figure out if there's a way to make a standard "DIBBs Release" resource
+  # - That would have some standard values (repo to install from, name of service) but
+  #  would allow us to just list out the charts/installation values individually
+  # - Automatically update to the latest image version AND the latest chart version
+  # (helm_release doesn't seem to do this by itself)
+
+  services_to_autoscale = toset([
+    "fhir-converter",
+    "ingestion",
+    "ingress",
+    "message-parser",
+    "orchestration",
+    "validation"
+  ])
 }
+
+# validation-chart
+# orchestration
+# message-parser-chart
+# ingress-chart
+# ingestion-chart
+# fhir-converter-chart
+
+variable "services_to_chart" {
+  type = map(string)
+  default = {
+    fhir-converter = "fhir-converter-chart",
+    ingestion      = "ingestion-chart",
+    ingress        = "ingress-chart",
+    message-parser = "message-parser-chart",
+    orchestration  = "orchestration",
+    validation     = "validation-chart"
+  }
+}
+
 
 # Service Principal
 resource "azuread_application" "aks" {
@@ -320,13 +356,22 @@ YAML
 
 # Helm Releases
 
+# validation-chart
+# orchestration
+# message-parser-chart
+# ingress-chart
+# ingestion-chart
+# fhir-converter-chart
+
 resource "helm_release" "building_blocks" {
-  for_each      = local.services
-  repository    = "https://cdcgov.github.io/phdi-charts/"
-  name          = "phdi-playground-${terraform.workspace}-${each.key}"
-  chart         = "${each.key}-chart"
-  recreate_pods = true
-  depends_on    = [helm_release.agic]
+  for_each        = services_to_chart
+  repository      = "https://cdcgov.github.io/phdi-charts/"
+  name            = "phdi-playground-${terraform.workspace}-${each.key}"
+  chart           = each.value
+  depends_on      = [helm_release.agic]
+  force_update    = true
+  recreate_pods   = true
+  cleanup_on_fail = true
 
   set {
     name  = "image.tag"
@@ -369,18 +414,18 @@ resource "helm_release" "building_blocks" {
   }
 }
 
-resource "helm_release" "emma_special_parsing_release" {
-  repository    = "https://cdcgov.github.io/phdi-charts/"
-  name          = "phdi-playground-${terraform.workspace}-message-parser"
-  chart         = "message-parser-chart"
-  recreate_pods = true
-  depends_on    = [helm_release.agic]
-
-  set {
-    name  = "image.tag"
-    value = "v1.1.1"
-  }
-}
+#resource "helm_release" "emma_special_parsing_release" {
+#  repository    = "https://cdcgov.github.io/phdi-charts/"
+#  name          = "phdi-playground-${terraform.workspace}-message-parser"
+#  chart         = "message-parser-chart"
+#  recreate_pods = true
+#  depends_on    = [helm_release.agic]
+#
+#  set {
+#    name  = "image.tag"
+#    value = "v1.1.1"
+#  }
+#}
 
 resource "helm_release" "ingress_controller" {
   repository    = "https://cdcgov.github.io/phdi-charts/"
@@ -471,7 +516,7 @@ resource "kubectl_manifest" "keda_trigger" {
 }
 
 resource "kubectl_manifest" "keda_scaled_object" {
-  for_each   = local.services
+  for_each   = local.services_to_autoscale
   depends_on = [kubectl_manifest.keda_trigger]
   yaml_body  = data.kubectl_path_documents.keda_scaled_object[each.key].documents[0]
 }
