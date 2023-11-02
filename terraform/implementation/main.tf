@@ -376,7 +376,7 @@ resource "helm_release" "building_blocks" {
   }
 }
 
-resource "helm_release" "ingress" {
+resource "helm_release" "ingress-temp" {
   name          = "phdi-playground-${terraform.workspace}-ingress"
   chart         = "./ingress-chart-0.1.10.tgz"
   recreate_pods = true
