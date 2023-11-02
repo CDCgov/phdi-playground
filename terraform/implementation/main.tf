@@ -19,46 +19,13 @@ locals {
     resource_group_name = var.resource_group_name,
     subscription_id     = var.subscription_id,
   }))
-
-  services = toset([
-    "fhir-converter",
-    "ingestion",
-    "validation",
-  ])
-
-  # what would be nice to do in this file
-  # - Figure out if there's a way to make a standard "DIBBs Release" resource
-  # - That would have some standard values (repo to install from, name of service) but
-  #  would allow us to just list out the charts/installation values individually
-  # - Automatically update to the latest image version AND the latest chart version
-  # (helm_release doesn't seem to do this by itself)
-
-  services_to_autoscale = toset([
-    "fhir-converter",
-    "ingestion",
-    "ingress",
-    "message-parser",
-    "orchestration",
-    "validation"
-  ])
 }
-
-# validation-chart
-# orchestration
-# message-parser-chart
-# ingress-chart
-# ingestion-chart
-# fhir-converter-chart
-
-#    orchestration  = "orchestration",
-
 
 variable "services_to_chart" {
   type = map(string)
   default = {
     fhir-converter = "fhir-converter-chart",
     ingestion      = "ingestion-chart",
-    ingress        = "ingress-chart",
     message-parser = "message-parser-chart",
     orchestration  = "orchestration",
     validation     = "validation-chart"
@@ -407,6 +374,13 @@ resource "helm_release" "building_blocks" {
     name  = "validationUrl"
     value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
   }
+}
+
+resource "helm_release" "ingress" {
+  name          = "phdi-playground-${terraform.workspace}-ingress"
+  chart         = "./ingress-chart-0.1.10.tgz"
+  recreate_pods = true
+  depends_on    = [helm_release.agic]
 }
 
 # Metrics Dashboard
