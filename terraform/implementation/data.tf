@@ -31,7 +31,7 @@ data "kubectl_path_documents" "keda_trigger" {
 }
 
 data "kubectl_path_documents" "keda_scaled_object" {
-  for_each = local.services
+  for_each = var.services_to_chart
   pattern  = "./manifests/kedaScaledObject.yaml"
   vars = {
     subscriptionId         = "${var.subscription_id}"

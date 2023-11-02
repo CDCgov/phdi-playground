@@ -50,6 +50,9 @@ locals {
 # ingestion-chart
 # fhir-converter-chart
 
+#    orchestration  = "orchestration",
+
+
 variable "services_to_chart" {
   type = map(string)
   default = {
@@ -57,7 +60,6 @@ variable "services_to_chart" {
     ingestion      = "ingestion-chart",
     ingress        = "ingress-chart",
     message-parser = "message-parser-chart",
-    orchestration  = "orchestration",
     validation     = "validation-chart"
   }
 }
@@ -364,7 +366,7 @@ YAML
 # fhir-converter-chart
 
 resource "helm_release" "building_blocks" {
-  for_each        = services_to_chart
+  for_each        = var.services_to_chart
   repository      = "https://cdcgov.github.io/phdi-charts/"
   name            = "phdi-playground-${terraform.workspace}-${each.key}"
   chart           = each.value
@@ -427,24 +429,24 @@ resource "helm_release" "building_blocks" {
 #  }
 #}
 
-resource "helm_release" "ingress_controller" {
-  repository    = "https://cdcgov.github.io/phdi-charts/"
-  name          = "phdi-playground-${terraform.workspace}-ingress-temp"
-  chart         = "ingress-chart"
-  recreate_pods = true
-  version       = "0.1.8"
-  depends_on    = [helm_release.agic]
-
-  set {
-    name  = "image.tag"
-    value = "latest"
-  }
-
-  set {
-    name  = "ingressHostname"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
-  }
-}
+#resource "helm_release" "ingress_controller" {
+#  repository    = "https://cdcgov.github.io/phdi-charts/"
+#  name          = "phdi-playground-${terraform.workspace}-ingress-temp"
+#  chart         = "ingress-chart"
+#  recreate_pods = true
+#  version       = "0.1.8"
+#  depends_on    = [helm_release.agic]
+#
+#  set {
+#    name  = "image.tag"
+#    value = "latest"
+#  }
+#
+#  set {
+#    name  = "ingressHostname"
+#    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
+#  }
+#}
 
 
 resource "helm_release" "orchestration_service" {
@@ -516,7 +518,7 @@ resource "kubectl_manifest" "keda_trigger" {
 }
 
 resource "kubectl_manifest" "keda_scaled_object" {
-  for_each   = local.services_to_autoscale
+  for_each   = var.services_to_chart
   depends_on = [kubectl_manifest.keda_trigger]
   yaml_body  = data.kubectl_path_documents.keda_scaled_object[each.key].documents[0]
 }
