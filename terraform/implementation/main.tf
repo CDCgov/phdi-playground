@@ -60,6 +60,7 @@ variable "services_to_chart" {
     ingestion      = "ingestion-chart",
     ingress        = "ingress-chart",
     message-parser = "message-parser-chart",
+    orchestration  = "orchestration",
     validation     = "validation-chart"
   }
 }
@@ -377,7 +378,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "image.tag"
-    value = "latest"
+    value = "v1.1.1"
   }
 
   set {
@@ -396,23 +397,23 @@ resource "helm_release" "building_blocks" {
   }
 
   set {
-    name  = "fhir-converter-url"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
+    name  = "fhirConverterUrl"
+    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
   }
 
   set {
-    name  = "ingestion-url"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion"
+    name  = "ingestionUrl"
+    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion"
   }
 
   set {
-    name  = "message-parser-url"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser"
+    name  = "messageParserUrl"
+    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser"
   }
 
   set {
-    name  = "validation-url"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
+    name  = "validationUrl"
+    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
   }
 }
 
@@ -449,37 +450,37 @@ resource "helm_release" "building_blocks" {
 #}
 
 
-resource "helm_release" "orchestration_service" {
-  name          = "phdi-playground-${terraform.workspace}-orchestration"
-  chart         = "./TEMP_orchestration-0.1.6.tgz"
-  recreate_pods = true
-  depends_on    = [helm_release.agic]
-
-  set {
-    name  = "image.tag"
-    value = "latest"
-  }
-
-  set {
-    name  = "fhirConverterUrl"
-    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
-  }
-
-  set {
-    name  = "ingestionUrl"
-    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion"
-  }
-
-  set {
-    name  = "messageParserUrl"
-    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser"
-  }
-
-  set {
-    name  = "validationUrl"
-    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
-  }
-}
+#resource "helm_release" "orchestration_service" {
+#  name          = "phdi-playground-${terraform.workspace}-orchestration"
+#  chart         = "./TEMP_orchestration-0.1.6.tgz"
+#  recreate_pods = true
+#  depends_on    = [helm_release.agic]
+#
+#  set {
+#    name  = "image.tag"
+#    value = "latest"
+#  }
+#
+#  set {
+#    name  = "fhirConverterUrl"
+#    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
+#  }
+#
+#  set {
+#    name  = "ingestionUrl"
+#    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion"
+#  }
+#
+#  set {
+#    name  = "messageParserUrl"
+#    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser"
+#  }
+#
+#  set {
+#    name  = "validationUrl"
+#    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
+#  }
+#}
 
 # Metrics Dashboard
 
