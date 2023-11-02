@@ -385,7 +385,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "ingressHostname"
-    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
   }
 
   set {
