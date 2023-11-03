@@ -6,8 +6,10 @@ import LinkAccordion from '@/components/LinkAccordion/LinkAccordion';
 import * as changeCase from "change-case";
 import { v4 } from 'uuid';
 import {formatData, ProgressData, Step} from './utils'
+import { useData } from '@/utils/DataContext';
 
 export default function UploadFile() {
+  const { setData } = useData();
   const router = useRouter();
   const url = 'ws://localhost:8080/process-ws'
   const [formData, setFormData] = useState({}); // State for form data
@@ -26,7 +28,7 @@ export default function UploadFile() {
     
     socket.send(file)
   };
-  const handleFileChange = (e: any) => {
+  const addFile = (e: any) => {
       const selectedFile = e.target.files[0];
       setFile(selectedFile);
   };
@@ -35,10 +37,16 @@ export default function UploadFile() {
     const ws = new WebSocket(url);
 
     ws.onmessage = (event) => {
-      setProgress(formatData(event.data));
+      let data = formatData(event.data)
+      if(data.complete && data["processed_values"]){
+        setData(data)
+      } else {
+        setProgress(formatData(event.data));
+      }
+      console.log('onmessage', event)
     };
 
-    ws.onclose = () => {
+    ws.onclose = (event) => {
       // Handle WebSocket closed
     };
 
@@ -64,6 +72,9 @@ export default function UploadFile() {
       let html: any[] = []
       if(data.steps){
         data.steps.forEach((step: Step )=> {
+          if(!step.display){
+            return;
+          }
           let classStr = stepClass(step)
           let serviceName = step.formalName ? step.formalName : 
             changeCase.sentenceCase(step.service).replace("Fhir", "FHIR")
@@ -84,8 +95,8 @@ export default function UploadFile() {
       return (
         <div className="usa-alert usa-alert--warning usa-alert--no-icon">
           <div className="usa-alert__body">
-            <h4 className="usa-alert__heading">Your eCR is still processing</h4>
-            <p className="usa-alert__text">
+            <h4 className="usa-alert__heading text-bold">Your eCR is still processing</h4>
+            <p className="usa-alert__text font-sans-xs">
               We are processing the file you uploaded 
               ({file && file["name"] ? file["name"] : ''}). Click the 'Cancel' button to 
               process a different file.
@@ -97,10 +108,10 @@ export default function UploadFile() {
       return (
         <div className="usa-alert usa-alert--success usa-alert--no-icon">
           <div className="usa-alert__body">
-            <h4 className="usa-alert__heading">
+            <h4 className="usa-alert__heading text-bold">
               Your eCR has been processed successfully
             </h4>
-            <p className="usa-alert__text">
+            <p className="usa-alert__text font-sans-xs">
               Click the 'Continue' button to view or download your data or click the 
               'Cancel' button to process a different file.
             </p>
@@ -115,9 +126,9 @@ export default function UploadFile() {
       return (<></>)
     }
     return (
-      <>
-        <h1>Processing your eCR</h1>
-        <p className="margin-bottom-3 margin-top-3">
+      <div className="max-641">
+        <h1 className='font-sans-xl text-bold margin-top'>Processing your eCR</h1>
+        <p className="font-sans-lg text-light">
           View the progress of your eCR through our pipeline
         </p>
         {alertHtml(progress)}
@@ -134,13 +145,13 @@ export default function UploadFile() {
           <button
             type="button"
             className="usa-button"
-            onClick={()=>location.reload()}
+            onClick={()=>router.push('/export')}
             disabled={progress.complete ? false : true}
           >
             Continue
           </button>
         </div>
-      </>
+      </div>
     )
   }
     if(progress){

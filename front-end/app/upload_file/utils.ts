@@ -3,6 +3,7 @@ import * as changeCase from "change-case";
 interface serviceFeatures {
   iconClass: string;
   formalName: string;
+  display?: boolean;
 } 
 
 const servicesConstants: { [key: string]: serviceFeatures } = {
@@ -16,15 +17,17 @@ const servicesConstants: { [key: string]: serviceFeatures } = {
   },
   "standardize_names": {
     iconClass: "standardizing-icon",
-    formalName: "Standardizing Name"
+    formalName: "Standardizing Name",
+    display: false
   },
   "standardize_phones": {
     iconClass: "standardizing-icon",
-    formalName: "Standardizing Phone"
+    formalName: "Standardizing Phone",
+    display: false
   },
   "standardize_dob": {
     iconClass: "standardizing-icon",
-    formalName: "Standardizing DOB"
+    formalName: "Standardizing and cleaning"
   },
   "parse_message": {
     iconClass: "parse-icon",
@@ -41,6 +44,7 @@ export interface Step  {
   progressState: string;
   iconClass: string;
   formalName: string;
+  display: boolean;
 }
 
 export type ProgressData = {
@@ -64,6 +68,10 @@ const setProgressState = (complete: boolean, previousStep: string) => {
 
 export const formatData = (str: string) => {
   let data = JSON.parse(str);
+  if(data["message"] && data["message"] === "Processing succeeded!"){
+    data["complete"] = true;
+    return data
+  }
   let rawSteps = data['steps']
   if(!rawSteps){
     throw new Error("Progress data is malformed");
@@ -86,7 +94,9 @@ export const formatData = (str: string) => {
       iconClass: servicesConstants[stub] && servicesConstants[stub].iconClass ? 
         servicesConstants[stub].iconClass : "",
       formalName: servicesConstants[stub] && servicesConstants[stub].formalName ?
-        servicesConstants[stub].formalName : ""
+        servicesConstants[stub].formalName : "",
+      display: servicesConstants[stub] && servicesConstants[stub].display === false ?
+        false : true
     }
     step.complete = isComplete(step, data);
     step.progressState = setProgressState(step.complete, previousStep);

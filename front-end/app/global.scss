@@ -60,7 +60,14 @@
 }
 
 .usa-nav-container {
-    max-width: 88rem!important;
+    max-width: 100% !important;
+}
+
+@media all and (min-width: 64em) and (min-width: 64em) {
+  .usa-nav-container {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
 }
 
 .main-body{
@@ -97,27 +104,27 @@
 
 .parse-icon::before{
   background-image: url("/parsing.svg");
-  background-position: 50% 25%;
+  background-position: 50% 50%;
 }
 
 .geolocation-icon::before {
   background-image: url("/geolocatting.svg");
-  background-position: 50% 25%;
+  background-position: 50% 50%;
 }
 
 .exporting-icon::before {
   background-image: url("/exporting-data-fields.svg");
-  background-position: 50% 25%;
+  background-position: 50% 50%;
 }
 
 .standardizing-icon::before {
   background-image: url("/standardizing.svg");
-  background-position: 50% 25%;
+  background-position: 50% 50%;
 }
 
 .fhir-icon::before {
   background-image: url("/converting-to-fhir.svg");
-  background-position: 50% 25%;
+  background-position: 50% 50%;
 }
 
 .usa-step-indicator__segment--complete::before{
@@ -129,3 +136,19 @@
   box-shadow: inset 0 0 0 0.25rem #005ea2, 0 0 0 0.25rem #fff !important;
 }
 
+.right-justified-text {
+  text-align: right;
+}
+
+@media (min-width: 64em){
+  .usa-logo {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+}
+
+.max-641{
+  max-width: 641px;
+  margin-left: auto;
+  margin-right: auto;
+}
