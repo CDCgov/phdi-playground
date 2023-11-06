@@ -26,7 +26,7 @@ export default function ViewECR() {
 				You can view your data below or download it as a FHIR bundle (JSON file).
 			</p>
 			<ECRTable ecrData={data}></ECRTable>
-			<Button type="button">Upload new eCR</Button>
+			<Button type="button" outline>Upload new eCR</Button>
 			<Button type="button">Download FHIR bundle</Button>
 		</div>
 	)
