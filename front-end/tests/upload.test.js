@@ -1,7 +1,8 @@
 import UploadFile from "../app/upload_file/page";
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { DataProvider } from '../utils/DataContext'
+import { DataProvider } from '../utils/DataContext';
+import * as changeCase from 'change-case';
 
 import { act } from "react-dom/test-utils";
 

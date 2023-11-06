@@ -2,8 +2,8 @@
 import { FileInput, FormGroup, Button } from '@trussworks/react-uswds'
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import * as changeCase from 'change-case';
 import LinkAccordion from '@/components/LinkAccordion/LinkAccordion';
-import * as changeCase from "change-case";
 import { v4 } from 'uuid';
 import {formatData, ProgressData, Step} from './utils'
 import { useData } from '@/utils/DataContext';
