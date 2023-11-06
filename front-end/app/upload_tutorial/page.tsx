@@ -14,8 +14,8 @@ export default function UploadTutorial() {
         <div className="display-flex flex-justify-center margin-top-5">
             <div>
                 <h1 className="font-sans-2xl text-bold">eCR Viewer Tool</h1>
-                <h2 className="font-sans-lg text-light">Easily see only the information you need in an eCR</h2>
-                <ProcessList>
+                <h2 className="font-sans-lg text-light">Easily find the information you need from an eCR</h2>
+                <ProcessList className='padding-top-4'>
                     <ProcessListItem>
                         <ProcessListHeading type="h4">Upload your eCR</ProcessListHeading>
                         <p className="margin-top-05 font-sans-xs">
@@ -39,7 +39,7 @@ export default function UploadTutorial() {
                         </p>
                     </ProcessListItem>
                 </ProcessList>
-                <Button type="button" onClick={handleClick}>Get Started</Button>
+                <Button type="button" onClick={handleClick}>Get started</Button>
             </div>
         </div>
     )
