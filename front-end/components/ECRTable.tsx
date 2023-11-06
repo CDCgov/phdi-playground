@@ -23,22 +23,18 @@ export default function ECRTable({ecrData}) {
 	}
 
 	return (
-		<div className='margin-3'>
-			{/*<h1>eCR Viewer</h1>*/}
-			<div>
-				<Table
-					bordered
-					// caption="This table uses the fullWidth prop to increase to 100% width"
-					fullWidth>
-					<thead>
-					<tr>
-						<th scope="col">Field Name</th>
-						<th scope="col">Field Value</th>
-					</tr>
-					</thead>
-					{getTableBody(ecrData.processed_values.parsed_values)}
-				</Table>
-			</div>
+		<div>
+			<Table
+				bordered
+				fullWidth>
+				<thead>
+				<tr>
+					<th scope="col">Field Name</th>
+					<th scope="col">Field Value</th>
+				</tr>
+				</thead>
+				{getTableBody(ecrData.processed_values.parsed_values)}
+			</Table>
 		</div>
 	)
 }
