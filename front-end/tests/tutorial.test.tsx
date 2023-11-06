@@ -26,7 +26,7 @@ describe('UploadTutorial', () => {
         // Check that the main elements are present
         expect(screen.getByText('eCR Viewer Tool')).toBeInTheDocument();
         expect(screen.getByText('Easily find the information you need from an eCR')).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Get Started' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Get started' })).toBeInTheDocument();
     });
 
     it('navigates to "/upload_file" when the "Get Started" button is clicked', () => {
@@ -34,7 +34,7 @@ describe('UploadTutorial', () => {
         render(<UploadTutorial />);
 
         // Find the button and click it
-        const getStartedButton = screen.getByRole('button', { name: 'Get Started' });
+        const getStartedButton = screen.getByRole('button', { name: 'Get started' });
         fireEvent.click(getStartedButton);
 
         // Expect the push function to have been called with the correct path
