@@ -2,30 +2,47 @@ import React from 'react';
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from '@testing-library/react';
 import UploadTutorial from "../app/upload_tutorial/page";
-import useRouter from 'next/navigation'
 
-// Mock the useRouter from 'next/navigation'
+// Mock the useRouter hook from Next.js
+const mockPush = jest.fn();
 jest.mock('next/navigation', () => ({
-    useRouter: () => ({
-        push: jest.fn(),
-    }),
+    useRouter() {
+        return {
+            push: mockPush,
+        };
+    },
 }));
 
 describe('UploadTutorial', () => {
-    it('renders the component', () => {
-        const { getByText } = render(<UploadTutorial />);
-        expect(getByText('eCR Viewer Tool')).toBeInTheDocument();
-        expect(getByText('Easily see only the information you need in an eCR')).toBeInTheDocument();
+    // Clear all mocks before each test
+    beforeEach(() => {
+        mockPush.mockClear();
     });
 
-    it('handles the "Get Started" button click', () => {
-        const { getByText } = render(<UploadTutorial />);
-        const button = getByText('Get Started');
+    it('renders without crashing', () => {
+        // Render the UploadTutorial component
+        render(<UploadTutorial />);
 
-        // Simulate a button click
-        fireEvent.click(button);
+        // Check that the main elements are present
+        expect(screen.getByText('eCR Viewer Tool')).toBeInTheDocument();
+        expect(screen.getByText('Easily find the information you need from an eCR')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Get Started' })).toBeInTheDocument();
+    });
 
-        // Expect that the router push function was called with the correct path
-        expect(require('next/navigation').useRouter().push).toHaveBeenCalledWith('/upload_file');
+    it('navigates to "/upload_file" when the "Get Started" button is clicked', () => {
+        // Render the UploadTutorial component
+        render(<UploadTutorial />);
+
+        // Find the button and click it
+        const getStartedButton = screen.getByRole('button', { name: 'Get Started' });
+        fireEvent.click(getStartedButton);
+
+        // Expect the push function to have been called with the correct path
+        expect(mockPush).toHaveBeenCalledWith('/upload_file');
     });
 });
+
+
+
+
+
