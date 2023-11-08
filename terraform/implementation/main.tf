@@ -383,6 +383,11 @@ resource "helm_release" "ingress-temp" {
   depends_on    = [helm_release.agic]
 
   set {
+    name  = "ingressHostname"
+    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
+  }
+
+  set {
     name  = "ingestionServiceName"
     value = "phdi-playground-${terraform.workspace}-ingestion-ingestion-service"
   }
