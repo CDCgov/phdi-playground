@@ -1,55 +1,46 @@
 'use client'
 import { ProcessList, ProcessListItem, ProcessListHeading, Button } from '@trussworks/react-uswds'
+import { useRouter } from 'next/navigation';
 
-export default function upload_tutorial() {
+export default function UploadTutorial() {
+    const router = useRouter();
+
+
+    const handleClick = () => {
+        router.push('/upload_file')
+    }
+
     return (
-        <div className="margin-3">
-            <h1>eCR Viewer Tool</h1>
-            <p>Easily see only the information you need in an eCR</p>
-            <ProcessList>
-                <ProcessListItem>
-                    <ProcessListHeading type="h4">Start a process</ProcessListHeading>
-                    <p className="margin-top-05">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo,
-                        ipsum sed pharetra gravida, orci magna rhoncus neque.
-                    </p>
-                    <ul>
-                        <li>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi
-                            commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id
-                            pulvinar odio lorem non turpis.
-                        </li>
-                        <li>
-                            Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat
-                            condimentum.
-                        </li>
-                        <li>Aliquam erat volutpat. Sed quis velit.</li>
-                    </ul>
-                </ProcessListItem>
-                <ProcessListItem>
-                    <ProcessListHeading type="h4">
-                        Proceed to the second step
-                    </ProcessListHeading>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo,
-                        ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio
-                        lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae
-                        ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit.
-                        Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien.
-                    </p>
-                </ProcessListItem>
-                <ProcessListItem>
-                    <ProcessListHeading type="h4">
-                        Complete the step-by-step process
-                    </ProcessListHeading>
-                    <p>
-                        Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat
-                        condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi.
-                        Nulla libero. Vivamus pharetra posuere sapien.
-                    </p>
-                </ProcessListItem>
-            </ProcessList>
-            <Button type="button">Get Started</Button>
+        <div className="display-flex flex-justify-center margin-top-5">
+            <div>
+                <h1 className="font-sans-2xl text-bold">eCR Viewer Tool</h1>
+                <h2 className="font-sans-lg text-light">Easily find the information you need from an eCR</h2>
+                <ProcessList className='padding-top-4'>
+                    <ProcessListItem>
+                        <ProcessListHeading type="h4">Upload your eCR</ProcessListHeading>
+                        <p className="margin-top-05 font-sans-xs">
+                            We currently accept one .zip file at a time (bulk eCR upload coming soon).
+                        </p>
+                    </ProcessListItem>
+                    <ProcessListItem>
+                        <ProcessListHeading type="h4">
+                            See the progress of your eCR through our pipeline
+                        </ProcessListHeading>
+                        <p className="font-sans-xs">
+                            We process your eCR through our data ingestion pipeline, which standardizes, cleans, and geocodes the data.
+                        </p>
+                    </ProcessListItem>
+                    <ProcessListItem>
+                        <ProcessListHeading type="h4">
+                            View and download your transformed eCR data
+                        </ProcessListHeading>
+                        <p className="font-sans-xs">
+                            We provide the option to view your eCR directly in our tool or download the data as a JSON file.
+                        </p>
+                    </ProcessListItem>
+                </ProcessList>
+                <Button type="button" onClick={handleClick}>Get started</Button>
+            </div>
         </div>
     )
 }
