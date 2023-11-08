@@ -374,6 +374,13 @@ resource "helm_release" "building_blocks" {
     name  = "validationUrl"
     value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
   }
+}
+
+resource "helm_release" "ingress-temp" {
+  name          = "phdi-playground-${terraform.workspace}-ingress"
+  chart         = "./ingress-chart-0.1.10.tgz"
+  recreate_pods = true
+  depends_on    = [helm_release.agic]
 
   set {
     name  = "ingestionServiceName"
@@ -394,14 +401,6 @@ resource "helm_release" "building_blocks" {
     name  = "validationServiceName"
     value = "phdi-playground-${terraform.workspace}-validation-validation-service"
   }
-
-}
-
-resource "helm_release" "ingress-temp" {
-  name          = "phdi-playground-${terraform.workspace}-ingress"
-  chart         = "./ingress-chart-0.1.10.tgz"
-  recreate_pods = true
-  depends_on    = [helm_release.agic]
 }
 
 # Metrics Dashboard
