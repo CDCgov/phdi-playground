@@ -374,6 +374,27 @@ resource "helm_release" "building_blocks" {
     name  = "validationUrl"
     value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
   }
+
+  set {
+    name  = "ingestionServiceName"
+    value = "phdi-playground-${terraform.workspace}-ingestion-ingestion-service"
+  }
+
+  set {
+    name  = "fhirConverterServiceName"
+    value = "phdi-playground-${terraform.workspace}-fhir-converter-fhir-converter-service"
+  }
+
+  set {
+    name  = "messageParserServiceName"
+    value = "phdi-playground-${terraform.workspace}-message-parser-message-parser-service"
+  }
+
+  set {
+    name  = "validationServiceName"
+    value = "phdi-playground-${terraform.workspace}-validation-validation-service"
+  }
+
 }
 
 resource "helm_release" "ingress-temp" {
