@@ -152,7 +152,7 @@ export const alertHtml = (data: ProgressData, file: File) => {
             <h4 className="usa-alert__heading text-bold">Your eCR is still processing</h4>
             <p className="usa-alert__text font-sans-xs">
               We are processing the file you uploaded 
-              ({file && file["name"] ? file["name"] : ''}). Click the 'Cancel' button to 
+              ({file && file["name"] ? file["name"] : ''}). Click the &apos;Cancel&apos; button to 
               process a different file.
             </p>
           </div>
@@ -166,8 +166,8 @@ export const alertHtml = (data: ProgressData, file: File) => {
               Your eCR has been processed successfully
             </h4>
             <p className="usa-alert__text font-sans-xs">
-              Click the 'Continue' button to view or download your data or click the 
-              'Cancel' button to process a different file.
+              Click the &apos;Continue&apos; button to view or download your data or click the 
+              &apos;Cancel&apos; button to process a different file.
             </p>
           </div>
         </div>
