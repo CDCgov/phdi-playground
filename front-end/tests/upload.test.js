@@ -1,10 +1,19 @@
 import UploadFile from "../app/upload_file/page";
+import * as utils from "../app/upload_file/utils"
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { DataProvider } from '../utils/DataContext';
-import * as changeCase from 'change-case';
+import { MockWebSocket } from "./mockWebSocket";
 
 import { act } from "react-dom/test-utils";
+
+let wsInstance = new MockWebSocket('ws://example.com');
+jest.mock("../app/upload_file/utils",()=>({
+    ...(jest.requireActual('../app/upload_file/utils')),
+    createWebSocket: jest.fn(()=> {
+    return wsInstance
+  })
+}));
 
 
 jest.mock("next/navigation", () => ({
@@ -16,6 +25,17 @@ jest.mock("next/navigation", () => ({
   }
 }));
 
+const createFileList = (array) => {
+  return {
+    length: array.length,
+    item(index) {
+      return array[index] || null;
+    },
+  };
+}
+
+
+
 describe("Upload File", () => {
   it("renders a upload file page", () => {
     render(
@@ -25,34 +45,32 @@ describe("Upload File", () => {
     );
     expect(screen.getByText('Upload your eCR')).toBeInTheDocument();
   });
+
 });
 
 describe('UploadFile Component', () => {
 
   it('should handle form submission', async () => {
     // Create a function to mimic a FileList object
-    function createFileList(array) {
-      return {
-        length: array.length,
-        item(index) {
-          return array[index] || null;
-        },
-      };
-    }
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve({ success: true }),
       })
     );
-    const { getByText, queryByTestId } = await act(async () => render(
-      <DataProvider>
-        <UploadFile />
-      </DataProvider>)
-    );
+  
 
+    const sendSpy = jest.spyOn(wsInstance, 'send');
+
+    const { getByText, queryByTestId } = await act(async () => render
+      (
+        <DataProvider>
+          <UploadFile />
+        </DataProvider>
+      )
+    );
     const fileInput = queryByTestId('file-input-input')
-    const file = new File(['test content'], 'test.txt', { type: 'text/plain' });
-    const fileList = createFileList([file]);
+    const file = new File(['{"test": "content"}'], 'test.json', { type: 'text/json' });
+    const fileList =  createFileList([file]);
 
     await act(async () => {
       fireEvent.change(fileInput, {
@@ -66,13 +84,12 @@ describe('UploadFile Component', () => {
       fireEvent.click(uploadButton);
     });
 
-    // Assert that the handleSubmit function has been called
-    expect(global.fetch).toHaveBeenCalledWith('http://localhost:8080/process', {
-      method: 'POST',
-      body: expect.any(FormData),
-    });
+    expect(sendSpy).toHaveBeenCalledWith(file);
+    expect(screen.getByText('Validating data fields')).toBeInTheDocument();
+    expect(screen.getByText('Converting to FHIR')).toBeInTheDocument();
 
     // Reset fetch mock
     global.fetch.mockRestore();
+    sendSpy.mockRestore();
   });
 });

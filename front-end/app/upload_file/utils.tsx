@@ -1,4 +1,4 @@
-import * as changeCase from "change-case";
+import { v4 } from 'uuid';
 
 interface serviceFeatures {
   iconClass: string;
@@ -53,9 +53,9 @@ export type ProgressData = {
 }
 
 const isComplete = (step: Step, data: any) => {
-    let stub = step.stub
-    return data[stub] && data[stub]["status_code"] == 200 
-  }
+  let stub = step.stub
+  return data[stub] && data[stub]["status_code"] == 200 ? true : false;
+}
 
 const setProgressState = (complete: boolean, previousStep: string) => {
   if(complete){
@@ -85,8 +85,7 @@ export const formatData = (str: string) => {
     let stub: string = rawStep["endpoint"].split('/').pop();
     let step = {
       service: rawStep['service'],
-      serviceName: changeCase.sentenceCase(rawStep["service"])
-            .replace("Fhir", "FHIR"),
+      serviceName: rawStep["service"].replace("Fhir", "FHIR"),
       endpoint: rawStep['endpoint'],
       stub: stub,
       complete: false,
@@ -108,3 +107,70 @@ export const formatData = (str: string) => {
   return formatted;
 }
 
+
+export const createWebSocket = (url: string) => {
+  return new WebSocket(url)
+}
+
+export const stepClass = (step: Step)=>{
+    let classStr = ""
+    classStr = step.progressState  === "complete" ? "usa-step-indicator__segment--complete" : "";
+    classStr += step.progressState === "in-progress" ? 
+      " usa-step-indicator-in-progress" : "";
+    classStr += step.progressState !== 'incomplete' ? 
+      ` ${step.iconClass}`: '';
+    return classStr;
+}
+
+export const stepHtml = (data: ProgressData) => {
+    let html: any[] = []
+    if(data.steps){
+      data.steps.forEach((step: Step )=> {
+        if(!step.display){
+          return;
+        }
+        let classStr = stepClass(step)
+        let serviceName = step.formalName ? step.formalName : 
+          step.service;
+        html.push(
+          <li className={'usa-step-indicator__segment no-content ' + classStr} key={v4()}>
+            <span className="usa-step-indicator__segment-label">{serviceName}
+              <span className="usa-sr-only">${step.complete ? "complete" : ""}</span>
+            </span>
+          </li>
+        )
+      });
+    }
+    return html;
+}
+
+export const alertHtml = (data: ProgressData, file: File) => {
+    if (!data.complete){
+      return (
+        <div className="usa-alert usa-alert--warning usa-alert--no-icon">
+          <div className="usa-alert__body">
+            <h4 className="usa-alert__heading text-bold">Your eCR is still processing</h4>
+            <p className="usa-alert__text font-sans-xs">
+              We are processing the file you uploaded 
+              ({file && file["name"] ? file["name"] : ''}). Click the 'Cancel' button to 
+              process a different file.
+            </p>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className="usa-alert usa-alert--success usa-alert--no-icon">
+          <div className="usa-alert__body">
+            <h4 className="usa-alert__heading text-bold">
+              Your eCR has been processed successfully
+            </h4>
+            <p className="usa-alert__text font-sans-xs">
+              Click the 'Continue' button to view or download your data or click the 
+              'Cancel' button to process a different file.
+            </p>
+          </div>
+        </div>
+      )
+    }
+  }
