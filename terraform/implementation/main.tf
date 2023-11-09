@@ -26,6 +26,7 @@ variable "services_to_chart" {
   default = {
     fhir-converter = "fhir-converter-chart",
     ingestion      = "ingestion-chart",
+    ingress        = "ingress-chart",
     message-parser = "message-parser-chart",
     orchestration  = "orchestration",
     validation     = "validation-chart"
@@ -355,6 +356,33 @@ resource "helm_release" "building_blocks" {
     value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
   }
 
+  #  Service names needed for ingress routes
+  set {
+    name  = "ingestionServiceName"
+    value = "phdi-playground-${terraform.workspace}-ingestion-ingestion-service"
+  }
+
+  set {
+    name  = "fhirConverterServiceName"
+    value = "phdi-playground-${terraform.workspace}-fhir-converter-fhir-converter-service"
+  }
+
+  set {
+    name  = "messageParserServiceName"
+    value = "phdi-playground-${terraform.workspace}-message-parser-message-parser-service"
+  }
+
+  set {
+    name  = "validationServiceName"
+    value = "phdi-playground-${terraform.workspace}-validation-validation-service"
+  }
+
+  set {
+    name  = "orchestrationServiceName"
+    value = "phdi-playground-${terraform.workspace}-orchestration-orchestration-service"
+  }
+
+  #  Values needed for orchestration service
   set {
     name  = "fhirConverterUrl"
     value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
@@ -376,37 +404,6 @@ resource "helm_release" "building_blocks" {
   }
 }
 
-resource "helm_release" "ingress-temp" {
-  name          = "phdi-playground-${terraform.workspace}-ingress"
-  chart         = "./ingress-chart-0.1.10.tgz"
-  recreate_pods = true
-  depends_on    = [helm_release.agic]
-
-  set {
-    name  = "ingressHostname"
-    value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
-  }
-
-  set {
-    name  = "ingestionServiceName"
-    value = "phdi-playground-${terraform.workspace}-ingestion-ingestion-service"
-  }
-
-  set {
-    name  = "fhirConverterServiceName"
-    value = "phdi-playground-${terraform.workspace}-fhir-converter-fhir-converter-service"
-  }
-
-  set {
-    name  = "messageParserServiceName"
-    value = "phdi-playground-${terraform.workspace}-message-parser-message-parser-service"
-  }
-
-  set {
-    name  = "validationServiceName"
-    value = "phdi-playground-${terraform.workspace}-validation-validation-service"
-  }
-}
 
 # Metrics Dashboard
 
