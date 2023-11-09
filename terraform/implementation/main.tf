@@ -26,7 +26,7 @@ variable "services_to_chart" {
   default = {
     fhir-converter = "fhir-converter-chart",
     ingestion      = "ingestion-chart",
-    ingress        = "ingress-chart",
+    #    ingress        = "ingress-chart",
     message-parser = "message-parser-chart",
     orchestration  = "orchestration",
     validation     = "validation-chart"
