@@ -19,15 +19,20 @@ locals {
     resource_group_name = var.resource_group_name,
     subscription_id     = var.subscription_id,
   }))
-
-  services = toset([
-    "fhir-converter",
-    "ingestion",
-    "ingress",
-    "message-parser",
-    "validation",
-  ])
 }
+
+variable "services_to_chart" {
+  type = map(string)
+  default = {
+    fhir-converter = "fhir-converter-chart",
+    ingestion      = "ingestion-chart",
+    ingress        = "ingress-chart",
+    message-parser = "message-parser-chart",
+    orchestration  = "orchestration",
+    validation     = "validation-chart"
+  }
+}
+
 
 # Service Principal
 resource "azuread_application" "aks" {
@@ -320,19 +325,20 @@ spec:
 YAML
 }
 
-# Helm Releases
 
 resource "helm_release" "building_blocks" {
-  for_each      = local.services
-  repository    = "https://cdcgov.github.io/phdi-charts/"
-  name          = "phdi-playground-${terraform.workspace}-${each.key}"
-  chart         = "${each.key}-chart"
-  recreate_pods = true
-  depends_on    = [helm_release.agic]
+  for_each        = var.services_to_chart
+  repository      = "https://cdcgov.github.io/phdi-charts/"
+  name            = "phdi-playground-${terraform.workspace}-${each.key}"
+  chart           = each.value
+  depends_on      = [helm_release.agic]
+  force_update    = true
+  recreate_pods   = true
+  cleanup_on_fail = true
 
   set {
     name  = "image.tag"
-    value = "latest"
+    value = "v1.1.1"
   }
 
   set {
@@ -349,7 +355,55 @@ resource "helm_release" "building_blocks" {
     name  = "ingressHostname"
     value = "${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com"
   }
+
+  #  Service names needed for ingress routes
+  set {
+    name  = "ingestionServiceName"
+    value = "phdi-playground-${terraform.workspace}-ingestion-ingestion-service"
+  }
+
+  set {
+    name  = "fhirConverterServiceName"
+    value = "phdi-playground-${terraform.workspace}-fhir-converter-fhir-converter-service"
+  }
+
+  set {
+    name  = "messageParserServiceName"
+    value = "phdi-playground-${terraform.workspace}-message-parser-message-parser-service"
+  }
+
+  set {
+    name  = "validationServiceName"
+    value = "phdi-playground-${terraform.workspace}-validation-validation-service"
+  }
+
+  set {
+    name  = "orchestrationServiceName"
+    value = "phdi-playground-${terraform.workspace}-orchestration-orchestration-service"
+  }
+
+  #  Values needed for orchestration service
+  set {
+    name  = "fhirConverterUrl"
+    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/fhir-converter"
+  }
+
+  set {
+    name  = "ingestionUrl"
+    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/ingestion"
+  }
+
+  set {
+    name  = "messageParserUrl"
+    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/message-parser"
+  }
+
+  set {
+    name  = "validationUrl"
+    value = "https://${var.resource_group_name}-${terraform.workspace}.${var.location}.cloudapp.azure.com/validation"
+  }
 }
+
 
 # Metrics Dashboard
 
@@ -388,7 +442,7 @@ resource "kubectl_manifest" "keda_trigger" {
 }
 
 resource "kubectl_manifest" "keda_scaled_object" {
-  for_each   = local.services
+  for_each   = var.services_to_chart
   depends_on = [kubectl_manifest.keda_trigger]
   yaml_body  = data.kubectl_path_documents.keda_scaled_object[each.key].documents[0]
 }
