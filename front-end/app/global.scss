@@ -44,7 +44,7 @@
     }
   }
   .usa_footer-trademark {
-    font-family: Public Sans,sans-serif!important;
+    font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif!important;
     font-size: 14px;
     font-weight: 300;
     line-height: 23px;
@@ -54,17 +54,109 @@
 
 }
 
+// @media all and (min-height: 35rem){
+//   .usa-footer{
+//     position: absolute;
+//     bottom: 0;
+//     width: 100%;
+//   }
+// }
+
 
 .hover\:text-base-lightest:hover, .text-base-lightest {
   color: #f0f0f0 !important;
 }
 
 .usa-nav-container {
-    max-width: 88rem!important;
+    max-width: 100% !important;
+}
+
+@media all and (min-width: 64em) and (min-width: 64em) {
+  .usa-nav-container {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
 }
 
 .main-body{
-  min-height: 40rem;
+  min-height: 74vh;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  //styleName: H1;
+  h1{
+    font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif !important;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 50px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  
+  .width-lg{
+    width: 100%;
+    max-width: 100%;
+  }
+  .usa-button--outline{
+    background-color: white !important;
+    &:hover {
+      background-color: #005ea2 !important;
+      color: white;
+    }
+  }
+
+}
+
+.no-content::before{
+  content: "" !important;
+}
+
+.parse-icon::before{
+  background-image: url("/parsing.svg");
+  background-position: 50% 50%;
+}
+
+.geolocation-icon::before {
+  background-image: url("/geolocatting.svg");
+  background-position: 50% 50%;
+}
+
+.exporting-icon::before {
+  background-image: url("/exporting-data-fields.svg");
+  background-position: 50% 50%;
+}
+
+.standardizing-icon::before {
+  background-image: url("/standardizing.svg");
+  background-position: 50% 50%;
+}
+
+.fhir-icon::before {
+  background-image: url("/converting-to-fhir.svg");
+  background-position: 50% 50%;
+}
+
+.usa-step-indicator__segment--complete::before{
+  background-color: #162E51 !important;
+}
+
+.usa-step-indicator-in-progress::before{
+  background-color: #005ea2 !important;
+  box-shadow: inset 0 0 0 0.25rem #005ea2, 0 0 0 0.25rem #fff !important;
+}
+
+.right-justified-text {
+  text-align: right;
+}
+
+@media (min-width: 64em){
+  .usa-logo {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+}
+
+.max-611{
+  max-width: 611px;
+  margin-left: auto;
+  margin-right: auto;
 }

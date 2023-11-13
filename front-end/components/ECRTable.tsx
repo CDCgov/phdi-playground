@@ -6,7 +6,6 @@ import _ from 'lodash';
 export default function ECRTable({ ecrData }) {
     const options = ['patient_id', 'first_name', 'last_name', 'gender', 'birth_date']
 
-    console.log(ecrData);
 
     const getTableBody = (data: any) => {
         return (
