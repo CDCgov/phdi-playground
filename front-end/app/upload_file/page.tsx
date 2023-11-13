@@ -9,7 +9,7 @@ import { useData } from '@/utils/DataContext';
 export default function UploadFile() {
   const { setData } = useData();
   const router = useRouter();
-  const url = 'ws://localhost:8080/process-ws'
+  const url = process.env.NEXT_PUBLIC_PROCESS_URL
   const [progress, setProgress] = useState<ProgressData | null>(null); // State for progress
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -59,30 +59,32 @@ export default function UploadFile() {
       return (<></>)
     }
     return (
-      <div className="max-641">
-        <h1 className='font-sans-xl text-bold margin-top'>Processing your eCR</h1>
-        <p className="font-sans-lg text-light">
-          View the progress of your eCR through our pipeline
-        </p>
-        {alertHtml(progress, file)}
-        <div 
-          className="usa-step-indicator usa-step-indicator--counters margin-top-3"
-          aria-label="progress"
-        >
-          <ol className="usa-step-indicator__segments">
-            {stepHtml(progress)}
-          </ol>
-        </div>
-        <div className='margin-top-4'>
-          <button type="button" className="usa-button--outline usa-button" onClick={()=>location.reload()}>Cancel</button>
-          <button
-            type="button"
-            className="usa-button"
-            onClick={()=>router.push('/export')}
-            disabled={progress.complete ? false : true}
+      <div className="display-flex flex-justify-center margin-top-5">
+        <div className="max-611">
+          <h1 className='font-sans-xl text-bold margin-top'>Processing your eCR</h1>
+          <p className="font-sans-lg text-light">
+            View the progress of your eCR through our pipeline
+          </p>
+          {alertHtml(progress, file)}
+          <div 
+            className="usa-step-indicator usa-step-indicator--counters margin-top-4"
+            aria-label="progress"
           >
-            Continue
-          </button>
+            <ol className="usa-step-indicator__segments">
+              {stepHtml(progress)}
+            </ol>
+          </div>
+          <div className='margin-top-5'>
+            <button type="button" className="usa-button--outline usa-button" onClick={()=>location.reload()}>Cancel</button>
+            <button
+              type="button"
+              className="usa-button"
+              onClick={()=>router.push('/export')}
+              disabled={progress.complete ? false : true}
+            >
+              Continue
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -92,7 +94,7 @@ export default function UploadFile() {
     } else {
       return (
         <div className="display-flex flex-justify-center margin-top-5">
-            <div>
+            <div className="max-611">
                 <h1 className='font-sans-xl text-bold margin-top'>Upload your eCR</h1>
                 <p className="font-sans-lg text-light">Select an eCR .zip file to process</p>
                 <div className="usa-alert usa-alert--info usa-alert--no-icon maxw-tablet">

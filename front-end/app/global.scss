@@ -44,7 +44,7 @@
     }
   }
   .usa_footer-trademark {
-    font-family: Public Sans,sans-serif!important;
+    font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif!important;
     font-size: 14px;
     font-weight: 300;
     line-height: 23px;
@@ -53,6 +53,14 @@
   }
 
 }
+
+// @media all and (min-height: 35rem){
+//   .usa-footer{
+//     position: absolute;
+//     bottom: 0;
+//     width: 100%;
+//   }
+// }
 
 
 .hover\:text-base-lightest:hover, .text-base-lightest {
@@ -71,12 +79,12 @@
 }
 
 .main-body{
-  min-height: 40rem;
+  min-height: 74vh;
   margin-top: 1rem;
   margin-bottom: 1rem;
   //styleName: H1;
   h1{
-    font-family: Public Sans,sans-serif!important;
+    font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif !important;
     font-size: 40px;
     font-weight: 700;
     line-height: 50px;
@@ -147,8 +155,8 @@
   }
 }
 
-.max-641{
-  max-width: 641px;
+.max-611{
+  max-width: 611px;
   margin-left: auto;
   margin-right: auto;
 }
