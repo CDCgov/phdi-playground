@@ -9,7 +9,7 @@ export default function FooterComponent() {
               className="
                 usa-footer__logo
                 grid-row
-                mobile-lg:grid-col-8 mobile-lg:grid-gap-1
+                mobile-lg:grid-col-10 mobile-lg:grid-gap-1
               "
             >
               <div className="mobile-lg:grid-col-auto">
@@ -29,11 +29,12 @@ export default function FooterComponent() {
               className="
                 usa-footer__logo
                 grid-row
-                mobile-lg:grid-col-4 mobile-lg:grid-gap-1
+                mobile-lg:grid-col-2 mobile-lg:grid-gap-1
+                right-justified-text
               "
             >
-              <div className="mobile-lg:grid-col-auto">
-                <p className="text-base-lightest usa_footer-trademark">© 2023 CDC. All rights reserved.</p>
+              <div className="mobile-lg:grid-col-auto right-justified-text">
+                <p className="text-base-lightest usa_footer-trademark right-justified-text">© 2023 CDC. All rights reserved.</p>
               </div>
             </div>
           </div>

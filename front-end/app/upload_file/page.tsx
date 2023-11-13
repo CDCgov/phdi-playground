@@ -1,47 +1,100 @@
 'use client'
-import { useData } from '@/utils/DataContext';
-import { FileInput, FormGroup, Alert, Button } from '@trussworks/react-uswds'
-import { useState } from 'react';
+import { FileInput, FormGroup, Button } from '@trussworks/react-uswds'
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import LinkAccordion from '@/components/LinkAccordion/LinkAccordion';
-
-
+import {formatData, ProgressData, createWebSocket, stepHtml, alertHtml} from './utils'
+import { useData } from '@/utils/DataContext';
 
 export default function UploadFile() {
-    const { setData } = useData();
-    const router = useRouter();
-    // We will change this and put it in a constants 
-    // file when orchestration is published
-    const process_url = 'http://localhost:8080/process'
-    const [file, setFile] = useState<File | null>(null);
-    const addFile = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setFile(event.target.files?.item(0) || null);
-    }
+  const { setData } = useData();
+  const router = useRouter();
+  const url = process.env.NEXT_PUBLIC_PROCESS_URL
+  const [progress, setProgress] = useState<ProgressData | null>(null); // State for progress
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
-    const handleSubmit = async (e: any) => {
-        e.preventDefault();
-        if (file) {
-            const formData = new FormData();
-            formData.append('upload_file', file);
-            formData.append('message_type', 'ecr');
-            formData.append('include_error_types', 'errors');
-            try {
-                const response = await fetch(process_url, {
-                    method: 'POST',
-                    body: formData,
-                });
-                const data = await response.json();
-                setData(data);
-                router.push('/export')
-            } catch (error) {
-                console.error('Error uploading file', error);
-            }
-        }
+  const handleSubmit = () => {
+    // Send form data to the server via a WebSocket
+    if(!file || !socket){
+      return 'false';
+    }
+    const formData = new FormData();
+    formData.append("file", file);
+    socket.send(file)
+  };
+  const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const selectedFile = event.target.files?.item(0);
+      if(selectedFile){
+        setFile(selectedFile);
+      }
+  };
+
+  useEffect(() => {
+    const ws = createWebSocket(url);
+    ws.onmessage = (event) => {
+      let data = formatData(event.data)
+      if(data.complete && data["processed_values"]){
+        setData(data)
+      } else {
+        setProgress(formatData(event.data));
+      }
     };
 
+    ws.onclose = (event) => {
+      // Handle WebSocket closed
+    };
+
+    setSocket(ws);
+
+    return () => {
+      ws.close(); // Close the WebSocket when the component unmounts
+    };
+  }, []);
+
+  
+
+  const progressHtml = () =>{
+    if(!progress || !file){
+      return (<></>)
+    }
     return (
+      <div className="display-flex flex-justify-center margin-top-5">
+        <div className="max-611">
+          <h1 className='font-sans-xl text-bold margin-top'>Processing your eCR</h1>
+          <p className="font-sans-lg text-light">
+            View the progress of your eCR through our pipeline
+          </p>
+          {alertHtml(progress, file)}
+          <div 
+            className="usa-step-indicator usa-step-indicator--counters margin-top-4"
+            aria-label="progress"
+          >
+            <ol className="usa-step-indicator__segments">
+              {stepHtml(progress)}
+            </ol>
+          </div>
+          <div className='margin-top-5'>
+            <button type="button" className="usa-button--outline usa-button" onClick={()=>location.reload()}>Cancel</button>
+            <button
+              type="button"
+              className="usa-button"
+              onClick={()=>router.push('/export')}
+              disabled={progress.complete ? false : true}
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+    if(progress){
+      return progressHtml()
+    } else {
+      return (
         <div className="display-flex flex-justify-center margin-top-5">
-            <div>
+            <div className="max-611">
                 <h1 className='font-sans-xl text-bold margin-top'>Upload your eCR</h1>
                 <p className="font-sans-lg text-light">Select an eCR .zip file to process</p>
                 <div className="usa-alert usa-alert--info usa-alert--no-icon maxw-tablet">
@@ -53,7 +106,7 @@ export default function UploadFile() {
                 </div>
                 <FormGroup>
                     <FileInput id="file-input-single"
-                        name="file-input-single" onChange={(addFile)}
+                        name="file-input-single" onChange={addFile}
                     />
                     <div className="margin-top-205">
                         <LinkAccordion></LinkAccordion>
@@ -62,5 +115,6 @@ export default function UploadFile() {
                 </FormGroup>
             </div>
         </div>
-    )
+      )
+    }
 }
