@@ -112,7 +112,7 @@ describe('UploadFile Component', () => {
       )
     );
     const fileInput = queryByTestId('file-input-input')
-    const file = new File(['{"test": "content"}'], 'test.json', { type: 'text/json' });
+    const file = new File(['{"test": "content"}'], 'test.zip', { type: 'text/json' });
     Object.defineProperty(file, 'size', { value: 1000000000 + 1})
     const fileList =  createFileList([file]);
 
