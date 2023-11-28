@@ -1,120 +1,136 @@
 'use client'
-import { FileInput, FormGroup, Button } from '@trussworks/react-uswds'
+import { FileInput, FormGroup, Alert, Button, Label, ErrorMessage } from '@trussworks/react-uswds'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import LinkAccordion from '@/components/LinkAccordion/LinkAccordion';
-import {formatData, ProgressData, createWebSocket, stepHtml, alertHtml} from './utils'
+import { formatData, ProgressData, createWebSocket, stepHtml, alertHtml } from './utils'
 import { useData } from '@/utils/DataContext';
 
 export default function UploadFile() {
-  const { setData } = useData();
-  const router = useRouter();
-  const url = process.env.NEXT_PUBLIC_PROCESS_URL
-  const [progress, setProgress] = useState<ProgressData | null>(null); // State for progress
-  const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [file, setFile] = useState<File | null>(null);
+    const { setData } = useData();
+    const router = useRouter();
+    const url = process.env.NEXT_PUBLIC_PROCESS_URL
 
-  const handleSubmit = () => {
-    // Send form data to the server via a WebSocket
-    if(!file || !socket){
-      return 'false';
-    }
-    const formData = new FormData();
-    formData.append("file", file);
-    socket.send(file)
-  };
-  const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedFile = event.target.files?.item(0);
-      if(selectedFile){
-        setFile(selectedFile);
-      }
-  };
+    const [hasError, setHasError] = useState(false);
+    const [progress, setProgress] = useState<ProgressData | null>(null); // State for progress
+    const [socket, setSocket] = useState<WebSocket | null>(null);
+    const [file, setFile] = useState<File | null>(null);
 
-  useEffect(() => {
-    const ws = createWebSocket(url);
-    ws.onmessage = (event) => {
-      let data = formatData(event.data)
-      if(data.complete && data["processed_values"]){
-        setData(data)
-      } else {
-        setProgress(formatData(event.data));
-      }
+    const handleSubmit = () => {
+        // Send form data to the server via a WebSocket
+        if (!file || !socket) {
+            return 'false';
+        }
+        const formData = new FormData();
+        formData.append("file", file);
+        socket.send(file)
+    };
+    const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files?.item(0);
+        const size = selectedFile?.size
+        if (selectedFile) {
+            if (!selectedFile?.name.toLowerCase().endsWith('.zip') || (size && size > 10)) {
+                setHasError(true)
+            }
+            else {
+                setHasError(false);
+                setFile(selectedFile);
+            }
+        }
+
     };
 
-    ws.onclose = (event) => {
-      // Handle WebSocket closed
-    };
+    useEffect(() => {
+        const ws = createWebSocket(url);
+        ws.onmessage = (event) => {
+            let data = formatData(event.data)
+            if (data.complete && data["processed_values"]) {
+                setData(data)
+            } else {
+                setProgress(formatData(event.data));
+            }
+        };
 
-    setSocket(ws);
+        ws.onclose = (event) => {
+            // Handle WebSocket closed
+        };
 
-    return () => {
-      ws.close(); // Close the WebSocket when the component unmounts
-    };
-  }, []);
+        setSocket(ws);
 
-  
+        return () => {
+            ws.close(); // Close the WebSocket when the component unmounts
+        };
+    }, []);
 
-  const progressHtml = () =>{
-    if(!progress || !file){
-      return (<></>)
-    }
-    return (
-      <div className="display-flex flex-justify-center margin-top-5">
-        <div className="max-611">
-          <h1 className='font-sans-xl text-bold margin-top'>Processing your eCR</h1>
-          <p className="font-sans-lg text-light">
-            View the progress of your eCR through our pipeline
-          </p>
-          {alertHtml(progress, file)}
-          <div 
-            className="usa-step-indicator usa-step-indicator--counters margin-top-4"
-            aria-label="progress"
-          >
-            <ol className="usa-step-indicator__segments">
-              {stepHtml(progress)}
-            </ol>
-          </div>
-          <div className='margin-top-5'>
-            <button type="button" className="usa-button--outline usa-button" onClick={()=>location.reload()}>Cancel</button>
-            <button
-              type="button"
-              className="usa-button"
-              onClick={()=>router.push('/export')}
-              disabled={progress.complete ? false : true}
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      </div>
-    )
-  }
-    if(progress){
-      return progressHtml()
-    } else {
-      return (
-        <div className="display-flex flex-justify-center margin-top-5">
-            <div className="max-611">
-                <h1 className='font-sans-xl text-bold margin-top'>Upload your eCR</h1>
-                <p className="font-sans-lg text-light">Select an eCR .zip file to process</p>
-                <div className="usa-alert usa-alert--info usa-alert--no-icon maxw-tablet">
-                    <div className="usa-alert__body padding-0">
-                        <p className="usa-alert__text font-sans-xs text-bold">
-                            This tool is only for test data. Please do not upload patient data to this site.
-                        </p>
+
+
+    const progressHtml = () => {
+        if (!progress || !file) {
+            return (<></>)
+        }
+        return (
+            <div className="display-flex flex-justify-center margin-top-5">
+                <div className="max-611">
+                    <h1 className='font-sans-xl text-bold margin-top'>Processing your eCR</h1>
+                    <p className="font-sans-lg text-light">
+                        View the progress of your eCR through our pipeline
+                    </p>
+                    {alertHtml(progress, file)}
+                    <div
+                        className="usa-step-indicator usa-step-indicator--counters margin-top-4"
+                        aria-label="progress"
+                    >
+                        <ol className="usa-step-indicator__segments">
+                            {stepHtml(progress)}
+                        </ol>
+                    </div>
+                    <div className='margin-top-5'>
+                        <button type="button" className="usa-button--outline usa-button" onClick={() => location.reload()}>Cancel</button>
+                        <button
+                            type="button"
+                            className="usa-button"
+                            onClick={() => router.push('/export')}
+                            disabled={progress.complete ? false : true}
+                        >
+                            Continue
+                        </button>
                     </div>
                 </div>
-                <FormGroup>
-                    <FileInput id="file-input-single"
-                        name="file-input-single" onChange={addFile}
-                    />
+            </div>
+        )
+    }
+    if (progress) {
+        return progressHtml()
+    } else {
+        return (
+            <div className="display-flex flex-justify-center margin-top-5">
+                <div className="max-611">
+                    <h1 className='font-sans-xl text-bold margin-top'>Upload your eCR</h1>
+                    <p className="font-sans-lg text-light">Select an eCR .zip file to process</p>
+                    <div className="usa-alert usa-alert--info usa-alert--no-icon maxw-tablet">
+                        <div className="usa-alert__body padding-0">
+                            <p className="usa-alert__text font-sans-xs text-bold">
+                                This tool is only for test data. Please do not upload patient data to this site.
+                            </p>
+                        </div>
+                    </div>
+                    <FormGroup error={hasError}>
+                        {hasError &&
+                            <ErrorMessage id="file-input-error-alert">
+                                We can only accept .zip files smaller than 1 GB
+                            </ErrorMessage>
+                        }
+
+                        <FileInput id="file-input-single"
+                            name="file-input-single" onChange={addFile}
+                        />
+                    </FormGroup>
                     <div className="margin-top-205">
                         <LinkAccordion></LinkAccordion>
                     </div>
-                    <Button className="margin-top-3" disabled={!file} type="button" onClick={handleSubmit}>Continue</Button>
-                </FormGroup>
+                    <Button className="margin-top-3" disabled={!file || hasError} type="button" onClick={handleSubmit}>Continue</Button>
+                </div>
             </div>
-        </div>
-      )
+        )
     }
 }
