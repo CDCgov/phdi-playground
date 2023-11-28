@@ -33,6 +33,12 @@
   }
 }
 
+// removing the border on the left
+.usa-form-group--error {
+  border-left-style: none !important;
+  padding-left: 0rem !important;
+}
+
 
 .footer-primary {
   div{
