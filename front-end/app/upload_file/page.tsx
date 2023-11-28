@@ -1,5 +1,5 @@
 'use client'
-import { FileInput, FormGroup, Button, Label, ErrorMessage } from '@trussworks/react-uswds'
+import { FileInput, FormGroup, Button, ErrorMessage } from '@trussworks/react-uswds'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import LinkAccordion from '@/components/LinkAccordion/LinkAccordion';
