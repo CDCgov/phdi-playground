@@ -19,6 +19,7 @@ export default function UploadFile() {
     size: "We can only accept .zip files smaller than 1GB",
     type: "We can only accept .zip files"
   }
+  const fileSizeLimit = 1000000000;
 
   const handleSubmit = () => {
     // Send form data to the server via a WebSocket
@@ -31,7 +32,7 @@ export default function UploadFile() {
   };
   const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
       const selectedFile = event.target.files?.item(0);
-      if(selectedFile?.size && selectedFile.size > 1000000000){
+      if(selectedFile?.size && selectedFile.size > fileSizeLimit){
         setFileError(fileErrors.size)
       }
       else if(!selectedFile?.name.toLowerCase().endsWith('.zip')){
