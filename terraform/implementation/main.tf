@@ -467,7 +467,9 @@ resource "azurerm_linux_web_app" "playground_webapp" {
   https_only          = true
   site_config {
     minimum_tls_version = "1.2"
-    linux_fx_version    = "NODE|20.5"
+    application_stack {
+      node_version = "18-lts"
+    }
   }
 }
 
