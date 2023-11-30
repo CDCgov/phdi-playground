@@ -27,6 +27,12 @@
 }
 
 @media (min-width: 64em) {
+  .usa-alert--info .usa-alert__body {
+      padding-right: 3.5rem;
+  }
+}
+
+@media (min-width: 64em) {
   .usa-header--basic .usa-navbar {
     position: relative;
     width: 50%;
