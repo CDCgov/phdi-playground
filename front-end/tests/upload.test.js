@@ -8,9 +8,9 @@ import { MockWebSocket } from "./mockWebSocket";
 import { act } from "react-dom/test-utils";
 
 let wsInstance = new MockWebSocket('ws://example.com');
-jest.mock("../app/upload_file/utils",()=>({
-    ...(jest.requireActual('../app/upload_file/utils')),
-    createWebSocket: jest.fn(()=> {
+jest.mock("../app/upload_file/utils", () => ({
+  ...(jest.requireActual('../app/upload_file/utils')),
+  createWebSocket: jest.fn(() => {
     return wsInstance
   })
 }));
@@ -57,7 +57,7 @@ describe('UploadFile Component', () => {
         json: () => Promise.resolve({ success: true }),
       })
     );
-  
+
 
     const sendSpy = jest.spyOn(wsInstance, 'send');
 
@@ -69,8 +69,8 @@ describe('UploadFile Component', () => {
       )
     );
     const fileInput = queryByTestId('file-input-input')
-    const file = new File(['{"test": "content"}'], 'test.json', { type: 'text/json' });
-    const fileList =  createFileList([file]);
+    const file = new File(['{"test": "content"}'], 'test.zip', { type: 'text/json' });
+    const fileList = createFileList([file]);
 
     await act(async () => {
       fireEvent.change(fileInput, {
@@ -87,6 +87,77 @@ describe('UploadFile Component', () => {
     expect(sendSpy).toHaveBeenCalledWith(file);
     expect(screen.getByText('Validating data fields')).toBeInTheDocument();
     expect(screen.getByText('Converting to FHIR')).toBeInTheDocument();
+
+    // Reset fetch mock
+    global.fetch.mockRestore();
+    sendSpy.mockRestore();
+  });
+
+  it('should reject files that are too big', async () => {
+    // Create a function to mimic a FileList object
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ success: true }),
+      })
+    );
+
+
+    const sendSpy = jest.spyOn(wsInstance, 'send');
+
+    const { getByText, queryByTestId } = await act(async () => render
+      (
+        <DataProvider>
+          <UploadFile />
+        </DataProvider>
+      )
+    );
+    const fileInput = queryByTestId('file-input-input')
+    const file = new File(['{"test": "content"}'], 'test.zip', { type: 'text/json' });
+    Object.defineProperty(file, 'size', { value: 1000000000 + 1 })
+    const fileList = createFileList([file]);
+
+    await act(async () => {
+      fireEvent.change(fileInput, {
+        target: { files: fileList },
+      });
+    });
+
+    expect(screen.getByText('We can only accept .zip files smaller than 1GB')).toBeInTheDocument();
+
+    // Reset fetch mock
+    global.fetch.mockRestore();
+    sendSpy.mockRestore();
+  });
+
+  it('should reject files that are not .zip', async () => {
+    // Create a function to mimic a FileList object
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ success: true }),
+      })
+    );
+
+
+    const sendSpy = jest.spyOn(wsInstance, 'send');
+
+    const { getByText, queryByTestId } = await act(async () => render
+      (
+        <DataProvider>
+          <UploadFile />
+        </DataProvider>
+      )
+    );
+    const fileInput = queryByTestId('file-input-input')
+    const file = new File(['{"test": "content"}'], 'test.json', { type: 'text/json' });
+    const fileList = createFileList([file]);
+
+    await act(async () => {
+      fireEvent.change(fileInput, {
+        target: { files: fileList },
+      });
+    });
+
+    expect(screen.getByText('We can only accept .zip files')).toBeInTheDocument();
 
     // Reset fetch mock
     global.fetch.mockRestore();
