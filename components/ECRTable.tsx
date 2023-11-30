@@ -3,7 +3,7 @@ import {
 } from '@trussworks/react-uswds'
 import _ from 'lodash';
 
-export default function ECRTable({ ecrData }) {
+export default function ECRTable({ ecrData }: any) {
     const options = ['patient_id', 'first_name', 'last_name', 'gender', 'birth_date']
 
 

@@ -32,7 +32,6 @@ export default function ExportPage() {
         <div className="margin-3">
             <h1>Export Page</h1>
             <Button type="button" onClick={downloadFile}>Export</Button>
-            <ECRTable ecrData={data}></ECRTable>
         </div>
     );
 }
