@@ -1,5 +1,5 @@
-
+import UploadTutorial from "./upload_tutorial/page";
 
 export default function Home() {
-    return <h1>Front page</h1>
+  return <UploadTutorial></UploadTutorial>;
 }
