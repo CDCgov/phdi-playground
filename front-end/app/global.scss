@@ -27,10 +27,22 @@
 }
 
 @media (min-width: 64em) {
+  .usa-alert--info .usa-alert__body {
+      padding-right: 3.5rem;
+  }
+}
+
+@media (min-width: 64em) {
   .usa-header--basic .usa-navbar {
     position: relative;
     width: 50%;
   }
+}
+
+// removing the border on the left
+.usa-form-group--error {
+  border-left-style: none !important;
+  padding-left: 1.2rem !important;
 }
 
 
