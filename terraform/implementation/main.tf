@@ -446,3 +446,45 @@ resource "kubectl_manifest" "keda_scaled_object" {
   depends_on = [kubectl_manifest.keda_trigger]
   yaml_body  = data.kubectl_path_documents.keda_scaled_object[each.key].documents[0]
 }
+
+# Azure Web App Service
+
+
+resource "azurerm_app_service_plan" "playground_app_service_plan" {
+  name                = "appserviceplan-${terraform.workspace}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  sku {
+    tier = "Standard"
+    size = "S1"
+  }
+}
+
+resource "azurerm_app_service" "playground_app_service" {
+  name                = "app-service-${terraform.workspace}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  app_service_plan_id = azurerm_app_service_plan.playground_app_service_plan.id
+  https_only          = true
+
+  site_config {
+    always_on = true
+  }
+
+  source_control {
+    repo_url = "https://github.com/CDCgov/phdi-playground/front-end"
+    branch   = "main"
+    # You may need additional configuration for authentication
+  }
+
+}
+
+# #  Deploy code from a public GitHub repo
+# resource "azurerm_app_service_source_control" "sourcecontrol" {
+#   app_id                 = azurerm_app_service.playground_app_service.id
+#   repo_url               = "https://github.com/CDCgov/phdi-playground/front-end"
+#   branch                 = "main"
+#   use_manual_integration = true
+#   use_mercurial          = false
+# }
