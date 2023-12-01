@@ -446,3 +446,38 @@ resource "kubectl_manifest" "keda_scaled_object" {
   depends_on = [kubectl_manifest.keda_trigger]
   yaml_body  = data.kubectl_path_documents.keda_scaled_object[each.key].documents[0]
 }
+
+
+# Azure Web App Service
+
+# Create the Linux App Service Plan
+resource "azurerm_service_plan" "playground_appserviceplan" {
+  name                = "appserviceplan-${terraform.workspace}-dibbs"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  os_type             = "Linux"
+  sku_name            = "B1"
+}
+
+# Create the web app, pass in the App Service Plan ID
+resource "azurerm_linux_web_app" "playground_webapp" {
+  name                = "app-service-${terraform.workspace}-dibbs"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  service_plan_id     = azurerm_service_plan.playground_appserviceplan.id
+  https_only          = true
+  site_config {
+    minimum_tls_version = "1.2"
+    application_stack {
+      node_version = "18-lts"
+    }
+  }
+}
+
+resource "azurerm_app_service_source_control" "playground_sourcecontrol" {
+  app_id                 = azurerm_linux_web_app.playground_webapp.id
+  repo_url               = "https://github.com/CDCgov/phdi-playground/"
+  branch                 = "boban/deploy-frontend"
+  use_manual_integration = true
+  use_mercurial          = false
+}
