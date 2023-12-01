@@ -473,7 +473,8 @@ resource "azurerm_linux_web_app" "playground_webapp" {
     }
   }
   app_settings = {
-    app_location = "/front-end"
+    APP_LOCATION = "front-end"
+    PRE_BUILD_COMMAND = "ls"
   }
 }
 
