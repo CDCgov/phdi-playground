@@ -472,6 +472,9 @@ resource "azurerm_linux_web_app" "playground_webapp" {
       node_version = "18-lts"
     }
   }
+  app_settings = {
+    app_location = "/front-end"
+  }
 }
 
 resource "azurerm_app_service_source_control" "playground_sourcecontrol" {
