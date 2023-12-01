@@ -473,7 +473,7 @@ resource "azurerm_linux_web_app" "playground_webapp" {
     }
   }
   app_settings = {
-    SKIP_APP_BUILD = "true"
+    PRE_BUILD_COMMAND	 = "echo foo"
   }
 }
 
