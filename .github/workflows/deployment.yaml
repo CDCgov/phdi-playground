@@ -8,6 +8,7 @@ on:
         description: Environment to deploy to
         type: environment
         required: true
+        default: dev2
   push:
     branches:
       - boban/deploy-frontend
