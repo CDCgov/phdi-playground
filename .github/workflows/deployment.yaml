@@ -29,12 +29,10 @@ jobs:
       - name: Set env
         run: |-
           echo "ENVIRONMENT=$(
-          if ${{ github.event.inputs.environment }}; then
-            echo ${{ github.event.inputs.environment }}
-          elif [ ${{ github.ref_name }} == main]; then
-            echo prod
-          else
+          if [ ${{ github.ref_name }} == boban/deploy-frontend]; then
             echo dev2
+          else
+            echo ${{ github.event.inputs.environment }}
           fi
           )" >> $GITHUB_ENV
   terraform:
