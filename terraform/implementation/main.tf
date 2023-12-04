@@ -471,6 +471,11 @@ resource "azurerm_linux_web_app" "playground_webapp" {
       node_version = "18-lts"
     }
   }
+
+  app_settings = {
+    "NEXT_PUBLIC_PROCESS_URL" = "ws://localhost:8080/process-ws"
+    # Add other environment variables here
+  }
 }
 
 resource "azurerm_app_service_source_control" "playground_sourcecontrol" {
