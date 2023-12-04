@@ -8,14 +8,15 @@ on:
       - boban/deploy-frontend
 
 jobs:
+  deployTerraform:
+    uses: ./.github/workflows/deployment.yaml
+    with:
+      environment: dev2
+
   build:
     runs-on: ubuntu-latest
-
+    needs: deployTerraform
     steps:
-      - uses: CDCgov/phdi-playground/.github/workflows/deployment.yaml@main
-        with:
-          environment: dev2
-
       - uses: actions/checkout@v4
 
       - name: Set up Node.js version
