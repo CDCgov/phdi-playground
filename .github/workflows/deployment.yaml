@@ -127,7 +127,7 @@ jobs:
           path: release.zip
   deploy:
     runs-on: ubuntu-latest
-    needs: [build, terrafom]
+    needs: [build, terraform]
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
