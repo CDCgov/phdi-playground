@@ -36,7 +36,7 @@ jobs:
           fi
           )" >> $GITHUB_ENV
   terraform:
-    name: Run Terraform (${{github.event.inputs.environment}})
+    name: Run Terraform (env.ENVIRONMENT)
     runs-on: ubuntu-latest
     needs: [setEnv]
     environment: main
@@ -107,7 +107,6 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
           TF_ENV: ${{ steps.set-environment.outputs.tf_env }}
         run: |
-          asdf
           terraform init -backend-config=backend.tfvars
           terraform workspace select -or-create $TF_ENV
           terraform apply -auto-approve -lock-timeout=30m
