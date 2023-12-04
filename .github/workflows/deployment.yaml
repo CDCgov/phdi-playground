@@ -95,6 +95,7 @@ jobs:
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
         run: |-
+          echo ${{ env.ENVIRONMENT }}
           echo "tf_env=$(
             echo ${{ env.ENVIRONMENT }}
           )" >> $GITHUB_OUTPUT
