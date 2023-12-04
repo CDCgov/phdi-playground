@@ -12,6 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: CDCgov/phdi-playground/.github/workflows/deployment.yaml@main
+        with:
+          environment: dev2
+
       - uses: actions/checkout@v4
 
       - name: Set up Node.js version
