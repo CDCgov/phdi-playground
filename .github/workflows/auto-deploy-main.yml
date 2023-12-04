@@ -12,6 +12,7 @@ jobs:
     uses: ./.github/workflows/deployment.yaml
     with:
       environment: dev2
+      ref: boban/deploy-frontend
 
   build:
     runs-on: ubuntu-latest
