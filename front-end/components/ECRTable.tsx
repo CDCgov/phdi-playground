@@ -16,7 +16,6 @@ export default function ECRTable({ecrData}) {
 					</tr>
 				);
 			})}
-
 			</tbody>
 		)
 	}
