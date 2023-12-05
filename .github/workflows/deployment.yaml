@@ -1,9 +1,6 @@
 ---
 name: Deployment
 
-env:
-  AZURE_WEBAPP_NAME: app-service-dev2-dibbs   # set this to your application's name
-
 on:
   workflow_dispatch:
     inputs:
@@ -11,10 +8,6 @@ on:
         description: Environment to deploy to
         type: environment
         required: true
-        default: dev2
-  push:
-    branches:
-      - boban/deploy-frontend
   # add back in when ready to add the terraform
   # push:
   #   branches:
@@ -85,11 +78,7 @@ jobs:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
         run: |-
           echo "tf_env=$(
-          if [[ "${{ github.event.inputs.environment }}" != "" ]]; then
             echo ${{ github.event.inputs.environment }}
-          else
-            echo dev2
-          fi
           )" >> $GITHUB_OUTPUT
           echo "short_cid=${CLIENT_ID:0:8}" >> $GITHUB_OUTPUT
 
@@ -144,6 +133,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_DEV2 }}
+          app-name: app-service-${{ github.event.inputs.environment }}-dibbs
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}'
