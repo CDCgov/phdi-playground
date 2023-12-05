@@ -24,6 +24,7 @@ export default function UploadFile() {
     socket.send(file)
   };
   const addFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(url)
     const selectedFile = event.target.files?.item(0);
     if (selectedFile) {
       setFile(selectedFile);
@@ -31,6 +32,7 @@ export default function UploadFile() {
   };
 
   useEffect(() => {
+
     const ws = createWebSocket(url);
     ws.onmessage = (event) => {
       let data = formatData(event.data)
