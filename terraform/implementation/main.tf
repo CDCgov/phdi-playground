@@ -338,7 +338,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "image.tag"
-    value = "v1.1.1"
+    value = "v1.1.2"
   }
 
   set {
