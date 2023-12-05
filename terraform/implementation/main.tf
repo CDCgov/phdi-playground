@@ -473,7 +473,7 @@ resource "azurerm_linux_web_app" "playground_webapp" {
   }
 
   app_settings = {
-    "NEXT_PUBLIC_PROCESS_URL" = "ws://localhost:8080/process-ws"
+    "NEXT_PUBLIC_PROCESS_URL" = "wss://phdi-playground-dev.centralus.cloudapp.azure.com/orchestration/process-ws"
     # Add other environment variables here
   }
 }
