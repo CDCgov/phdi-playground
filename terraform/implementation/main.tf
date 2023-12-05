@@ -471,17 +471,5 @@ resource "azurerm_linux_web_app" "playground_webapp" {
     application_stack {
       node_version = "18-lts"
     }
-    app_command_line = "pm2 start front-end/.next/standalone/server.js --no-daemon"
   }
-  app_settings = {
-    PRE_BUILD_COMMAND	 = "echo foo"
-  }
-}
-
-resource "azurerm_app_service_source_control" "playground_sourcecontrol" {
-  app_id                 = azurerm_linux_web_app.playground_webapp.id
-  repo_url               = "https://github.com/CDCgov/phdi-playground/"
-  branch                 = "boban/deploy-frontend"
-  use_manual_integration = true
-  use_mercurial          = false
 }
