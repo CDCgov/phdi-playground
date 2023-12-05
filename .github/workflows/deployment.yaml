@@ -131,7 +131,7 @@ jobs:
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
+        uses: azure/webapps-deploy@v3
         with:
           app-name: app-service-${{ github.event.inputs.environment }}-dibbs
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
