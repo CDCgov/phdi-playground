@@ -6,6 +6,8 @@ import LinkAccordion from '@/components/LinkAccordion/LinkAccordion';
 import { formatData, ProgressData, createWebSocket, stepHtml, alertHtml } from './utils'
 import { useData } from '@/utils/DataContext';
 
+import "./page.css"
+
 export default function UploadFile() {
     const { setData } = useData();
     const router = useRouter();
@@ -66,7 +68,10 @@ export default function UploadFile() {
         };
     }, []);
 
-    const progressComponent = () => {
+
+  console.log("progress", progress)
+
+  const progressComponent = () => {
         if (!progress || !file) {
             return (<></>)
         }

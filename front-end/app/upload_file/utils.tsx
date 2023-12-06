@@ -41,6 +41,7 @@ export interface Step  {
   stub: string;
   endpoint: string;
   complete: boolean;
+  error: boolean;
   progressState: string;
   iconClass: string;
   formalName: string;
@@ -50,6 +51,7 @@ export interface Step  {
 export type ProgressData = {
   steps: Step[],
   complete: boolean
+  error: boolean
 }
 
 const isComplete = (step: Step, data: any) => {
@@ -57,10 +59,19 @@ const isComplete = (step: Step, data: any) => {
   return data[stub] && data[stub]["status_code"] == 200 ? true : false;
 }
 
-const setProgressState = (complete: boolean, previousStep: string) => {
-  if(complete){
+const isError = (step: Step, data: any) => {
+  let stub = step.stub
+  return data[stub] && data[stub]["status"] == "error" ? true : false;
+}
+
+const setProgressState = (step: Step, previousStep: string) => {
+  if(step.complete){
       return "complete"
-  } else if(previousStep === "complete" && !complete){
+  }
+  else if(step.error){
+    return "error"
+  }
+  else if(previousStep === "complete" && !step.complete){
     return "in-progress"
   }
   return "incomplete"
@@ -78,18 +89,21 @@ export const formatData = (str: string) => {
   }
   let formatted: ProgressData = {
     steps: [],
-    complete: false
+    complete: false,
+    error: false,
   }
   let previousStep = "inc"
   for(let rawStep of rawSteps){
     let stub: string = rawStep["endpoint"].split('/').pop();
+    //console.log("stub", stub)
     let step = {
       service: rawStep['service'],
       serviceName: rawStep["service"].replace("Fhir", "FHIR"),
       endpoint: rawStep['endpoint'],
       stub: stub,
       complete: false,
-      progressState: 'incomplete',
+      error: false,
+      progressState: 'error',
       iconClass: servicesConstants[stub] && servicesConstants[stub].iconClass ? 
         servicesConstants[stub].iconClass : "",
       formalName: servicesConstants[stub] && servicesConstants[stub].formalName ?
@@ -97,13 +111,18 @@ export const formatData = (str: string) => {
       display: servicesConstants[stub] && servicesConstants[stub].display === false ?
         false : true
     }
+    //console.log("step", step)
     step.complete = isComplete(step, data);
-    step.progressState = setProgressState(step.complete, previousStep);
+    step.error = isError(step, data);
+    step.progressState = setProgressState(step, previousStep);
     previousStep = step.progressState;
     
     formatted.steps.push(step)
   }
+
+
   formatted.complete = !formatted.steps.find((step) => !step.complete)
+  formatted.error = !!formatted.steps.find((step) => step.error)
   return formatted;
 }
 
@@ -113,12 +132,12 @@ export const createWebSocket = (url: string) => {
 }
 
 export const stepClass = (step: Step)=>{
+
     let classStr = ""
-    classStr = step.progressState  === "complete" ? "usa-step-indicator__segment--complete" : "";
-    classStr += step.progressState === "in-progress" ? 
-      " usa-step-indicator-in-progress" : "";
-    classStr += step.progressState !== 'incomplete' ? 
-      ` ${step.iconClass}`: '';
+    classStr = step.progressState === 'error' ? `dibbs-error `: '';
+    classStr += step.progressState  === "complete" ? " usa-step-indicator__segment--complete" : "";
+    classStr += step.progressState === "in-progress" ? " usa-step-indicator-in-progress" : "";
+    classStr += step.progressState !== 'incomplete' ? ` ${step.iconClass}`: '';
     return classStr;
 }
 
@@ -145,7 +164,19 @@ export const stepHtml = (data: ProgressData) => {
 }
 
 export const alertHtml = (data: ProgressData, file: File) => {
-    if (!data.complete){
+    console.log("data", data)
+    if(data.error){
+      return (
+        <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">
+          <div className="usa-alert__body padding-0">
+            <p className="usa-alert__text font-sans-xs text-bold">
+              We couldn’t validate your eCR
+            </p>
+            Something went wrong and we were unable to validate your eCR file. Please try re-uploading the file. If this error persists, try uploading a different eCR file.
+          </div>
+        </div>
+      )
+    } else if (!data.complete){
       return (
         <div className="usa-alert usa-alert--warning usa-alert--no-icon">
           <div className="usa-alert__body">

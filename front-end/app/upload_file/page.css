@@ -1,0 +1,8 @@
+.dibbs-error span{
+    color: red;
+}
+
+.dibbs-error::before, .dibbs-error::after {
+    background: red !important;
+}
+
