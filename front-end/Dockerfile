@@ -40,6 +40,10 @@ ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+ARG NEXT_PUBLIC_PROCESS_URL
+
+ENV NEXT_PUBLIC_PROCESS_URL $NEXT_PUBLIC_PROCESS_URL
+
 # Add your environment variable here
 ENV NEXT_PUBLIC_PROCESS_URL "wss://phdi-playground-dev.centralus.cloudapp.azure.com/orchestration/process-ws"
 
