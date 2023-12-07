@@ -19,11 +19,10 @@ export default function ECRTable({ecrData}) {
 			</tbody>
 		)
 	}
-
 	return (
-		<Table
-			bordered
-			fullWidth>
+		<Table className={'usa-table'}
+					 bordered
+					 fullWidth>
 			<thead>
 			<tr>
 				<th scope="col">Field Name</th>
