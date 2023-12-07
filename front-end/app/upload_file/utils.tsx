@@ -132,13 +132,16 @@ export const createWebSocket = (url: string) => {
 }
 
 export const stepClass = (step: Step)=>{
-
-    let classStr = ""
-    classStr = step.progressState === 'error' ? `dibbs-error `: '';
-    classStr += step.progressState  === "complete" ? " usa-step-indicator__segment--complete" : "";
-    classStr += step.progressState === "in-progress" ? " usa-step-indicator-in-progress" : "";
-    classStr += step.progressState !== 'incomplete' ? ` ${step.iconClass}`: '';
-    return classStr;
+    switch (step.progressState){
+      case 'error':
+        return "usa-step-indicator__segment--complete error-icon";
+      case 'complete':
+        return `usa-step-indicator__segment--complete ${step.iconClass}`;
+      case 'in-progress':
+        return `usa-step-indicator-in-progress ${step.iconClass}`
+      default:
+        return "";
+    }
 }
 
 export const stepHtml = (data: ProgressData) => {

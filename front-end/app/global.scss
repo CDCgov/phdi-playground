@@ -151,6 +151,17 @@
   background-position: 50% 50%;
 }
 
+.error-icon::before {
+  background-image: url("/exporting-data-fields.svg");
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.error-icon::after {
+  background: #B50909 !important;
+}
+
 .standardizing-icon::before {
   background-image: url("/standardizing.svg");
   background-position: 50% 50%;
@@ -163,6 +174,10 @@
 
 .usa-step-indicator__segment--complete::before {
   background-color: #162e51 !important;
+}
+
+.error-icon.usa-step-indicator__segment--complete::before{
+  background-color: #B50909 !important;
 }
 
 .usa-step-indicator-in-progress::before {
