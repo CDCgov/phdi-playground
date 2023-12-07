@@ -95,7 +95,6 @@ export const formatData = (str: string) => {
   let previousStep = "inc"
   for(let rawStep of rawSteps){
     let stub: string = rawStep["endpoint"].split('/').pop();
-    //console.log("stub", stub)
     let step = {
       service: rawStep['service'],
       serviceName: rawStep["service"].replace("Fhir", "FHIR"),
@@ -111,7 +110,6 @@ export const formatData = (str: string) => {
       display: servicesConstants[stub] && servicesConstants[stub].display === false ?
         false : true
     }
-    //console.log("step", step)
     step.complete = isComplete(step, data);
     step.error = isError(step, data);
     step.progressState = setProgressState(step, previousStep);
@@ -119,8 +117,6 @@ export const formatData = (str: string) => {
     
     formatted.steps.push(step)
   }
-
-
   formatted.complete = !formatted.steps.find((step) => !step.complete)
   formatted.error = !!formatted.steps.find((step) => step.error)
   return formatted;
@@ -167,7 +163,6 @@ export const stepHtml = (data: ProgressData) => {
 }
 
 export const alertHtml = (data: ProgressData, file: File) => {
-    console.log("data", data)
     if(data.error){
       return (
         <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">

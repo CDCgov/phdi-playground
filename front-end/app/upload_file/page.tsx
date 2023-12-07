@@ -66,10 +66,7 @@ export default function UploadFile() {
         };
     }, []);
 
-
-  console.log("progress", progress)
-
-  const progressComponent = () => {
+    const progressComponent = () => {
         if (!progress || !file) {
             return (<></>)
         }
