@@ -2,9 +2,12 @@
 import {Button} from '@trussworks/react-uswds'
 import ECRTable from '@/components/ECRTable';
 import React from "react";
+import {useRouter} from "next/router";
+import {useData} from "@/utils/DataContext";
 
 
 export default function ViewECR() {
+	const router = useRouter()
 	const {data} = useData()
 
 	if (!data) {
