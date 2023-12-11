@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Button} from "@trussworks/react-uswds";
 
 function LinkAccordion() {
     const [isAccordionOpen, setAccordionOpen] = useState(false);
@@ -15,15 +16,15 @@ function LinkAccordion() {
             <div>
                 <p>Our tool expects the .zip file format generated from AIMS. For a successful upload, your .zip file:</p>
                 <ul className="usa-list margin-top-0">
-                    <li>&bull; <u>must</u> contain: </li>
+                    <li><u>must</u> contain: </li>
                     <ul className="usa-list margin-top-0 margin-bottom-0">
-                        <li>&bull; one RR (reportability response) .xml file</li>
-                        <li>&bull; one eICR (electronic initial case report) .xml file</li>
+                        <li>one RR (reportability response) .xml file</li>
+                        <li>one eICR (electronic initial case report) .xml file</li>
                     </ul>
-                    <li>&bull; can also contain: </li>
+                    <li>can also contain: </li>
                     <ul className="usa-list margin-top-0">
-                        <li>&bull; one RR HTML file</li>
-                        <li>&bull; one eICR HTML file</li>
+                        <li>one RR HTML file</li>
+                        <li>one eICR HTML file</li>
                     </ul>
                 </ul>
             </div>
@@ -33,17 +34,10 @@ function LinkAccordion() {
 
     return (
         <div>
-            <button
-                type="button"
-                className={`usa-banner__button ${isAccordionOpen ? 'active' : ''} margin-left-0`}
-                aria-expanded={isAccordionOpen ? 'true' : 'false'}
-                aria-controls="gov-banner-default-default"
-                data-testid="accordion-button"
-                onClick={toggleAccordion}
-            >
-                <span className="usa-banner__button-text font-sans-xs">What are the .zip file requirements</span>
+            <Button type="button" unstyled onClick={toggleAccordion} data-testid="accordion-button">
+                What are the .zip file requirements
+            </Button>
 
-            </button>
             {isAccordionOpen ? content() : null}
         </div>
     );

@@ -46,6 +46,7 @@ export interface Step  {
   iconClass: string;
   formalName: string;
   display: boolean;
+  response: any;
 }
 
 export type ProgressData = {
@@ -108,7 +109,9 @@ export const formatData = (str: string) => {
       formalName: servicesConstants[stub] && servicesConstants[stub].formalName ?
         servicesConstants[stub].formalName : "",
       display: servicesConstants[stub] && servicesConstants[stub].display === false ?
-        false : true
+        false : true,
+      response: data[stub] ? data[stub]["response"] : null,
+
     }
     step.complete = isComplete(step, data);
     step.error = isError(step, data);
@@ -163,7 +166,48 @@ export const stepHtml = (data: ProgressData) => {
 }
 
 export const alertHtml = (data: ProgressData, file: File) => {
-    if(data.error){
+  const formatError = (error: string) => {
+    if (error.match(/(^Could not find field.*)/)){
+      return error.replace("Could not find field.", "")
+    }
+    return error;
+  };
+
+  if(data.error){
+      const validateStep = data.steps.findLast(step => step.endpoint === "/validate")
+
+      if(validateStep.error){
+        if (validateStep.response["validation_results"]["fatal"].length > 1){
+          const fatalErrors = validateStep.response["validation_results"]["fatal"]
+          return (
+            <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">
+              <div className="usa-alert__body padding-0">
+                <p className="usa-alert__text font-sans-xs text-bold">
+                  We couldn’t validate your eCR
+                </p>
+                We noticed the following required fields were missing:
+                <ul>
+                  {fatalErrors.map(error => <li key={v4()}>{formatError(error)}</li>)}
+                </ul>
+                Please upload an eCR that contains these fields.
+              </div>
+            </div>
+          )
+        } else {
+          return (
+            <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">
+              <div className="usa-alert__body padding-0">
+                <p className="usa-alert__text font-sans-xs text-bold">
+                  We couldn’t validate your eCR
+                </p>
+                Something went wrong and we were unable to validate your eCR file. Please try re-uploading the file. If this error persists, try uploading a different eCR file.
+              </div>
+            </div>
+          )
+        }
+      }
+
+
       return (
         <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">
           <div className="usa-alert__body padding-0">
