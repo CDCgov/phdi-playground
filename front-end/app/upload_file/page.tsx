@@ -9,7 +9,7 @@ import { useData } from '@/utils/DataContext';
 export default function UploadFile() {
     const { setData } = useData();
     const router = useRouter();
-    const url = process.env.NEXT_PUBLIC_PROCESS_URL
+    const url = process.env.NEXT_PUBLIC_PROCESS_URL ?? ""
     const [progress, setProgress] = useState<ProgressData | null>(null); // State for progress
     const [socket, setSocket] = useState<WebSocket | null>(null);
     const [file, setFile] = useState<File | null>(null);

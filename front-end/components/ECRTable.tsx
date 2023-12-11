@@ -3,14 +3,14 @@ import {
 } from '@trussworks/react-uswds'
 import _ from 'lodash';
 
-export default function ECRTable({ ecrData }) {
+export default function ECRTable({ ecrData }: any) {
     const options = ['patient_id', 'first_name', 'last_name', 'gender', 'birth_date']
 
 
     const getTableBody = (data: any) => {
         return (
             <tbody>
-                {options.map(function (option) {
+                {data && options.map(function (option) {
                     return (
                         <tr key={option}>
                             <th scope="row">{_.startCase(option)}</th>
@@ -37,7 +37,7 @@ export default function ECRTable({ ecrData }) {
                             <th scope="col">Field Value</th>
                         </tr>
                     </thead>
-                    {getTableBody(ecrData.processed_values.parsed_values)}
+                    {getTableBody(ecrData?.processed_values?.parsed_values)}
                 </Table>
             </div>
         </div>
