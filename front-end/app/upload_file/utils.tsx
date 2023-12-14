@@ -3,35 +3,39 @@ import { v4 } from 'uuid';
 interface serviceFeatures {
   iconClass: string;
   formalName: string;
-  display?: boolean;
+  display: boolean;
 } 
 
 const servicesConstants: { [key: string]: serviceFeatures } = {
   "validate": {
     iconClass: "exporting-icon",
-    formalName: "Validating data fields"
+    formalName: "Validating data fields",
+    display: true,
   },
   "convert-to-fhir": {
     iconClass: "fhir-icon",
-    formalName: "Converting to FHIR"
+    formalName: "Converting to FHIR",
+    display: true,
   },
   "standardize_names": {
     iconClass: "standardizing-icon",
     formalName: "Standardizing Name",
-    display: false
+    display: false,
   },
   "standardize_phones": {
     iconClass: "standardizing-icon",
     formalName: "Standardizing Phone",
-    display: false
+    display: false,
   },
   "standardize_dob": {
     iconClass: "standardizing-icon",
-    formalName: "Standardizing and cleaning"
+    formalName: "Standardizing and cleaning",
+    display: true,
   },
   "parse_message": {
     iconClass: "parse-icon",
-    formalName: "Parsing relevant data fields"
+    formalName: "Parsing relevant data fields",
+    display: true,
   }
 }
 
@@ -55,18 +59,16 @@ export type ProgressData = {
   error: boolean
 }
 
-const isComplete = (step: Step, data: any) => {
-  let stub = step.stub
-  return data[stub] && data[stub]["status_code"] == 200 ? true : false;
+const isComplete = (stub: string, data: any) => {
+  return !!(data[stub] && data[stub]["status_code"] === 200);
 }
 
-const isError = (step: Step, data: any) => {
-  let stub = step.stub
-  return data[stub] && data[stub]["status"] == "error" ? true : false;
+const isError = (stub: string, data: any) => {
+  return !!(data[stub] && data[stub]["status"] === "error");
 }
 
 const setProgressState = (step: Step, previousStep: string) => {
-  if(step.complete){
+  if(step.complete && !step.error){
       return "complete"
   }
   else if(step.error){
@@ -101,20 +103,16 @@ export const formatData = (str: string) => {
       serviceName: rawStep["service"].replace("Fhir", "FHIR"),
       endpoint: rawStep['endpoint'],
       stub: stub,
-      complete: false,
-      error: false,
+      complete: isComplete(stub, data),
+      error: isError(stub, data),
       progressState: 'error',
       iconClass: servicesConstants[stub] && servicesConstants[stub].iconClass ? 
         servicesConstants[stub].iconClass : "",
       formalName: servicesConstants[stub] && servicesConstants[stub].formalName ?
         servicesConstants[stub].formalName : "",
-      display: servicesConstants[stub] && servicesConstants[stub].display === false ?
-        false : true,
-      response: data[stub] ? data[stub]["response"] : null,
-
+      display: servicesConstants[stub] && servicesConstants[stub].display,
+      response: data[stub] ? data[stub]["response"] : undefined,
     }
-    step.complete = isComplete(step, data);
-    step.error = isError(step, data);
     step.progressState = setProgressState(step, previousStep);
     previousStep = step.progressState;
     
@@ -166,8 +164,10 @@ export const stepHtml = (data: ProgressData) => {
 }
 
 export const alertHtml = (data: ProgressData, file: File) => {
+  const missingFieldError = (error: string) => error.match(/(^Could not find field.*)/);
+
   const formatError = (error: string) => {
-    if (error.match(/(^Could not find field.*)/)){
+    if (missingFieldError(error)){
       return error.replace("Could not find field.", "")
     }
     return error;
@@ -176,9 +176,9 @@ export const alertHtml = (data: ProgressData, file: File) => {
   if(data.error){
       const validateStep = data.steps.findLast(step => step.endpoint === "/validate")
 
-      if(validateStep.error){
-        if (validateStep.response["validation_results"]["fatal"].length > 1){
-          const fatalErrors = validateStep.response["validation_results"]["fatal"]
+      if(validateStep?.error){
+        const fatalErrors = validateStep.response["validation_results"]["fatal"]
+        if (fatalErrors.length > 1 || (fatalErrors.length == 1 && missingFieldError(fatalErrors[0]))){
           return (
             <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">
               <div className="usa-alert__body padding-0">
@@ -187,7 +187,7 @@ export const alertHtml = (data: ProgressData, file: File) => {
                 </p>
                 We noticed the following required fields were missing:
                 <ul>
-                  {fatalErrors.map(error => <li key={v4()}>{formatError(error)}</li>)}
+                  {fatalErrors.map((error: string) => <li key={v4()}>{formatError(error)}</li>)}
                 </ul>
                 Please upload an eCR that contains these fields.
               </div>
