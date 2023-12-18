@@ -21,20 +21,16 @@ export default function ECRTable({ecrData}: any) {
 	}
 
 	return (
-		<div className='margin-3'>
-			<div>
-				<Table
-					bordered
-					fullWidth>
-					<thead>
-					<tr>
-						<th scope="col">Field Name</th>
-						<th scope="col">Field Value</th>
-					</tr>
-					</thead>
-					{getTableBody(ecrData?.processed_values?.parsed_values)}
-				</Table>
-			</div>
-		</div>
+		<Table
+			bordered
+			fullWidth>
+			<thead>
+			<tr>
+				<th scope="col">Field Name</th>
+				<th scope="col">Field Value</th>
+			</tr>
+			</thead>
+			{getTableBody(ecrData?.processed_values?.parsed_values)}
+		</Table>
 	)
 }
