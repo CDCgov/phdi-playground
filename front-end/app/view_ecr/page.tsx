@@ -1,6 +1,6 @@
 'use client'
 import {Button} from '@trussworks/react-uswds'
-import ECRTable from '@/components/ECRTable';
+import ECRTable from '@/components/ECRTable/ECRTable';
 import React from "react";
 import { useRouter } from 'next/navigation';
 import {useData} from "@/utils/DataContext";

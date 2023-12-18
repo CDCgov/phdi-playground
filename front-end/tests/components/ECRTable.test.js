@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
 import "@testing-library/jest-dom";
-import ECRTable from '../../components/ECRTable'; // Adjust the import path as per your project structure
+import ECRTable from '../../components/ECRTable/ECRTable'; // Adjust the import path as per your project structure
 
 describe('ECRTable', () => {
     it('renders ECRTable component with provided data', () => {
