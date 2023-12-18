@@ -2,6 +2,7 @@ import {Table} from '@trussworks/react-uswds'
 import _ from 'lodash';
 
 export default function ECRTable({ecrData}: any) {
+
 	const options = ['patient_id', 'first_name', 'last_name', 'gender', 'birth_date']
 
 
@@ -29,6 +30,7 @@ export default function ECRTable({ecrData}: any) {
 				<th scope="col">Field Value</th>
 			</tr>
 			</thead>
+			
 			{getTableBody(ecrData?.processed_values?.parsed_values)}
 		</Table>
 	)
