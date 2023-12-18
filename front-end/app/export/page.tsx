@@ -1,5 +1,5 @@
 'use client'
-import ECRTable from '@/components/ECRTable';
+import ECRTable from '@/components/ECRTable/ECRTable';
 import { useData } from '@/utils/DataContext';
 import { Button } from '@trussworks/react-uswds'
 
