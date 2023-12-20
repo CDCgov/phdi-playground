@@ -2,19 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '@trussworks/react-uswds/lib/uswds.css';
-@import '@trussworks/react-uswds/lib/index.css';
+@import "@trussworks/react-uswds/lib/uswds.css";
+@import "@trussworks/react-uswds/lib/index.css";
 
 .usa-button {
-    background-color: #005ea2;
+  background-color: #005ea2;
 }
 
 .usa-modal__close {
-    background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .usa-button--unstyled {
-    background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .usa-file-input {
@@ -22,13 +22,13 @@
 }
 
 .usa-alert .usa-alert__body {
-  margin-left: 0.5rem ;
-  padding-left: 0.5rem ;
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
 }
 
 @media (min-width: 64em) {
   .usa-alert--info .usa-alert__body {
-      padding-right: 3.5rem;
+    padding-right: 3.5rem;
   }
 }
 
@@ -45,10 +45,9 @@
   padding-left: 1.2rem !important;
 }
 
-
 .footer-primary {
-  div{
-    background: #162E51;
+  div {
+    background: #162e51;
     color: white !important;
     min-height: 84px;
     a {
@@ -56,31 +55,36 @@
     }
   }
   .usa_footer-trademark {
-    font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif!important;
+    font-family:
+      Source Sans Pro Web,
+      Helvetica Neue,
+      Helvetica,
+      Roboto,
+      Arial,
+      sans-serif !important;
     font-size: 14px;
     font-weight: 300;
     line-height: 23px;
     letter-spacing: 0em;
     text-align: right;
   }
-
 }
 
-// @media all and (min-height: 35rem){
-//   .usa-footer{
-//     position: absolute;
-//     bottom: 0;
-//     width: 100%;
-//   }
-// }
+@media all and (min-height: 35rem) {
+  .usa-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
 
-
-.hover\:text-base-lightest:hover, .text-base-lightest {
+.hover\:text-base-lightest:hover,
+.text-base-lightest {
   color: #f0f0f0 !important;
 }
 
 .usa-nav-container {
-    max-width: 100% !important;
+  max-width: 100% !important;
 }
 
 @media all and (min-width: 64em) and (min-width: 64em) {
@@ -90,39 +94,44 @@
   }
 }
 
-.main-body{
+.main-body {
   min-height: 74vh;
   margin-top: 1rem;
   margin-bottom: 1rem;
   //styleName: H1;
-  h1{
-    font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif !important;
+  h1 {
+    font-family:
+      Source Sans Pro Web,
+      Helvetica Neue,
+      Helvetica,
+      Roboto,
+      Arial,
+      sans-serif !important;
     font-size: 40px;
     font-weight: 700;
     line-height: 50px;
     letter-spacing: 0em;
     text-align: left;
   }
-  
-  .width-lg{
+
+  .width-lg {
     width: 100%;
     max-width: 100%;
   }
-  .usa-button--outline{
+  .usa-button--outline {
     background-color: white !important;
     &:hover {
       background-color: #005ea2 !important;
       color: white;
     }
   }
-
 }
 
-.no-content::before{
+.no-content::before {
   content: "" !important;
 }
 
-.parse-icon::before{
+.parse-icon::before {
   background-image: url("/parsing.svg");
   background-position: 50% 50%;
 }
@@ -147,27 +156,29 @@
   background-position: 50% 50%;
 }
 
-.usa-step-indicator__segment--complete::before{
-  background-color: #162E51 !important;
+.usa-step-indicator__segment--complete::before {
+  background-color: #162e51 !important;
 }
 
-.usa-step-indicator-in-progress::before{
+.usa-step-indicator-in-progress::before {
   background-color: #005ea2 !important;
-  box-shadow: inset 0 0 0 0.25rem #005ea2, 0 0 0 0.25rem #fff !important;
+  box-shadow:
+    inset 0 0 0 0.25rem #005ea2,
+    0 0 0 0.25rem #fff !important;
 }
 
 .right-justified-text {
   text-align: right;
 }
 
-@media (min-width: 64em){
+@media (min-width: 64em) {
   .usa-logo {
     margin-top: 2rem !important;
     margin-bottom: 2rem !important;
   }
 }
 
-.max-611{
+.max-611 {
   max-width: 611px;
   margin-left: auto;
   margin-right: auto;
