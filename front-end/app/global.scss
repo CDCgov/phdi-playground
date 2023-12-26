@@ -50,10 +50,12 @@
     background: #162e51;
     color: white !important;
     min-height: 84px;
+
     a {
       color: white !important;
     }
   }
+
   .usa_footer-trademark {
     font-family:
       Source Sans Pro Web,
@@ -99,6 +101,7 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   //styleName: H1;
+
   h1 {
     font-family:
       Source Sans Pro Web,
@@ -118,8 +121,10 @@
     width: 100%;
     max-width: 100%;
   }
+
   .usa-button--outline {
     background-color: white !important;
+
     &:hover {
       background-color: #005ea2 !important;
       color: white;
