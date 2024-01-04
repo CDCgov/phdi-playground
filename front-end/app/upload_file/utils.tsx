@@ -177,7 +177,7 @@ export const alertHtml = (data: ProgressData, file: File) => {
       const validateStep = data.steps.findLast(step => step.endpoint === "/validate")
 
       if(validateStep?.error){
-        const fatalErrors = validateStep.response["validation_results"]["fatal"]
+        const fatalErrors = validateStep.response["validation_results"] && validateStep.response["validation_results"]["fatal"] || []
         if (fatalErrors.length > 1 || (fatalErrors.length == 1 && missingFieldError(fatalErrors[0]))){
           return (
             <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">
