@@ -63,7 +63,7 @@ export default function ECRTable({ ecrData }: any) {
 	}
 
 	return (
-		<div className='margin-3'>
+		<div className='margin-top-3'>
 			<h1>eCR Viewer</h1>
 			<div>
 				<Table

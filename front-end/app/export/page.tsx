@@ -30,8 +30,10 @@ export default function ExportPage() {
     };
     return (
         <div className="margin-3">
-            <h1>Export Page</h1>
-            <Button type="button" onClick={downloadFile}>Export</Button>
+            <div className="display-flex flex-justify">
+                <h1>Export Page</h1>
+                <Button type="button" onClick={downloadFile}>Export</Button>
+            </div>
             <ECRTable ecrData={data}></ECRTable>
         </div>
     );

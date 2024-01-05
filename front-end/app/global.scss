@@ -5,6 +5,17 @@
 @import "@trussworks/react-uswds/lib/uswds.css";
 @import "@trussworks/react-uswds/lib/index.css";
 
+body {
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: nowrap
+}
+
 .usa-button {
   background-color: #005ea2;
 }
@@ -72,14 +83,6 @@
   }
 }
 
-@media all and (min-height: 35rem) {
-  .usa-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-}
-
 .hover\:text-base-lightest:hover,
 .text-base-lightest {
   color: #f0f0f0 !important;
@@ -98,9 +101,8 @@
 
 .main-body {
   min-height: 74vh;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  //styleName: H1;
+  max-width: 75vw;
+  margin: 1rem auto;
 
   h1 {
     font-family:

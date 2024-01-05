@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        <div className="grid-container main-body">
+        <div className="grid-container  main-body">
          <DataProvider>
            {children}
          </DataProvider>
