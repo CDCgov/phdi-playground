@@ -3,35 +3,39 @@ import { v4 } from 'uuid';
 interface serviceFeatures {
   iconClass: string;
   formalName: string;
-  display?: boolean;
+  display: boolean;
 } 
 
 const servicesConstants: { [key: string]: serviceFeatures } = {
   "validate": {
     iconClass: "exporting-icon",
-    formalName: "Validating data fields"
+    formalName: "Validating data fields",
+    display: true,
   },
   "convert-to-fhir": {
     iconClass: "fhir-icon",
-    formalName: "Converting to FHIR"
+    formalName: "Converting to FHIR",
+    display: true,
   },
   "standardize_names": {
     iconClass: "standardizing-icon",
     formalName: "Standardizing Name",
-    display: false
+    display: false,
   },
   "standardize_phones": {
     iconClass: "standardizing-icon",
     formalName: "Standardizing Phone",
-    display: false
+    display: false,
   },
   "standardize_dob": {
     iconClass: "standardizing-icon",
-    formalName: "Standardizing and cleaning"
+    formalName: "Standardizing and cleaning",
+    display: true,
   },
   "parse_message": {
     iconClass: "parse-icon",
-    formalName: "Parsing relevant data fields"
+    formalName: "Parsing relevant data fields",
+    display: true,
   }
 }
 
@@ -41,26 +45,36 @@ export interface Step  {
   stub: string;
   endpoint: string;
   complete: boolean;
+  error: boolean;
   progressState: string;
   iconClass: string;
   formalName: string;
   display: boolean;
+  response: any;
 }
 
 export type ProgressData = {
   steps: Step[],
   complete: boolean
+  error: boolean
 }
 
-const isComplete = (step: Step, data: any) => {
-  let stub = step.stub
-  return data[stub] && data[stub]["status_code"] == 200 ? true : false;
+const isComplete = (stub: string, data: any) => {
+  return !!(data[stub] && data[stub]["status_code"] === 200);
 }
 
-const setProgressState = (complete: boolean, previousStep: string) => {
-  if(complete){
+const isError = (stub: string, data: any) => {
+  return !!(data[stub] && data[stub]["status"] === "error");
+}
+
+const setProgressState = (step: Step, previousStep: string) => {
+  if(step.complete && !step.error){
       return "complete"
-  } else if(previousStep === "complete" && !complete){
+  }
+  else if(step.error){
+    return "error"
+  }
+  else if(previousStep === "complete" && !step.complete){
     return "in-progress"
   }
   return "incomplete"
@@ -78,7 +92,8 @@ export const formatData = (str: string) => {
   }
   let formatted: ProgressData = {
     steps: [],
-    complete: false
+    complete: false,
+    error: false,
   }
   let previousStep = "inc"
   for(let rawStep of rawSteps){
@@ -88,22 +103,23 @@ export const formatData = (str: string) => {
       serviceName: rawStep["service"].replace("Fhir", "FHIR"),
       endpoint: rawStep['endpoint'],
       stub: stub,
-      complete: false,
-      progressState: 'incomplete',
+      complete: isComplete(stub, data),
+      error: isError(stub, data),
+      progressState: 'error',
       iconClass: servicesConstants[stub] && servicesConstants[stub].iconClass ? 
         servicesConstants[stub].iconClass : "",
       formalName: servicesConstants[stub] && servicesConstants[stub].formalName ?
         servicesConstants[stub].formalName : "",
-      display: servicesConstants[stub] && servicesConstants[stub].display === false ?
-        false : true
+      display: servicesConstants[stub] && servicesConstants[stub].display,
+      response: data[stub] ? data[stub]["response"] : undefined,
     }
-    step.complete = isComplete(step, data);
-    step.progressState = setProgressState(step.complete, previousStep);
+    step.progressState = setProgressState(step, previousStep);
     previousStep = step.progressState;
     
     formatted.steps.push(step)
   }
   formatted.complete = !formatted.steps.find((step) => !step.complete)
+  formatted.error = !!formatted.steps.find((step) => step.error)
   return formatted;
 }
 
@@ -113,13 +129,16 @@ export const createWebSocket = (url: string) => {
 }
 
 export const stepClass = (step: Step)=>{
-    let classStr = ""
-    classStr = step.progressState  === "complete" ? "usa-step-indicator__segment--complete" : "";
-    classStr += step.progressState === "in-progress" ? 
-      " usa-step-indicator-in-progress" : "";
-    classStr += step.progressState !== 'incomplete' ? 
-      ` ${step.iconClass}`: '';
-    return classStr;
+    switch (step.progressState){
+      case 'error':
+        return "usa-step-indicator__segment--complete error-icon";
+      case 'complete':
+        return `usa-step-indicator__segment--complete ${step.iconClass}`;
+      case 'in-progress':
+        return `usa-step-indicator-in-progress ${step.iconClass}`
+      default:
+        return "";
+    }
 }
 
 export const stepHtml = (data: ProgressData) => {
@@ -145,7 +164,61 @@ export const stepHtml = (data: ProgressData) => {
 }
 
 export const alertHtml = (data: ProgressData, file: File) => {
-    if (!data.complete){
+  const missingFieldError = (error: string) => error.match(/(^Could not find field.*)/);
+
+  const formatError = (error: string) => {
+    if (missingFieldError(error)){
+      return error.replace("Could not find field.", "")
+    }
+    return error;
+  };
+
+  if(data.error){
+      const validateStep = data.steps.findLast(step => step.endpoint === "/validate")
+
+      if(validateStep?.error){
+        const fatalErrors = validateStep.response["validation_results"] && validateStep.response["validation_results"]["fatal"] || []
+        if (fatalErrors.length > 1 || (fatalErrors.length == 1 && missingFieldError(fatalErrors[0]))){
+          return (
+            <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">
+              <div className="usa-alert__body padding-0">
+                <p className="usa-alert__text font-sans-xs text-bold">
+                  We couldn’t validate your eCR
+                </p>
+                We noticed the following required fields were missing:
+                <ul>
+                  {fatalErrors.map((error: string) => <li key={v4()}>{formatError(error)}</li>)}
+                </ul>
+                Please upload an eCR that contains these fields.
+              </div>
+            </div>
+          )
+        } else {
+          return (
+            <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">
+              <div className="usa-alert__body padding-0">
+                <p className="usa-alert__text font-sans-xs text-bold">
+                  We couldn’t validate your eCR
+                </p>
+                Something went wrong and we were unable to validate your eCR file. Please try re-uploading the file. If this error persists, try uploading a different eCR file.
+              </div>
+            </div>
+          )
+        }
+      }
+
+
+      return (
+        <div className="usa-alert usa-alert--error usa-alert--no-icon maxw-tablet">
+          <div className="usa-alert__body padding-0">
+            <p className="usa-alert__text font-sans-xs text-bold">
+              We couldn’t validate your eCR
+            </p>
+            Something went wrong and we were unable to validate your eCR file. Please try re-uploading the file. If this error persists, try uploading a different eCR file.
+          </div>
+        </div>
+      )
+    } else if (!data.complete){
       return (
         <div className="usa-alert usa-alert--warning usa-alert--no-icon">
           <div className="usa-alert__body">
