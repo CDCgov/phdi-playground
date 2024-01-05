@@ -18,8 +18,8 @@ export default function ECRTable({ ecrData }: any) {
 		.replace(/eicr /i, "eICR ")
 		.replace(/ecr /i, "eCR ");
 
-	const getArrayTableHeader = (datax: [{[key: string]: any}]) => {
-		const innerOptions = datax.length > 0 && Object.keys(datax[0] || {}) || [];
+	const getArrayTableHeader = (data: [{[key: string]: any}]) => {
+		const innerOptions = data.length > 0 && Object.keys(data[0] || {}) || [];
 
 		return (
 			<thead>
@@ -30,12 +30,12 @@ export default function ECRTable({ ecrData }: any) {
 		)
 	}
 
-	const getArrayTableBody = (datax: [{[key: string]: any}]) => {
-		const innerOptions = datax.length > 0 && Object.keys(datax[0] || {}) || [];
+	const getArrayTableBody = (data: [{[key: string]: any}]) => {
+		const innerOptions = data.length > 0 && Object.keys(data[0] || {}) || [];
 
 		return (
 			<tbody>
-			{datax.map(entry => (
+			{data.map(entry => (
 				<tr key={v4()}>
 					{innerOptions.map(option => {
 						return (<th scope="row" key={v4()}>{entry[option]}</th>)
@@ -47,18 +47,18 @@ export default function ECRTable({ ecrData }: any) {
 		)
 	}
 
-	const getTableBody = (datax: any) => {
-		Object.keys(datax || {}).forEach((k) => datax[k] == null && delete datax[k])
-		const innerOptions = Object.keys(datax || {});
-		const innerArrayOptions = innerOptions.filter((option) => Array.isArray(datax[option]))
+	const getTableBody = (data: any) => {
+		Object.keys(data || {}).forEach((k) => data[k] == null && delete data[k])
+		const innerOptions = Object.keys(data || {});
+		const innerArrayOptions = innerOptions.filter((option) => Array.isArray(data[option]))
 		innerArrayOptions.forEach(arrayOption => {innerOptions.splice(innerOptions.indexOf(arrayOption), 1)})
 		return (
 			<tbody>
-			{datax && innerOptions.map(function (option) {
+			{data && innerOptions.map(function (option) {
 				return (
 					<tr key={option}>
 						<th scope="row">{formatHeader(option)}</th>
-						<td>{datax[option]}</td>
+						<td>{data[option]}</td>
 					</tr>
 				);
 			})}
