@@ -23,9 +23,9 @@ export default function ECRTable({ ecrData }: any) {
 
 		return (
 			<thead>
-			<tr>
-				{innerOptions.map(innerOption => <th scope="col" key={v4()}>{formatHeader(innerOption)}</th>)}
-			</tr>
+				<tr>
+					{innerOptions.map(innerOption => <th scope="col" key={v4()}>{formatHeader(innerOption)}</th>)}
+				</tr>
 			</thead>
 		)
 	}
