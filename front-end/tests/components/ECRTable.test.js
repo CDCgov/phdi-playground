@@ -5,9 +5,7 @@ import ECRTable from '../../components/ECRTable/ECRTable'; // Adjust the import 
 import fullEcrData from "./ecrData.json"
 
 describe('ECRTable', () => {
-    it('renders ECRTable component with provided data', async () => {
-       console.log(fullEcrData)
-
+    it('renders ECRTable component with provided data', () => {
         const ecrData = {
             "processed_values": {
                 "message": "Parsing succeeded!",
@@ -33,7 +31,7 @@ describe('ECRTable', () => {
         // Add similar assertions for other data fields
     });
 
-    it('renders ECRTable component with ALL provided data', async () => {
+    it('renders ECRTable component with ALL provided data', () => {
         expect(render(<ECRTable ecrData={fullEcrData}/>)).toMatchSnapshot();
     });
 });
