@@ -4,6 +4,7 @@ import {
 import _ from 'lodash';
 import { v4 } from 'uuid';
 
+
 export default function ECRTable({ ecrData }: any) {
 	const tableData = ecrData?.processed_values?.parsed_values
 	// remove null fields
@@ -12,6 +13,10 @@ export default function ECRTable({ ecrData }: any) {
 	const arrayOptions = options.filter((option) => Array.isArray(tableData[option]))
 	// remove array fields from options
 	arrayOptions.forEach(arrayOption => {options.splice(options.indexOf(arrayOption), 1)})
+	const formatHeader = (innerOption: string) => _.startCase(innerOption)
+		.replace(/rr /i, "RR ")
+		.replace(/eicr /i, "eICR ")
+		.replace(/ecr /i, "eCR ");
 
 	const getArrayTableHeader = (datax: [{[key: string]: any}]) => {
 		const innerOptions = datax.length > 0 && Object.keys(datax[0] || {}) || [];
@@ -19,7 +24,7 @@ export default function ECRTable({ ecrData }: any) {
 		return (
 			<thead>
 			<tr>
-				{innerOptions.map(innerOption => <th scope="col" key={v4()}>{_.startCase(innerOption)}</th>)}
+				{innerOptions.map(innerOption => <th scope="col" key={v4()}>{formatHeader(innerOption)}</th>)}
 			</tr>
 			</thead>
 		)
@@ -52,7 +57,7 @@ export default function ECRTable({ ecrData }: any) {
 			{datax && innerOptions.map(function (option) {
 				return (
 					<tr key={option}>
-						<th scope="row">{_.startCase(option)}</th>
+						<th scope="row">{formatHeader(option)}</th>
 						<td>{datax[option]}</td>
 					</tr>
 				);
@@ -82,7 +87,7 @@ export default function ECRTable({ ecrData }: any) {
 			{arrayOptions.map(option => {
 				return (
 					<div key={option}>
-						<h2>{_.startCase(option)}</h2>
+						<h2>{formatHeader(option)}</h2>
 						<div>
 							<Table
 								bordered

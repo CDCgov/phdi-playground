@@ -138,7 +138,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
                 <th
                   scope="row"
                 >
-                  Rr Id
+                  RR Id
                 </th>
                 <td>
                   3f854741-c9f7-462a-8ee5-590a72b9af33
@@ -168,7 +168,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
                 <th
                   scope="row"
                 >
-                  Eicr Set Id
+                  eICR Set Id
                 </th>
                 <td>
                   69bbc532-0a17-11ed-94c7-005056a7fb21
@@ -178,7 +178,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
                 <th
                   scope="row"
                 >
-                  Eicr Id
+                  eICR Id
                 </th>
                 <td>
                   1.2.840.114350.1.13.202.3.7.8.688883.266
@@ -188,7 +188,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
                 <th
                   scope="row"
                 >
-                  Eicr Version Number
+                  eICR Version Number
                 </th>
                 <td>
                   16
@@ -198,7 +198,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
                 <th
                   scope="row"
                 >
-                  Replaced Eicr Id
+                  Replaced eICR Id
                 </th>
                 <td>
                   Composition/1.2.840.114350.1.13.202.3.7.8.688883.265
@@ -208,7 +208,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
                 <th
                   scope="row"
                 >
-                  Replaced Eicr Version
+                  Replaced eICR Version
                 </th>
                 <td>
                   15
@@ -769,7 +769,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
               <th
                 scope="row"
               >
-                Rr Id
+                RR Id
               </th>
               <td>
                 3f854741-c9f7-462a-8ee5-590a72b9af33
@@ -799,7 +799,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
               <th
                 scope="row"
               >
-                Eicr Set Id
+                eICR Set Id
               </th>
               <td>
                 69bbc532-0a17-11ed-94c7-005056a7fb21
@@ -809,7 +809,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
               <th
                 scope="row"
               >
-                Eicr Id
+                eICR Id
               </th>
               <td>
                 1.2.840.114350.1.13.202.3.7.8.688883.266
@@ -819,7 +819,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
               <th
                 scope="row"
               >
-                Eicr Version Number
+                eICR Version Number
               </th>
               <td>
                 16
@@ -829,7 +829,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
               <th
                 scope="row"
               >
-                Replaced Eicr Id
+                Replaced eICR Id
               </th>
               <td>
                 Composition/1.2.840.114350.1.13.202.3.7.8.688883.265
@@ -839,7 +839,7 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
               <th
                 scope="row"
               >
-                Replaced Eicr Version
+                Replaced eICR Version
               </th>
               <td>
                 15
