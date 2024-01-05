@@ -298,9 +298,9 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
           </table>
         </div>
         <div>
-          <h1>
+          <h2>
             Active Problems
-          </h1>
+          </h2>
           <div>
             <div
               class="usa-table-container--scrollable"
@@ -368,9 +368,9 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
           </div>
         </div>
         <div>
-          <h1>
+          <h2>
             Labs
-          </h1>
+          </h2>
           <div>
             <div
               class="usa-table-container--scrollable"
@@ -929,9 +929,9 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
         </table>
       </div>
       <div>
-        <h1>
+        <h2>
           Active Problems
-        </h1>
+        </h2>
         <div>
           <div
             class="usa-table-container--scrollable"
@@ -999,9 +999,9 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
         </div>
       </div>
       <div>
-        <h1>
+        <h2>
           Labs
-        </h1>
+        </h2>
         <div>
           <div
             class="usa-table-container--scrollable"

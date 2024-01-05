@@ -82,7 +82,7 @@ export default function ECRTable({ ecrData }: any) {
 			{arrayOptions.map(option => {
 				return (
 					<div key={option}>
-						<h1>{_.startCase(option)}</h1>
+						<h2>{_.startCase(option)}</h2>
 						<div>
 							<Table
 								bordered
