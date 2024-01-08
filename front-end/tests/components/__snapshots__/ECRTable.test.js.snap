@@ -1,0 +1,1320 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="margin-top-3"
+      >
+        <h1>
+          eCR Viewer
+        </h1>
+        <div>
+          <table
+            class="usa-table width-full"
+            data-testid="table"
+          >
+            <caption>
+              This table uses the fullWidth prop to increase to 100% width
+            </caption>
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                >
+                  Field Name
+                </th>
+                <th
+                  scope="col"
+                >
+                  Field Value
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Patient Id
+                </th>
+                <td>
+                  70c659b7-675f-4d51-9a75-2111a88dbcc8
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Last Name
+                </th>
+                <td>
+                  ZZTESTTWELVE
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  First Name
+                </th>
+                <td>
+                  CEDARSECR
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Birth Date
+                </th>
+                <td>
+                  1990-12-31
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Gender
+                </th>
+                <td>
+                  female
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Race
+                </th>
+                <td>
+                  Native Hawaiian or Other Pacific Islander,Asian
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Ethnicity
+                </th>
+                <td>
+                  Hispanic
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Street Address 1
+                </th>
+                <td>
+                  1123 MALTMAN STREET
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  State
+                </th>
+                <td>
+                  CA
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Zip
+                </th>
+                <td>
+                  90026
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  RR Id
+                </th>
+                <td>
+                  3f854741-c9f7-462a-8ee5-590a72b9af33
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Status
+                </th>
+                <td>
+                  RRVS19
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Conditions
+                </th>
+                <td>
+                  Disease caused by severe acute respiratory syndrome coronavirus 2 (disorder),Disease caused by severe acute respiratory syndrome coronavirus 2 (disorder)
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  eICR Set Id
+                </th>
+                <td>
+                  69bbc532-0a17-11ed-94c7-005056a7fb21
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  eICR Id
+                </th>
+                <td>
+                  1.2.840.114350.1.13.202.3.7.8.688883.266
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  eICR Version Number
+                </th>
+                <td>
+                  16
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Replaced eICR Id
+                </th>
+                <td>
+                  Composition/1.2.840.114350.1.13.202.3.7.8.688883.265
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Replaced eICR Version
+                </th>
+                <td>
+                  15
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Authoring Datetime
+                </th>
+                <td>
+                  2022-07-25T16:20:31-07:00
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Facility Id Number
+                </th>
+                <td>
+                  1.2.840.114350.1.13.202.3.7.2.686980
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Facility Name
+                </th>
+                <td>
+                  CAR TOW635E CSMG
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Facility Type
+                </th>
+                <td>
+                  Healthcare Facility
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Encounter Start Date
+                </th>
+                <td>
+                  2022-01-21
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Encounter End Date
+                </th>
+                <td>
+                  2022-01-21
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Reason For Visit
+                </th>
+                <td>
+                  Not on file
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  Preferred Language
+                </th>
+                <td>
+                  English
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h2>
+            Active Problems
+          </h2>
+          <div>
+            <div
+              class="usa-table-container--scrollable"
+              data-testid="scrollable-table-container"
+              tabindex="0"
+            >
+              <table
+                class="usa-table width-full no-wrap-table"
+                data-testid="table"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                    >
+                      Problem
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Problem Date
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th
+                      scope="row"
+                    >
+                      Mild to moderate pre-eclampsia
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      2022-07-21
+                    </th>
+                  </tr>
+                  <tr>
+                    <th
+                      scope="row"
+                    >
+                      Depression, recurrent
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      2022-07-21
+                    </th>
+                  </tr>
+                  <tr>
+                    <th
+                      scope="row"
+                    >
+                      Pain, upper back
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      2022-07-22
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2>
+            Labs
+          </h2>
+          <div>
+            <div
+              class="usa-table-container--scrollable"
+              data-testid="scrollable-table-container"
+              tabindex="0"
+            >
+              <table
+                class="usa-table width-full no-wrap-table"
+                data-testid="table"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                    >
+                      Test Type
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Type Code
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Type System
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Qualitative
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Quantitative
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Units
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Code
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Code Display
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Code System
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Interp
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Interp Code
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Interp System
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Ref Range Low
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Ref Range Low Units
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Ref Range High
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Test Result Ref Range High Units
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Specimen Type
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Performing Lab
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Specimen Collection Date
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th
+                      scope="row"
+                    >
+                      SARS-CoV-2, RNA
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      94500-6
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      http://loinc.org
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      Detected
+                    </th>
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    >
+                      Abnormal
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      A
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation
+                    </th>
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    >
+                      LABCORP
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      2022-01-21T08:00:00Z
+                    </th>
+                  </tr>
+                  <tr>
+                    <th
+                      scope="row"
+                    >
+                      Lab Interpretation
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      56850-1
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      http://loinc.org
+                    </th>
+                    <th
+                      scope="row"
+                    >
+                      Abnormal
+                    </th>
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    />
+                    <th
+                      scope="row"
+                    >
+                      2022-01-21T08:00:00Z
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="margin-top-3"
+    >
+      <h1>
+        eCR Viewer
+      </h1>
+      <div>
+        <table
+          class="usa-table width-full"
+          data-testid="table"
+        >
+          <caption>
+            This table uses the fullWidth prop to increase to 100% width
+          </caption>
+          <thead>
+            <tr>
+              <th
+                scope="col"
+              >
+                Field Name
+              </th>
+              <th
+                scope="col"
+              >
+                Field Value
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th
+                scope="row"
+              >
+                Patient Id
+              </th>
+              <td>
+                70c659b7-675f-4d51-9a75-2111a88dbcc8
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Last Name
+              </th>
+              <td>
+                ZZTESTTWELVE
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                First Name
+              </th>
+              <td>
+                CEDARSECR
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Birth Date
+              </th>
+              <td>
+                1990-12-31
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Gender
+              </th>
+              <td>
+                female
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Race
+              </th>
+              <td>
+                Native Hawaiian or Other Pacific Islander,Asian
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Ethnicity
+              </th>
+              <td>
+                Hispanic
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Street Address 1
+              </th>
+              <td>
+                1123 MALTMAN STREET
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                State
+              </th>
+              <td>
+                CA
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Zip
+              </th>
+              <td>
+                90026
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                RR Id
+              </th>
+              <td>
+                3f854741-c9f7-462a-8ee5-590a72b9af33
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Status
+              </th>
+              <td>
+                RRVS19
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Conditions
+              </th>
+              <td>
+                Disease caused by severe acute respiratory syndrome coronavirus 2 (disorder),Disease caused by severe acute respiratory syndrome coronavirus 2 (disorder)
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                eICR Set Id
+              </th>
+              <td>
+                69bbc532-0a17-11ed-94c7-005056a7fb21
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                eICR Id
+              </th>
+              <td>
+                1.2.840.114350.1.13.202.3.7.8.688883.266
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                eICR Version Number
+              </th>
+              <td>
+                16
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Replaced eICR Id
+              </th>
+              <td>
+                Composition/1.2.840.114350.1.13.202.3.7.8.688883.265
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Replaced eICR Version
+              </th>
+              <td>
+                15
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Authoring Datetime
+              </th>
+              <td>
+                2022-07-25T16:20:31-07:00
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Facility Id Number
+              </th>
+              <td>
+                1.2.840.114350.1.13.202.3.7.2.686980
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Facility Name
+              </th>
+              <td>
+                CAR TOW635E CSMG
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Facility Type
+              </th>
+              <td>
+                Healthcare Facility
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Encounter Start Date
+              </th>
+              <td>
+                2022-01-21
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Encounter End Date
+              </th>
+              <td>
+                2022-01-21
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Reason For Visit
+              </th>
+              <td>
+                Not on file
+              </td>
+            </tr>
+            <tr>
+              <th
+                scope="row"
+              >
+                Preferred Language
+              </th>
+              <td>
+                English
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2>
+          Active Problems
+        </h2>
+        <div>
+          <div
+            class="usa-table-container--scrollable"
+            data-testid="scrollable-table-container"
+            tabindex="0"
+          >
+            <table
+              class="usa-table width-full no-wrap-table"
+              data-testid="table"
+            >
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                  >
+                    Problem
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Problem Date
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    scope="row"
+                  >
+                    Mild to moderate pre-eclampsia
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    2022-07-21
+                  </th>
+                </tr>
+                <tr>
+                  <th
+                    scope="row"
+                  >
+                    Depression, recurrent
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    2022-07-21
+                  </th>
+                </tr>
+                <tr>
+                  <th
+                    scope="row"
+                  >
+                    Pain, upper back
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    2022-07-22
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>
+          Labs
+        </h2>
+        <div>
+          <div
+            class="usa-table-container--scrollable"
+            data-testid="scrollable-table-container"
+            tabindex="0"
+          >
+            <table
+              class="usa-table width-full no-wrap-table"
+              data-testid="table"
+            >
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                  >
+                    Test Type
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Type Code
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Type System
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Qualitative
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Quantitative
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Units
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Code
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Code Display
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Code System
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Interp
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Interp Code
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Interp System
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Ref Range Low
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Ref Range Low Units
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Ref Range High
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Test Result Ref Range High Units
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Specimen Type
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Performing Lab
+                  </th>
+                  <th
+                    scope="col"
+                  >
+                    Specimen Collection Date
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    scope="row"
+                  >
+                    SARS-CoV-2, RNA
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    94500-6
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    http://loinc.org
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    Detected
+                  </th>
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  >
+                    Abnormal
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    A
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation
+                  </th>
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  >
+                    LABCORP
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    2022-01-21T08:00:00Z
+                  </th>
+                </tr>
+                <tr>
+                  <th
+                    scope="row"
+                  >
+                    Lab Interpretation
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    56850-1
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    http://loinc.org
+                  </th>
+                  <th
+                    scope="row"
+                  >
+                    Abnormal
+                  </th>
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  />
+                  <th
+                    scope="row"
+                  >
+                    2022-01-21T08:00:00Z
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
