@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useData } from '@/utils/DataContext';
 import { Checkbox } from '@trussworks/react-uswds';
 
-const CheckboxesPage = () => {
+export default CheckboxesPage = () => {
   const [checkedItems, setCheckedItems] = useState({});
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
-    setCheckedItems({ ...checkedItems, [name]: checked });
+    setCheckedItems((prevCheckedItems) => ({ ...prevCheckedItems, [name]: checked }));
   };
 
   const renderCheckboxes = () => {
@@ -19,7 +19,7 @@ const CheckboxesPage = () => {
         id={`checkbox-${item.id}`}
         name={`checkbox-${item.id}`}
         label={item.label}
-        checked={checkedItems[`checkbox-${item.id}`] || false}
+        checked={checkedItems[`checkbox-${item.id}`] || true}
         onChange={handleCheckboxChange}
       />
     ));
@@ -47,5 +47,3 @@ const CheckboxesPage = () => {
     </div>
   );
 };
-
-export default CheckboxesPage;
