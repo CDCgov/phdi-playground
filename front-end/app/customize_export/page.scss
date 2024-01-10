@@ -1,0 +1,11 @@
+.checkbox-container {
+    grid-template-columns: 175px 175px 175px;
+    column-gap: 10px;
+    row-gap: 15px;
+    display: grid;
+    padding: 0.5em;
+    background: #f0f0f080 ;
+    .usa-checkbox {
+        background: none;
+    }
+}
