@@ -9,3 +9,21 @@
         background: none;
     }
 }
+.deselect-all-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+    background: #f0f0f080;
+  }
+  
+  .deselect-all-button {
+    margin-left: auto;
+    color: #0000FF;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
