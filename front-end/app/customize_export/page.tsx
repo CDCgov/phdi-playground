@@ -6,12 +6,15 @@ import { Checkbox, Button } from '@trussworks/react-uswds'; // https://designsys
 import './page.scss' 
 import { json } from 'stream/consumers';
 import ecrData from './data.json'; // test data; remove once complete
+import { useRouter } from 'next/navigation';
+
 
 // read in message-parser bundle and parse
 // const ecrData = useData(); // Access the shared data;
 const tableData = ecrData?.processed_values?.parsed_values
 
 export default function CheckboxesPage() {
+  const router = useRouter();
   const [keysDict, setKeysDict] = useState({});
   const [checkedItems, setCheckedItems] = useState({});
   const [sectionSelection, setSectionSelection] = useState({});
@@ -167,7 +170,7 @@ export default function CheckboxesPage() {
       <h3>Select which fields you wish to <i><b>omit</b></i> from the options below:</h3>
         {checkboxes}
       <Button type="button" onClick={downloadFile}>Download (.json)</Button>
-      <Button type="button" className="usa-button--outline usa-button" onClick={() => location.reload()}>Cancel</Button>
+      <Button type="button" className="usa-button--outline usa-button" onClick={() => window.history.back()}>Cancel</Button>
     </div>
   );
 }
