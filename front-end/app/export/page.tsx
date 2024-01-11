@@ -2,10 +2,11 @@
 import ECRTable from '@/components/ECRTable/ECRTable';
 import { useData } from '@/utils/DataContext';
 import { Button } from '@trussworks/react-uswds'
-
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 export default function ExportPage() {
+    const router = useRouter();
     const { data } = useData(); // Access the shared data
     const downloadFile = () => {
         // Convert the data object to a JSON string
@@ -33,6 +34,12 @@ export default function ExportPage() {
             <div className="display-flex flex-justify">
                 <h1>Export Page</h1>
                 <Button type="button" onClick={downloadFile}>Export</Button>
+                <Button
+                            type="button"
+                            className="usa-button--outline usa-button"
+                            onClick={() => router.push('/customize_export')}>
+                            Customize fields
+            </Button>                
             </div>
             <ECRTable ecrData={data}></ECRTable>
         </div>
