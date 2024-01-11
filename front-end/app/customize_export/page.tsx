@@ -4,17 +4,13 @@ import { useData } from '@/utils/DataContext';
 import _ from 'lodash';
 import { Checkbox, Button } from '@trussworks/react-uswds'; // https://designsystem.digital.gov/components/checkbox/
 import './page.scss' 
-import { json } from 'stream/consumers';
-import ecrData from './data.json'; // test data; remove once complete
-import { useRouter } from 'next/navigation';
 
-
-// read in message-parser bundle and parse
-// const ecrData = useData(); // Access the shared data;
-const tableData = ecrData?.processed_values?.parsed_values
 
 export default function CheckboxesPage() {
-  const router = useRouter();
+  // read in message-parser bundle and parse
+  const { data } = useData(); // Access the shared data
+  const tableData = data?.processed_values?.parsed_values
+
   const [keysDict, setKeysDict] = useState({});
   const [checkedItems, setCheckedItems] = useState({});
   const [sectionSelection, setSectionSelection] = useState({});
