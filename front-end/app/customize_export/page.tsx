@@ -81,7 +81,7 @@ export default function CheckboxesPage() {
     return Object.keys(keysDict).map((section) => (
       <div key={section}>
         <div className="deselect-all-container">
-          <th>{_.startCase(section)}</th>
+          <th>{_.startCase(section)}</th> {/*TODO: once transitioned to ecr_with_metadata, this would be replaced with the subcategory*/}
           <button className="deselect-all-button" onClick={() => deselectAll(section)}>
             Deselect All
           </button>
@@ -122,6 +122,11 @@ export default function CheckboxesPage() {
               delete lab[key];
             }
           });
+    
+          // Remove the labs array if it becomes empty or contains only empty objects
+          if (filteredData.labs.length === 0 || filteredData.labs.every((lab) => Object.keys(lab).length === 0)) {
+            delete filteredData.labs;
+          }
         }
     
         if (filteredData.active_problems && Array.isArray(filteredData.active_problems)) {
@@ -130,10 +135,17 @@ export default function CheckboxesPage() {
               delete problem[key];
             }
           });
+    
+          // Remove the active_problems array if it becomes empty or contains only empty objects
+          if (
+            filteredData.active_problems.length === 0 ||
+            filteredData.active_problems.every((problem) => Object.keys(problem).length === 0)
+          ) {
+            delete filteredData.active_problems;
+          }
         }
       }
-    }
-    const selectedData = JSON.stringify(filteredData);
+    }    const selectedData = JSON.stringify(filteredData);
 
     // Create a Blob with the JSON data
     const blob = new Blob([selectedData], { type: 'application/json' });
