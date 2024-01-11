@@ -14,6 +14,7 @@ const tableData = ecrData?.processed_values?.parsed_values
 export default function CheckboxesPage() {
   const [keysDict, setKeysDict] = useState({});
   const [checkedItems, setCheckedItems] = useState({});
+  const [sectionSelection, setSectionSelection] = useState({});
 
   // Handle checkbox change
   const handleCheckboxChange = (event) => {
@@ -27,33 +28,20 @@ export default function CheckboxesPage() {
 
       // Directly access and process 'parsed_values'
       if (tableData) {
-        keysDictTemp['parsed_values'] = Object.keys(tableData || {}).filter((key) => !Array.isArray(tableData[key]));
+        keysDictTemp['patient_information'] = Object.keys(tableData || {}).filter((key) => !Array.isArray(tableData[key]));
       }
-      // Directly access and process 'labs'
-      if (tableData.labs && Array.isArray(tableData.labs) && tableData.labs.length > 0) {
-        const labKeys = new Set();
-        tableData.labs.forEach((item) => {
-          Object.keys(item).forEach((key) => labKeys.add(key));
-        });
-        keysDictTemp['labs'] = Array.from(labKeys);
-      }
-
-      // Directly access and process 'active_problems'
-      if (
-        tableData.active_problems &&
-        Array.isArray(tableData.active_problems) &&
-        tableData.active_problems.length > 0
-      ) {
-        const problemKeys = new Set();
-        tableData.active_problems.forEach((item) => {
-          Object.keys(item).forEach((key) => problemKeys.add(key));
-        });
-        keysDictTemp['active_problems'] = Array.from(problemKeys);
-      }
-
+      // Directly access and process 'labs' and 'active_problems'
+      Object.keys(tableData || {}).forEach((key) => {
+        if (Array.isArray(tableData[key]) && tableData[key].length > 0) {
+          const newKeys = new Set();
+          tableData[key].forEach((item) => {
+            Object.keys(item).forEach((itemKey) => newKeys.add(itemKey));
+          });
+          keysDictTemp[key] = Array.from(newKeys);
+        }
+      });
       return keysDictTemp;
     };
-
     const keys = extractKeys();
     setKeysDict(keys);
   }, []);
@@ -67,23 +55,42 @@ export default function CheckboxesPage() {
     setCheckedItems(initialChecked);
   }, [keysDict]);
 
-  const deselectAll = (section) => {
-    const uncheckedItems = keysDict[section].reduce((acc, option) => {
-      acc[option] = false;
-      return acc;
-    }, {});
-    setCheckedItems((prev) => ({ ...prev, ...uncheckedItems }));
+  // Toggle select all/deselect all
+  const handleToggleSelectAll = (section) => {
+    const updatedCheckedItems = { ...checkedItems };
+    const updatedSectionSelection = { ...sectionSelection };
+  
+    if (!updatedSectionSelection[section]) {
+      // Deselect all checkboxes in the section
+      keysDict[section].forEach((key) => {
+        updatedCheckedItems[key] = false;
+      });
+      updatedSectionSelection[section] = true;
+    } else {
+      // Select all checkboxes in the section
+      keysDict[section].forEach((key) => {
+        updatedCheckedItems[key] = true;
+      });
+      updatedSectionSelection[section] = false;
+    }
+  
+    setCheckedItems(updatedCheckedItems);
+    setSectionSelection(updatedSectionSelection);
   };
-
+  
+  
 
   // Create checkbox components
   const createCheckboxes = () => {
     return Object.keys(keysDict).map((section) => (
       <div key={section}>
+        <div>
+          <h2>{_.startCase(section)}</h2> {/*TODO: once transitioned to ecr_with_metadata, this would be replaced with the category*/}
+        </div>
         <div className="deselect-all-container">
           <th>{_.startCase(section)}</th> {/*TODO: once transitioned to ecr_with_metadata, this would be replaced with the subcategory*/}
-          <button className="deselect-all-button" onClick={() => deselectAll(section)}>
-            Deselect All
+          <button className="deselect-all-button" onClick={() => handleToggleSelectAll(section)}>
+          {sectionSelection[section] ? 'Select All' : 'Deselect All'}
           </button>
         </div>
         <div className="checkbox-container">
@@ -110,42 +117,31 @@ export default function CheckboxesPage() {
 
   // code taken from export page to establish button
   const downloadFile = () => {
-    // Filter out unchecked items -- TODO, make lab and active problems dynamic to account for future arrays
-    const filteredData = tableData;
+    // Filter out unchecked items
+    const filteredData = { ...tableData };
     for (const key in checkedItems) {
       if (!checkedItems[key]) {
         delete filteredData[key];
-    
-        if (filteredData.labs && Array.isArray(filteredData.labs)) {
-          filteredData.labs.forEach((lab) => {
-            if (lab.hasOwnProperty(key)) {
-              delete lab[key];
+  
+        for (const arrayName in filteredData) {
+          if (Array.isArray(filteredData[arrayName])) {
+            filteredData[arrayName].forEach((item) => {
+              if (item.hasOwnProperty(key)) {
+                delete item[key];
+              }
+            });
+            // Remove the array if it becomes empty or contains only empty objects
+            if (
+              filteredData[arrayName].length === 0 ||
+              filteredData[arrayName].every((item) => Object.keys(item).length === 0)
+            ) {
+              delete filteredData[arrayName];
             }
-          });
-    
-          // Remove the labs array if it becomes empty or contains only empty objects
-          if (filteredData.labs.length === 0 || filteredData.labs.every((lab) => Object.keys(lab).length === 0)) {
-            delete filteredData.labs;
-          }
-        }
-    
-        if (filteredData.active_problems && Array.isArray(filteredData.active_problems)) {
-          filteredData.active_problems.forEach((problem) => {
-            if (problem.hasOwnProperty(key)) {
-              delete problem[key];
-            }
-          });
-    
-          // Remove the active_problems array if it becomes empty or contains only empty objects
-          if (
-            filteredData.active_problems.length === 0 ||
-            filteredData.active_problems.every((problem) => Object.keys(problem).length === 0)
-          ) {
-            delete filteredData.active_problems;
           }
         }
       }
-    }    const selectedData = JSON.stringify(filteredData);
+    }    
+    const selectedData = JSON.stringify(filteredData);
 
     // Create a Blob with the JSON data
     const blob = new Blob([selectedData], { type: 'application/json' });
