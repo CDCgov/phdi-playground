@@ -51,7 +51,7 @@ export default function UploadFile() {
             if (data.complete && data["processed_values"]) {
                 setData(data)
             } else {
-                setProgress(formatData(event.data));
+                setProgress(data);
             }
         };
 
