@@ -73,7 +73,6 @@ export default function ECRTable({ ecrData }: any) {
 			<div>
 				<Table
 					bordered
-					caption="This table uses the fullWidth prop to increase to 100% width"
 					fullWidth>
 					<thead>
 					<tr>

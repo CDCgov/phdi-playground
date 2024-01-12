@@ -16,9 +16,6 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
             class="usa-table width-full"
             data-testid="table"
           >
-            <caption>
-              This table uses the fullWidth prop to increase to 100% width
-            </caption>
             <thead>
               <tr>
                 <th
@@ -647,9 +644,6 @@ exports[`ECRTable renders ECRTable component with ALL provided data 1`] = `
           class="usa-table width-full"
           data-testid="table"
         >
-          <caption>
-            This table uses the fullWidth prop to increase to 100% width
-          </caption>
           <thead>
             <tr>
               <th
