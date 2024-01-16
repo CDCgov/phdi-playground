@@ -182,8 +182,6 @@ export const alertHtml = (data: ProgressData, file: File) => {
   if(data.error){
     const validateStep = data?.steps?.findLast(step => step.endpoint === "/validate")
 
-    console.log(data.error)
-
     if (validateStep?.error) {
       const fatalErrors = validateStep.response["validation_results"] && validateStep.response["validation_results"]["fatal"] || []
       if (fatalErrors.length > 1 || (fatalErrors.length == 1 && missingFieldError(fatalErrors[0]))) {
