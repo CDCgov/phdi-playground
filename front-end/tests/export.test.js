@@ -2,6 +2,17 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import "@testing-library/jest-dom";
 import ExportPage from '../app/export/page'; // Adjust the import path as needed
+import { useRouter } from 'next/router';
+
+// Mock the useRouter hook from Next.js
+const mockPush = jest.fn();
+jest.mock('next/navigation', () => ({
+    useRouter() {
+        return {
+            push: mockPush,
+        };
+    },
+}));
 
 // Mock the DataContext module
 jest.mock('../utils/DataContext', () => ({
@@ -26,6 +37,10 @@ global.URL.createObjectURL = jest.fn();
 global.URL.revokeObjectURL = jest.fn();
 
 describe("Export Page", () => {
+    // Clear all mocks before each test
+    beforeEach(() => {
+        mockPush.mockClear();
+    });    
     it("ExportPage component should render page", () => {
         render(<ExportPage />);
         expect(screen.getByText('Export Page')).toBeInTheDocument();
@@ -51,7 +66,7 @@ test('ExportPage component should render and trigger download', () => {
     };
 
     // Find the "Export" button and click it
-    const exportButton = screen.getByText('Export');
+    const exportButton = screen.getByText('Download (.json)');
     fireEvent.click(exportButton);
 
     // Assert that the anchor click function was called
