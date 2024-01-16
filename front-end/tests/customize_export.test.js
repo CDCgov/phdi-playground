@@ -43,7 +43,7 @@ describe("Customize Export Page", () => {
   
       // Assert that all checkboxes are unchecked
       checkboxes.forEach((checkbox) => {
-        expect(checkbox.querySelector('input')).toBeChecked();
+        expect(checkbox.querySelector('input')).not.toBeChecked();
       });
   
       // Click the "Select All" button to check boxes again
