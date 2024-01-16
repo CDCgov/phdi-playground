@@ -1,10 +1,8 @@
 .checkbox-container {
-    grid-template-columns: 175px 175px 175px;
+    grid-template-columns: 200px 200px 200px;
     column-gap: 10px;
     row-gap: 15px;
     display: grid;
-    padding: 0.5em;
-    background: #f0f0f080 ;
     .usa-checkbox {
         background: none;
     }
@@ -13,17 +11,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #000;
-    padding-bottom: 5px;
-    background: #f0f0f080;
+    border-bottom: 1px solid #00000071;
+    padding-bottom: 5px; 
   }
   
   .deselect-all-button {
     margin-left: auto;
-    color: #0000FF;
     text-decoration: underline;
     background: none;
     border: none;
     cursor: pointer;
   }
-  
+ .section-container {
+    background: #f0f0f080;
+    padding: 1em;
+    margin-bottom: 1em;   
+ }

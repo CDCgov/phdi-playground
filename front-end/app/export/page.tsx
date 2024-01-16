@@ -33,13 +33,15 @@ export default function ExportPage() {
         <div className="margin-3">
             <div className="display-flex flex-justify">
                 <h1>Export Page</h1>
-                <Button type="button" onClick={downloadFile}>Export</Button>
-                <Button
+                <div>
+                    <Button type="button" onClick={downloadFile}>Download (.json)</Button>
+                    <Button
                             type="button"
                             className="usa-button--outline usa-button"
                             onClick={() => router.push('/customize_export')}>
                             Customize fields
-            </Button>                
+                    </Button>
+                </div>                
             </div>
             <ECRTable ecrData={data}></ECRTable>
         </div>

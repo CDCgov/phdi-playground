@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import "@testing-library/jest-dom";
-import ExportPage from '../app/export/page'; // Adjust the import path as needed
+import CustomizeExportPage from '../app/customize_export/page'; // Adjust the import path as needed
 
 // Mock the DataContext module
 jest.mock('../utils/DataContext', () => ({
@@ -25,15 +25,41 @@ jest.mock('../utils/DataContext', () => ({
 global.URL.createObjectURL = jest.fn();
 global.URL.revokeObjectURL = jest.fn();
 
-describe("Export Page", () => {
-    it("ExportPage component should render page", () => {
-        render(<ExportPage />);
-        expect(screen.getByText('Export Page')).toBeInTheDocument();
+describe("Customize Export Page", () => {
+    it("Customize Export Page component should render page", () => {
+      render(<CustomizeExportPage />);
+      expect(screen.getByText('Customize your bundle')).toBeInTheDocument();
     });
-});
+  
+    it('should toggle checkbox when clicked', () => {
+      render(<CustomizeExportPage />);
+      
+      // Find the "Deselect All" button and click it
+      const deselectButton = screen.getByText('Deselect All');
+      fireEvent.click(deselectButton);
+  
+      // Get all the checkboxes within the "checkbox-container" div
+      const checkboxes = screen.getAllByTestId('checkbox');
+  
+      // Assert that all checkboxes are unchecked
+      checkboxes.forEach((checkbox) => {
+        expect(checkbox.querySelector('input')).toBeChecked();
+      });
+  
+      // Click the "Select All" button to check boxes again
+      const selectButton = screen.getByText('Select All');
+      fireEvent.click(selectButton);
+  
+      // Assert that all checkboxes are checked again
+      checkboxes.forEach((checkbox) => {
+        expect(checkbox.querySelector('input')).toBeChecked();
+      });
+    });
+  });
+  
 
 test('ExportPage component should render and trigger download', () => {
-    render(<ExportPage />);
+    render(<CustomizeExportPage />);
 
     // Assert that the component renders
     // Mock the anchor click function to prevent actual navigation

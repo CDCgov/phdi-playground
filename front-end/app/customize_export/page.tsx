@@ -82,13 +82,10 @@ export default function CheckboxesPage() {
   // Create checkbox components
   const createCheckboxes = () => {
     return Object.keys(keysDict).map((section) => (
-      <div key={section}>
-        <div>
-          <h2>{_.startCase(section)}</h2> {/*TODO: once transitioned to ecr_with_metadata, this would be replaced with the category*/}
-        </div>
+      <div className='section-container usa-table' key={section}>
         <div className="deselect-all-container">
-          <th>{_.startCase(section)}</th> {/*TODO: once transitioned to ecr_with_metadata, this would be replaced with the subcategory*/}
-          <button className="deselect-all-button" onClick={() => handleToggleSelectAll(section)}>
+          <h3>{_.startCase(section)}</h3> {/*TODO: once transitioned to ecr_with_metadata, this would be replaced with the subcategory*/}
+          <button className= "deselect-all-button usa-link" onClick={() => handleToggleSelectAll(section)}>
           {sectionSelection[section] ? 'Select All' : 'Deselect All'}
           </button>
         </div>
@@ -117,7 +114,7 @@ export default function CheckboxesPage() {
   // code taken from export page to establish button
   const downloadFile = () => {
     // Filter out unchecked items
-    const filteredData = { ...tableData };
+    const filteredData = JSON.parse(JSON.stringify({ ...tableData }));
     for (const key in checkedItems) {
       if (!checkedItems[key]) {
         delete filteredData[key];
@@ -161,12 +158,12 @@ export default function CheckboxesPage() {
   };
 
   return (
-    <div>
+    <>
       <h1>Customize your bundle</h1>
       <h3>Select which fields you wish to <i><b>omit</b></i> from the options below:</h3>
         {checkboxes}
       <Button type="button" onClick={downloadFile}>Download (.json)</Button>
       <Button type="button" className="usa-button--outline usa-button" onClick={() => window.history.back()}>Cancel</Button>
-    </div>
+    </>
   );
 }
