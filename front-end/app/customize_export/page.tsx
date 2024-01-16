@@ -98,7 +98,7 @@ export default function CheckboxesPage() {
                 label={_.startCase(key).replace(/rr /i, "RR ")
                 .replace(/eicr /i, "eICR ")
                 .replace(/ecr /i, "eCR ")}
-                checked={checkedItems[key]}
+                checked={checkedItems[key] ? checkedItems[key] : false}
                 onChange={handleCheckboxChange}
               />
             </div>
