@@ -11,19 +11,19 @@ export default function CheckboxesPage() {
   const { data } = useData(); // Access the shared data
   const tableData = data?.processed_values?.parsed_values
 
-  const [keysDict, setKeysDict] = useState({});
-  const [checkedItems, setCheckedItems] = useState({});
-  const [sectionSelection, setSectionSelection] = useState({});
+  const [keysDict, setKeysDict] = useState<Record<string, string[]>>({});
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [sectionSelection, setSectionSelection] = useState<Record<string, boolean>>({});
 
   // Handle checkbox change
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
     setCheckedItems((prev) => ({ ...prev, [name]: checked }));
   };
 
   useEffect(() => {
     const extractKeys = () => {
-      const keysDictTemp = {};
+      const keysDictTemp: Record<string, string[]> = {};
 
       // Directly access and process 'parsed_values'
       if (tableData) {
@@ -32,8 +32,8 @@ export default function CheckboxesPage() {
       // Directly access and process 'labs' and 'active_problems'
       Object.keys(tableData || {}).forEach((key) => {
         if (Array.isArray(tableData[key]) && tableData[key].length > 0) {
-          const newKeys = new Set();
-          tableData[key].forEach((item) => {
+          const newKeys = new Set<string>();;
+          tableData[key].forEach((item: Record<string, any>) => {
             Object.keys(item).forEach((itemKey) => newKeys.add(itemKey));
           });
           keysDictTemp[key] = Array.from(newKeys);
@@ -47,17 +47,20 @@ export default function CheckboxesPage() {
 
   // Initialize all checkboxes as checked
   useEffect(() => {
-    const initialChecked = Object.values(keysDict).flat().reduce((acc, key) => {
+    const allKeys = Object.values(keysDict).flat() as string[]; // Asserting the type of the flattened array
+    const initialChecked = allKeys.reduce((acc: Record<string, boolean>, key) => {
       acc[key] = true;
       return acc;
-    }, {});
+    }, {} as Record<string, boolean>);
+  
     setCheckedItems(initialChecked);
-  }, [keysDict]);
+  }, [keysDict]);  
+  
 
   // Toggle select all/deselect all
-  const handleToggleSelectAll = (section) => {
-    const updatedCheckedItems = { ...checkedItems };
-    const updatedSectionSelection = { ...sectionSelection };
+  const handleToggleSelectAll = (section: string) => {
+    const updatedCheckedItems = { ...checkedItems } as Record<string, boolean>;
+    const updatedSectionSelection = { ...sectionSelection } as Record<string, boolean>;
   
     if (!updatedSectionSelection[section]) {
       // Deselect all checkboxes in the section
@@ -121,7 +124,7 @@ export default function CheckboxesPage() {
   
         for (const arrayName in filteredData) {
           if (Array.isArray(filteredData[arrayName])) {
-            filteredData[arrayName].forEach((item) => {
+            filteredData[arrayName].forEach((item: any) => {
               if (item.hasOwnProperty(key)) {
                 delete item[key];
               }
@@ -129,7 +132,7 @@ export default function CheckboxesPage() {
             // Remove the array if it becomes empty or contains only empty objects
             if (
               filteredData[arrayName].length === 0 ||
-              filteredData[arrayName].every((item) => Object.keys(item).length === 0)
+              filteredData[arrayName].every((item: any) => Object.keys(item).length === 0)
             ) {
               delete filteredData[arrayName];
             }
