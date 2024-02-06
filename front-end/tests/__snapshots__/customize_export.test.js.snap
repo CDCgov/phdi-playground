@@ -1,0 +1,388 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Customize Export Page Customize Export Page component should render page 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <h1>
+        Customize your bundle
+      </h1>
+      <h3>
+        Select which fields you wish to 
+        <i>
+          <b>
+            omit
+          </b>
+        </i>
+         from the options below:
+      </h3>
+      <div
+        class="section-container usa-table"
+      >
+        <div
+          class="deselect-all-container"
+        >
+          <h3>
+            Patient Information
+          </h3>
+           
+          <button
+            class="deselect-all-button usa-link"
+          >
+            Deselect All
+          </button>
+        </div>
+        <div
+          class="checkbox-container"
+        >
+          <div>
+            <div
+              class="usa-checkbox"
+              data-testid="checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="checkbox-patient_id"
+                name="patient_id"
+                type="checkbox"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="checkbox-patient_id"
+              >
+                Patient Id
+              </label>
+            </div>
+          </div>
+          <div>
+            <div
+              class="usa-checkbox"
+              data-testid="checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="checkbox-person_id"
+                name="person_id"
+                type="checkbox"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="checkbox-person_id"
+              >
+                Person Id
+              </label>
+            </div>
+          </div>
+          <div>
+            <div
+              class="usa-checkbox"
+              data-testid="checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="checkbox-last_name"
+                name="last_name"
+                type="checkbox"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="checkbox-last_name"
+              >
+                Last Name
+              </label>
+            </div>
+          </div>
+          <div>
+            <div
+              class="usa-checkbox"
+              data-testid="checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="checkbox-first_name"
+                name="first_name"
+                type="checkbox"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="checkbox-first_name"
+              >
+                First Name
+              </label>
+            </div>
+          </div>
+          <div>
+            <div
+              class="usa-checkbox"
+              data-testid="checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="checkbox-birth_date"
+                name="birth_date"
+                type="checkbox"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="checkbox-birth_date"
+              >
+                Birth Date
+              </label>
+            </div>
+          </div>
+          <div>
+            <div
+              class="usa-checkbox"
+              data-testid="checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="checkbox-gender"
+                name="gender"
+                type="checkbox"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="checkbox-gender"
+              >
+                Gender
+              </label>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+      <button
+        class="usa-button"
+        data-testid="button"
+        type="button"
+      >
+        Download (.json)
+      </button>
+      <button
+        class="usa-button usa-button--outline usa-button"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </body>,
+  "container": <div>
+    <h1>
+      Customize your bundle
+    </h1>
+    <h3>
+      Select which fields you wish to 
+      <i>
+        <b>
+          omit
+        </b>
+      </i>
+       from the options below:
+    </h3>
+    <div
+      class="section-container usa-table"
+    >
+      <div
+        class="deselect-all-container"
+      >
+        <h3>
+          Patient Information
+        </h3>
+         
+        <button
+          class="deselect-all-button usa-link"
+        >
+          Deselect All
+        </button>
+      </div>
+      <div
+        class="checkbox-container"
+      >
+        <div>
+          <div
+            class="usa-checkbox"
+            data-testid="checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="checkbox-patient_id"
+              name="patient_id"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="checkbox-patient_id"
+            >
+              Patient Id
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="usa-checkbox"
+            data-testid="checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="checkbox-person_id"
+              name="person_id"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="checkbox-person_id"
+            >
+              Person Id
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="usa-checkbox"
+            data-testid="checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="checkbox-last_name"
+              name="last_name"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="checkbox-last_name"
+            >
+              Last Name
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="usa-checkbox"
+            data-testid="checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="checkbox-first_name"
+              name="first_name"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="checkbox-first_name"
+            >
+              First Name
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="usa-checkbox"
+            data-testid="checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="checkbox-birth_date"
+              name="birth_date"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="checkbox-birth_date"
+            >
+              Birth Date
+            </label>
+          </div>
+        </div>
+        <div>
+          <div
+            class="usa-checkbox"
+            data-testid="checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="checkbox-gender"
+              name="gender"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="checkbox-gender"
+            >
+              Gender
+            </label>
+          </div>
+        </div>
+      </div>
+      <br />
+    </div>
+    <button
+      class="usa-button"
+      data-testid="button"
+      type="button"
+    >
+      Download (.json)
+    </button>
+    <button
+      class="usa-button usa-button--outline usa-button"
+      data-testid="button"
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

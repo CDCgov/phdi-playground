@@ -1,0 +1,29 @@
+.checkbox-container {
+    grid-template-columns: 200px 200px 200px;
+    column-gap: 10px;
+    row-gap: 15px;
+    display: grid;
+    .usa-checkbox {
+        background: none;
+    }
+}
+.deselect-all-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #00000071;
+    padding-bottom: 5px; 
+  }
+  
+  .deselect-all-button {
+    margin-left: auto;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+ .section-container {
+    background: #f0f0f080;
+    padding: 1em;
+    margin-bottom: 1em;   
+ }
