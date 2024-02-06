@@ -160,24 +160,24 @@ resource "terraform_data" "kubeconfig" {
 
 # cert-manager
 
-resource "helm_release" "cert_manager" {
-  depends_on       = [module.eks-cluster]
-  name             = "cert-manager"
-  repository       = "https://charts.jetstack.io"
-  chart            = "cert-manager"
-  namespace        = "cert-manager"
-  create_namespace = true
+# resource "helm_release" "cert_manager" {
+#   depends_on       = [module.eks-cluster]
+#   name             = "cert-manager"
+#   repository       = "https://charts.jetstack.io"
+#   chart            = "cert-manager"
+#   namespace        = "cert-manager"
+#   create_namespace = true
 
-  set {
-    name  = "installCRDs"
-    value = true
-  }
+#   set {
+#     name  = "installCRDs"
+#     value = true
+#   }
 
-  set {
-    name  = "webhook.securePort"
-    value = 10260
-  }
-}
+#   set {
+#     name  = "webhook.securePort"
+#     value = 10260
+#   }
+# }
 
 # Load Balancer Controller
 
@@ -188,7 +188,7 @@ resource "kubectl_manifest" "load_balancer_controller_crds" {
 }
 
 resource "helm_release" "load_balancer_controller" {
-  depends_on = [helm_release.cert_manager, kubectl_manifest.load_balancer_controller_crds]
+  depends_on = [module.eks-cluster, kubectl_manifest.load_balancer_controller_crds]
   name       = "aws-load-balancer-controller"
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
@@ -232,12 +232,12 @@ resource "helm_release" "load_balancer_controller" {
 }
 
 
-# Sleep for 60 seconds to allow the load balancer controller to start
+# Sleep for 120 seconds to allow the load balancer controller to start
 resource "terraform_data" "wait_for_load_balancer_controller" {
   depends_on = [helm_release.load_balancer_controller]
 
   provisioner "local-exec" {
-    command = "sleep 60"
+    command = "sleep 120"
   }
 }
 
@@ -255,7 +255,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "image.tag"
-    value = "v1.1.9"
+    value = "v1.1.11"
   }
 
   set {
@@ -271,22 +271,22 @@ resource "helm_release" "building_blocks" {
   #  Values needed for orchestration service
   set {
     name  = "fhirConverterUrl"
-    value = "https://phdi-playground-${terraform.workspace}.${var.region}.elb.amazonaws.com/fhir-converter"
+    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/fhir-converter"
   }
 
   set {
     name  = "ingestionUrl"
-    value = "https://phdi-playground-${terraform.workspace}.${var.region}.elb.amazonaws.com/ingestion"
+    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/ingestion"
   }
 
   set {
     name  = "messageParserUrl"
-    value = "https://phdi-playground-${terraform.workspace}.${var.region}.elb.amazonaws.com/message-parser"
+    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/message-parser"
   }
 
   set {
     name  = "validationUrl"
-    value = "https://phdi-playground-${terraform.workspace}.${var.region}.elb.amazonaws.com/validation"
+    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/validation"
   }
 }
 
