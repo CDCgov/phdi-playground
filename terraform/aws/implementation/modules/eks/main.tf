@@ -158,27 +158,6 @@ resource "terraform_data" "kubeconfig" {
   }
 }
 
-# cert-manager
-
-# resource "helm_release" "cert_manager" {
-#   depends_on       = [module.eks-cluster]
-#   name             = "cert-manager"
-#   repository       = "https://charts.jetstack.io"
-#   chart            = "cert-manager"
-#   namespace        = "cert-manager"
-#   create_namespace = true
-
-#   set {
-#     name  = "installCRDs"
-#     value = true
-#   }
-
-#   set {
-#     name  = "webhook.securePort"
-#     value = 10260
-#   }
-# }
-
 # Load Balancer Controller
 
 resource "kubectl_manifest" "load_balancer_controller_crds" {
