@@ -42,9 +42,9 @@ module "eks" {
 }
 
 module "cloudfront" {
-  depends_on = [ module.eks ]
-  source = "./modules/cloudfront"
-  region = var.region
-  vpc_id = module.vpc.vpc_id
+  depends_on   = [module.eks]
+  source       = "./modules/cloudfront"
+  region       = var.region
+  vpc_id       = module.vpc.vpc_id
   alb_hostname = module.eks.alb_hostname
 }
