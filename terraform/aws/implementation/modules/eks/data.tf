@@ -341,3 +341,13 @@ data "kubectl_file_documents" "ingress" {
     terraform_workspace = terraform.workspace
   })
 }
+
+data "kubernetes_ingress_v1" "ingress" {
+  depends_on = [kubectl_manifest.ingress]
+  metadata {
+    name = "ingress"
+    annotations = {
+      "alb.ingress.kubernetes.io/group.name" = "phdi-playground-${terraform.workspace}"
+    }
+  }
+}
