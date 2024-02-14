@@ -351,3 +351,13 @@ data "kubernetes_ingress_v1" "ingress" {
     }
   }
 }
+
+data "kubectl_file_documents" "karpenter" {
+  content = templatefile("./manifests/karpenter.yaml", {
+    cluster_name = module.eks-cluster.cluster_name
+  })
+}
+
+data "aws_ecrpublic_authorization_token" "token" {
+  provider = aws
+}

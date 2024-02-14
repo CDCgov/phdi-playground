@@ -21,41 +21,48 @@ module "eks-cluster" {
   vpc_id     = var.vpc_id
   subnet_ids = flatten([var.private_subnet_ids, var.public_subnet_ids])
 
-  cluster_addons = {
-    coredns = {
-      most_recent = true
-    }
-    kube-proxy = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent = true
-    }
-  }
+  # Fargate profiles use the cluster primary security group so these are not utilized
+  create_cluster_security_group = false
+  create_node_security_group    = false
 
   fargate_profiles = {
     default = {
-      name = "default"
       selectors = [
-        {
-          namespace = "kube-system"
-        },
-        {
-          namespace = "default"
-        }
+        { namespace = "default" }
+      ]
+      subnet_ids = var.private_subnet_ids
+    }
+    karpenter = {
+      selectors = [
+        { namespace = "karpenter" }
+      ]
+      subnet_ids = var.private_subnet_ids
+    }
+    kube_system = {
+      name = "kube-system"
+      selectors = [
+        { namespace = "kube-system" }
       ]
       subnet_ids = var.private_subnet_ids
     }
   }
 
   manage_aws_auth_configmap = true
-
   aws_auth_roles = [
     {
       rolearn  = "arn:aws:iam::339712971032:role/Developer"
       username = "Developer"
       groups   = ["system:masters"]
-    }
+    },
+    # We need to add in the Karpenter node IAM role for nodes launched by Karpenter
+    {
+      rolearn  = module.eks_blueprints_addons.karpenter.node_iam_role_arn
+      username = "system:node:{{EC2PrivateDNSName}}"
+      groups = [
+        "system:bootstrappers",
+        "system:nodes",
+      ]
+    },
   ]
 
   aws_auth_users = [
@@ -69,6 +76,10 @@ module "eks-cluster" {
   aws_auth_accounts = [
     "339712971032"
   ]
+
+  tags = {
+    "karpenter.sh/discovery" = var.eks_name
+  }
 }
 
 data "aws_eks_cluster_auth" "eks" {
@@ -115,6 +126,10 @@ locals {
   oidc_provider        = module.eks-cluster.oidc_provider
   namespace            = "kube-system"
   service_account_name = "aws-load-balancer-controller"
+  tags = {
+    Blueprint  = var.eks_name
+    GithubRepo = "github.com/aws-ia/terraform-aws-eks-blueprints"
+  }
 }
 
 resource "aws_iam_role" "eks_service_account" {
@@ -274,4 +289,116 @@ resource "helm_release" "building_blocks" {
 resource "kubectl_manifest" "ingress" {
   depends_on = [helm_release.building_blocks]
   yaml_body  = data.kubectl_file_documents.ingress.documents[0]
+}
+
+# Karpenter
+
+# resource "helm_release" "karpenter" {
+#   depends_on = [helm_release.building_blocks]
+#   name       = "karpenter"
+#   repository = "oci://public.ecr.aws/karpenter"
+#   chart      = "karpenter"
+#   namespace  = "kube-system"
+#   version    = "v0.34.0"
+
+#   set {
+#     name  = "region"
+#     value = var.region
+#   }
+
+#   set {
+#     name  = "vpcId"
+#     value = var.vpc_id
+#   }
+
+#   set {
+#     name  = "settings.clusterName"
+#     value = module.eks-cluster.cluster_name
+#   }
+
+#   set {
+#     name  = "settings.interruptionQueue"
+#     value = module.eks-cluster.cluster_name
+#   }
+
+#   set {
+#     name  = "controller.resources.requests.cpu"
+#     value = 1
+#   }
+
+#   set {
+#     name  = "controller.resources.requests.memory"
+#     value = "1Gi"
+#   }
+
+#   set {
+#     name  = "controller.resources.limits.cpu"
+#     value = 1
+#   }
+
+#   set {
+#     name  = "controller.resources.limits.memory"
+#     value = "1Gi"
+#   }
+# }
+
+# resource "kubectl_manifest" "karpenter" {
+#   depends_on = [helm_release.karpenter]
+#   for_each   = data.kubectl_file_documents.karpenter.manifests
+#   yaml_body  = each.value
+# }
+
+module "eks_blueprints_addons" {
+  source  = "aws-ia/eks-blueprints-addons/aws"
+  version = "~> 1.14"
+
+  cluster_name      = module.eks-cluster.cluster_name
+  cluster_endpoint  = module.eks-cluster.cluster_endpoint
+  cluster_version   = module.eks-cluster.cluster_version
+  oidc_provider_arn = module.eks-cluster.oidc_provider_arn
+
+  # We want to wait for the Fargate profiles to be deployed first
+  create_delay_dependencies = [for prof in module.eks-cluster.fargate_profiles : prof.fargate_profile_arn]
+
+  eks_addons = {
+    coredns = {
+      configuration_values = jsonencode({
+        computeType = "Fargate"
+        # Ensure that the we fully utilize the minimum amount of resources that are supplied by
+        # Fargate https://docs.aws.amazon.com/eks/latest/userguide/fargate-pod-configuration.html
+        # Fargate adds 256 MB to each pod's memory reservation for the required Kubernetes
+        # components (kubelet, kube-proxy, and containerd). Fargate rounds up to the following
+        # compute configuration that most closely matches the sum of vCPU and memory requests in
+        # order to ensure pods always have the resources that they need to run.
+        resources = {
+          limits = {
+            cpu = "0.25"
+            # We are targeting the smallest Task size of 512Mb, so we subtract 256Mb from the
+            # request/limit to ensure we can fit within that task
+            memory = "256M"
+          }
+          requests = {
+            cpu = "0.25"
+            # We are targeting the smallest Task size of 512Mb, so we subtract 256Mb from the
+            # request/limit to ensure we can fit within that task
+            memory = "256M"
+          }
+        }
+      })
+    }
+    vpc-cni    = {}
+    kube-proxy = {}
+  }
+
+  enable_karpenter = true
+  karpenter = {
+    repository_username = data.aws_ecrpublic_authorization_token.token.user_name
+    repository_password = data.aws_ecrpublic_authorization_token.token.password
+  }
+  karpenter_node = {
+    # Use static name so that it matches what is defined in `karpenter.yaml` example manifest
+    iam_role_use_name_prefix = false
+  }
+
+  tags = local.tags
 }
