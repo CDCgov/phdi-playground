@@ -293,61 +293,6 @@ resource "kubectl_manifest" "ingress" {
 
 # Karpenter
 
-# resource "helm_release" "karpenter" {
-#   depends_on = [helm_release.building_blocks]
-#   name       = "karpenter"
-#   repository = "oci://public.ecr.aws/karpenter"
-#   chart      = "karpenter"
-#   namespace  = "kube-system"
-#   version    = "v0.34.0"
-
-#   set {
-#     name  = "region"
-#     value = var.region
-#   }
-
-#   set {
-#     name  = "vpcId"
-#     value = var.vpc_id
-#   }
-
-#   set {
-#     name  = "settings.clusterName"
-#     value = module.eks-cluster.cluster_name
-#   }
-
-#   set {
-#     name  = "settings.interruptionQueue"
-#     value = module.eks-cluster.cluster_name
-#   }
-
-#   set {
-#     name  = "controller.resources.requests.cpu"
-#     value = 1
-#   }
-
-#   set {
-#     name  = "controller.resources.requests.memory"
-#     value = "1Gi"
-#   }
-
-#   set {
-#     name  = "controller.resources.limits.cpu"
-#     value = 1
-#   }
-
-#   set {
-#     name  = "controller.resources.limits.memory"
-#     value = "1Gi"
-#   }
-# }
-
-# resource "kubectl_manifest" "karpenter" {
-#   depends_on = [helm_release.karpenter]
-#   for_each   = data.kubectl_file_documents.karpenter.manifests
-#   yaml_body  = each.value
-# }
-
 module "eks_blueprints_addons" {
   source  = "aws-ia/eks-blueprints-addons/aws"
   version = "~> 1.14"
