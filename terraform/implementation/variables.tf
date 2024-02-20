@@ -115,3 +115,10 @@ variable "vm_username" {
   description = "User name for the VM"
   default     = "aks_user"
 }
+
+# TODO: Double Check the lower environments
+variable "env" {
+  type        = string
+  description = "Environment"
+  default     = "Dev"
+}
