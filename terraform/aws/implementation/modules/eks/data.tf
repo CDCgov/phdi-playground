@@ -351,3 +351,7 @@ data "kubernetes_ingress_v1" "ingress" {
     }
   }
 }
+
+data "aws_ecrpublic_authorization_token" "token" {
+  provider = aws
+}
