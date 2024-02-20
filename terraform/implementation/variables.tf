@@ -116,9 +116,4 @@ variable "vm_username" {
   default     = "aks_user"
 }
 
-# TODO: Double Check the lower environments
-variable "env" {
-  type        = string
-  description = "Environment"
-  default     = "Dev"
-}
+
