@@ -115,5 +115,3 @@ variable "vm_username" {
   description = "User name for the VM"
   default     = "aks_user"
 }
-
-
