@@ -272,7 +272,7 @@ resource "helm_release" "building_blocks" {
     name  = "ingestionUrl"
     value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/ingestion"
   }
-
+  
   set {
     name  = "messageParserUrl"
     value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/message-parser"
@@ -281,6 +281,11 @@ resource "helm_release" "building_blocks" {
   set {
     name  = "validationUrl"
     value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/validation"
+  }
+
+  set {
+    name  = "ecrViewerUrl"
+    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/ecr-viewer"
   }
 }
 

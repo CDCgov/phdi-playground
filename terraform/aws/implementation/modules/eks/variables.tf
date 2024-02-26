@@ -31,6 +31,7 @@ variable "services_to_chart" {
     message-parser = "message-parser-chart",
     orchestration  = "orchestration",
     validation     = "validation-chart"
+    ecr-viewer     = "ecr-viewer-chart"
   }
 }
 

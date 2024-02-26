@@ -47,3 +47,9 @@ module "cloudfront" {
   vpc_id       = module.vpc.vpc_id
   alb_hostname = module.eks.alb_hostname
 }
+
+module "s3" {
+  source       = "./modules/s3"
+  region       = var.region
+ 
+}
