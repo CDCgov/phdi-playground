@@ -9,6 +9,6 @@ variable "s3_name" {
 }
 
 variable "dynamodb_table" {
-    type  = string
-    default = "phdi-playground-tfstate-lock-dev"
+  type    = string
+  default = "phdi-playground-tfstate-lock-dev"
 }
