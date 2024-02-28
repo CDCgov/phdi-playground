@@ -92,8 +92,17 @@ export const formatData = (str: string) => {
     return data
   }
 
-  let rawSteps = data['steps']
-  if(!rawSteps){
+  // Dynamically create steps array from data keys
+  let rawSteps = Object.keys(data).filter(key => key !== 
+    "message" && data[key].status_code).map(key => {
+    return {
+      service: key,
+      endpoint: `/${key}`,
+      ...data[key]
+    };
+  });
+
+  if(!rawSteps.length){
     throw new Error("Progress data is malformed");
   }
   let formatted: ProgressData = {
