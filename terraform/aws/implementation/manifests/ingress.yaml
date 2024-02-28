@@ -6,6 +6,7 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: phdi-playground-${terraform_workspace}
+    alb.ingress.kubernetes.io/certificate-arn: ${aws_acm_certificate_arn}
 spec:
   ingressClassName: alb
   rules:
