@@ -1,5 +1,6 @@
 locals {
-  name = "phdi-playground-${terraform.workspace}"
+  name        = "phdi-playground-${terraform.workspace}"
+  domain_name = "dibbs.cloud"
 }
 
 module "vpc" {
@@ -39,10 +40,18 @@ module "eks" {
   smarty_auth_id          = var.smarty_auth_id
   smarty_auth_token       = var.smarty_auth_token
   aws_acm_certificate_arn = module.route53.aws_acm_certificate_arn
+  cognito_user_pool_arn   = module.cognito.cognito_user_pool_arn
+  cognito_client_id       = module.cognito.cognito_client_id
+  cognito_domain          = module.cognito.cognito_domain
 }
 
 module "route53" {
   source       = "./modules/route53"
-  domain_name  = "dibbs.cloud"
+  domain_name  = local.domain_name
   alb_hostname = module.eks.alb_hostname
+}
+
+module "cognito" {
+  source      = "./modules/cognito"
+  domain_name = local.domain_name
 }
