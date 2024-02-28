@@ -7,6 +7,10 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: phdi-playground-${terraform_workspace}
     alb.ingress.kubernetes.io/certificate-arn: ${aws_acm_certificate_arn}
+    alb.ingress.kubernetes.io/auth-type: cognito
+    alb.ingress.kubernetes.io/auth-idp-cognito: '{"userPoolARN":"${cognito_user_pool_arn}","userPoolClientID":"${cognito_client_id}","userPoolDomain":"${cognito_domain}"}'
+    alb.ingress.kubernetes.io/auth-on-unauthenticated-request: authenticate
+    alb.ingress.kubernetes.io/auth-scope: openid
 spec:
   ingressClassName: alb
   rules:
