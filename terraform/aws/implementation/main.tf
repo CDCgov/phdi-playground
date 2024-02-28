@@ -30,19 +30,19 @@ module "vpc" {
 }
 
 module "eks" {
-  source             = "./modules/eks"
-  region             = var.region
-  eks_name           = local.name
-  vpc_id             = module.vpc.vpc_id
-  public_subnet_ids  = module.vpc.public_subnets
-  private_subnet_ids = module.vpc.private_subnets
-  smarty_auth_id     = var.smarty_auth_id
-  smarty_auth_token  = var.smarty_auth_token
+  source                  = "./modules/eks"
+  region                  = var.region
+  eks_name                = local.name
+  vpc_id                  = module.vpc.vpc_id
+  public_subnet_ids       = module.vpc.public_subnets
+  private_subnet_ids      = module.vpc.private_subnets
+  smarty_auth_id          = var.smarty_auth_id
+  smarty_auth_token       = var.smarty_auth_token
   aws_acm_certificate_arn = module.route53.aws_acm_certificate_arn
 }
 
 module "route53" {
-  source = "./modules/route53"
-  domain_name   = "dibbs.cloud"
+  source       = "./modules/route53"
+  domain_name  = "dibbs.cloud"
   alb_hostname = module.eks.alb_hostname
 }
