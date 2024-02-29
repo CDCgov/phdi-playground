@@ -338,7 +338,8 @@ data "kubectl_file_documents" "load_balancer_controller_crds" {
 # Ingress
 data "kubectl_file_documents" "ingress" {
   content = templatefile("./manifests/ingress.yaml", {
-    terraform_workspace = terraform.workspace
+    terraform_workspace     = terraform.workspace,
+    aws_acm_certificate_arn = var.aws_acm_certificate_arn
   })
 }
 
