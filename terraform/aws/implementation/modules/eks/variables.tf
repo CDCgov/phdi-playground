@@ -41,3 +41,7 @@ variable "smarty_auth_id" {
 variable "smarty_auth_token" {
   description = "value of the SmartyStreets Auth Token"
 }
+
+variable "aws_acm_certificate_arn" {
+  description = "The ARN of the ACM certificate"
+}
