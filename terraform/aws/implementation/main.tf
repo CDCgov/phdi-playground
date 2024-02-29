@@ -30,6 +30,7 @@ module "vpc" {
 }
 
 module "eks" {
+<<<<<<< HEAD
   source             = "./modules/eks"
   region             = var.region
   eks_name           = local.name
@@ -40,13 +41,22 @@ module "eks" {
   smarty_auth_token  = var.smarty_auth_token
   #aws_access_key_id  = var.aws_access_key_id
   #aws_secret_access_key = var.aws_secret_access_key
+=======
+  source                  = "./modules/eks"
+  region                  = var.region
+  eks_name                = local.name
+  vpc_id                  = module.vpc.vpc_id
+  public_subnet_ids       = module.vpc.public_subnets
+  private_subnet_ids      = module.vpc.private_subnets
+  smarty_auth_id          = var.smarty_auth_id
+  smarty_auth_token       = var.smarty_auth_token
+  aws_acm_certificate_arn = module.route53.aws_acm_certificate_arn
+>>>>>>> main
 }
 
-module "cloudfront" {
-  depends_on   = [module.eks]
-  source       = "./modules/cloudfront"
-  region       = var.region
-  vpc_id       = module.vpc.vpc_id
+module "route53" {
+  source       = "./modules/route53"
+  domain_name  = "dibbs.cloud"
   alb_hostname = module.eks.alb_hostname
 }
 
