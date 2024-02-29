@@ -38,6 +38,8 @@ module "eks" {
   private_subnet_ids = module.vpc.private_subnets
   smarty_auth_id     = var.smarty_auth_id
   smarty_auth_token  = var.smarty_auth_token
+  #aws_access_key_id  = var.aws_access_key_id
+  #aws_secret_access_key = var.aws_secret_access_key
 }
 
 module "cloudfront" {

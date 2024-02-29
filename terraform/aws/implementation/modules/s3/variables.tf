@@ -5,10 +5,5 @@ variable "region" {
 
 variable "s3_name" {
   type    = string
-  default = "phdi-playground-tfstate-dev"
-}
-
-variable "dynamodb_table" {
-  type    = string
-  default = "phdi-playground-tfstate-lock-dev"
+  default = "processed-ecr-files-dev"
 }
