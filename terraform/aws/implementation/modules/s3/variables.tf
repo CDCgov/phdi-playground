@@ -5,5 +5,5 @@ variable "region" {
 
 variable "s3_name" {
   type    = string
-  default = "processed-ecr-files-dev"
+  default = "processed-ecr-files"
 }
