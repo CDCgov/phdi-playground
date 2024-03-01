@@ -29,7 +29,7 @@ variable "services_to_chart" {
     fhir-converter = "fhir-converter-chart",
     ingestion      = "ingestion-chart",
     message-parser = "message-parser-chart",
-    orchestration  = "orchestration",
+    orchestration  = "orchestration-chart",
     validation     = "validation-chart"
     ecr-viewer     = "ecr-viewer-chart"
   }
