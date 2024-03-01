@@ -1,5 +1,11 @@
 data "aws_iam_policy_document" "ecr_viewer_s3_policy" {
   statement {
+
+    principals {
+      type        = "Service"
+      identifiers = ["s3.amazonaws.com"]
+    }
+
     principals {
       type        = "AWS"
       identifiers = ["arn:aws:iam:339712971032:role/s3_role"]
@@ -23,6 +29,12 @@ data "aws_iam_policy_document" "ecr_viewer_s3_policy" {
 
 data "aws_iam_policy_document" "orchestration_s3_policy" {
   statement {
+
+    principals {
+      type        = "Service"
+      identifiers = ["s3.amazonaws.com"]
+    }
+
     principals {
       type        = "AWS"
       identifiers = ["arn:aws:iam:339712971032:role/s3_role"]
