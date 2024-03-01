@@ -282,6 +282,11 @@ resource "helm_release" "building_blocks" {
     name  = "validationUrl"
     value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/validation"
   }
+
+  set {
+    name  = "ecrViewerUrl"
+    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/ecr-viewer"
+  }
 }
 
 # Ingress
