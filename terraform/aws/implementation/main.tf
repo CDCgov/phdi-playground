@@ -46,3 +46,9 @@ module "route53" {
   domain_name  = "dibbs.cloud"
   alb_hostname = module.eks.alb_hostname
 }
+
+module "s3" {
+  depends_on = [module.eks]
+  source     = "./modules/s3"
+  region     = var.region
+}

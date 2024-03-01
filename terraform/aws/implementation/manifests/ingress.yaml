@@ -47,3 +47,10 @@ spec:
                 name: phdi-playground-${terraform_workspace}-orchestration-orchestration-service
                 port:
                   number: 8080
+          - path: /ecr-viewer
+            pathType: Prefix
+            backend:
+              service:
+                name: phdi-playground-${terraform_workspace}-ecr-viewer-ecr-viewer-service
+                port:
+                  number: 8080
