@@ -28,7 +28,7 @@ variable "services_to_chart" {
     ingestion      = "ingestion-chart",
     ingress        = "ingress-chart",
     message-parser = "message-parser-chart",
-    orchestration  = "orchestration",
+    orchestration  = "orchestration-chart",
     validation     = "validation-chart"
   }
 }
