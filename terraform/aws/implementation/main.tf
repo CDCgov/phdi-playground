@@ -55,3 +55,15 @@ module "cognito" {
   source      = "./modules/cognito"
   domain_name = local.domain_name
 }
+
+module "s3" {
+  depends_on = [module.eks]
+  source     = "./modules/s3"
+  region     = var.region
+}
+
+module "s3" {
+  depends_on = [module.eks]
+  source     = "./modules/s3"
+  region     = var.region
+}
