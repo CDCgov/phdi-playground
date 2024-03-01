@@ -51,4 +51,5 @@ module "s3" {
   depends_on = [module.eks]
   source     = "./modules/s3"
   region     = var.region
+  eks_assume_role_policy = module.eks.eks_assume_role_policy
 }
