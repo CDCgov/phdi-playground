@@ -265,27 +265,27 @@ resource "helm_release" "building_blocks" {
   #  Values needed for orchestration service
   set {
     name  = "fhirConverterUrl"
-    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/fhir-converter"
+    value = "https://${var.domain_name}/fhir-converter"
   }
 
   set {
     name  = "ingestionUrl"
-    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/ingestion"
+    value = "https://${var.domain_name}/ingestion"
   }
 
   set {
     name  = "messageParserUrl"
-    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/message-parser"
+    value = "https://${var.domain_name}/message-parser"
   }
 
   set {
     name  = "validationUrl"
-    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/validation"
+    value = "https://${var.domain_name}/validation"
   }
 
   set {
     name  = "ecrViewerUrl"
-    value = "https://k8s-phdiplayground${terraform.workspace}.${var.region}.elb.amazonaws.com/ecr-viewer"
+    value = "https://${var.domain_name}/ecr-viewer"
   }
 }
 

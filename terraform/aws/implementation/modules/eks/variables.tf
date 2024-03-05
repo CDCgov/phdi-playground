@@ -58,3 +58,7 @@ variable "cognito_client_id" {
 variable "cognito_domain" {
   description = "The domain of the Cognito user pool"
 }
+
+variable "domain_name" {
+  description = "The domain name of the application"
+}

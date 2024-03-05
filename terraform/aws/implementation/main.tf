@@ -43,6 +43,7 @@ module "eks" {
   cognito_user_pool_arn   = module.cognito.cognito_user_pool_arn
   cognito_client_id       = module.cognito.cognito_client_id
   cognito_domain          = module.cognito.cognito_domain
+  domain_name = local.domain_name
 }
 
 module "route53" {
