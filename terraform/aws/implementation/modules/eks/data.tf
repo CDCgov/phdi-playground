@@ -329,18 +329,6 @@ data "kubectl_file_documents" "load_balancer_service_account" {
   })
 }
 
-data "kubectl_file_documents" "ecr_viewer_service_account" {
-  content = templatefile("./manifests/ecrViewerServiceAccount.yaml", {
-    ecr_viewer_service_account_role_arn = var.ecr_viewer_s3_role_arn
-  })
-}
-
-data "kubectl_file_documents" "orchestration_service_account" {
-  content = templatefile("./manifests/orchestrationServiceAccount.yaml", {
-    orchestration_service_account_role_arn = var.orchestration_s3_role_arn
-  })
-}
-
 data "aws_caller_identity" "current" {}
 
 data "kubectl_file_documents" "load_balancer_controller_crds" {
