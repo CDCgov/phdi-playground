@@ -30,17 +30,17 @@ module "vpc" {
 }
 
 module "eks" {
-  source                  = "./modules/eks"
-  region                  = var.region
-  eks_name                = local.name
-  vpc_id                  = module.vpc.vpc_id
-  public_subnet_ids       = module.vpc.public_subnets
-  private_subnet_ids      = module.vpc.private_subnets
-  smarty_auth_id          = var.smarty_auth_id
-  smarty_auth_token       = var.smarty_auth_token
-  aws_acm_certificate_arn = module.route53.aws_acm_certificate_arn
+  source                    = "./modules/eks"
+  region                    = var.region
+  eks_name                  = local.name
+  vpc_id                    = module.vpc.vpc_id
+  public_subnet_ids         = module.vpc.public_subnets
+  private_subnet_ids        = module.vpc.private_subnets
+  smarty_auth_id            = var.smarty_auth_id
+  smarty_auth_token         = var.smarty_auth_token
+  aws_acm_certificate_arn   = module.route53.aws_acm_certificate_arn
   orchestration_s3_role_arn = module.s3.orchestration_s3_role_arn
-  ecr_viewer_s3_role_arn  = module.s3.ecr_viewer_s3_role_arn
+  ecr_viewer_s3_role_arn    = module.s3.ecr_viewer_s3_role_arn
 }
 
 module "route53" {
@@ -50,7 +50,7 @@ module "route53" {
 }
 
 module "s3" {
-  source     = "./modules/s3"
-  region     = var.region
+  source                 = "./modules/s3"
+  region                 = var.region
   eks_assume_role_policy = module.eks.eks_assume_role_policy
 }

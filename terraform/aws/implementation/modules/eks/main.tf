@@ -133,7 +133,7 @@ locals {
 }
 
 resource "aws_iam_role" "eks_service_account" {
-  name = "AmazonEKSLoadBalancerControllerRole"
+  name               = "AmazonEKSLoadBalancerControllerRole"
   assume_role_policy = data.aws_iam_policy_document.eks_assume_role_policy.json
 }
 
