@@ -146,14 +146,6 @@ resource "kubectl_manifest" "load_balancer_service_account" {
   yaml_body = data.kubectl_file_documents.load_balancer_service_account.documents[0]
 }
 
-resource "kubectl_manifest" "ecr_viewer_service_account" {
-  yaml_body = data.kubectl_file_documents.ecr_viewer_service_account.documents[0]
-}
-
-resource "kubectl_manifest" "orchestration_service_account" {
-  yaml_body = data.kubectl_file_documents.orchestration_service_account.documents[0]
-}
-
 # kubectl auth to EKS
 resource "terraform_data" "kubeconfig" {
   depends_on = [module.eks-cluster, kubectl_manifest.cluster_role_binding, kubectl_manifest.load_balancer_service_account]
@@ -228,7 +220,7 @@ resource "terraform_data" "wait_for_load_balancer_controller" {
 # Building blocks
 
 resource "helm_release" "building_blocks" {
-  depends_on      = [terraform_data.wait_for_load_balancer_controller, kubectl_manifest.ecr_viewer_service_account, kubectl_manifest.orchestration_service_account]
+  depends_on      = [terraform_data.wait_for_load_balancer_controller]
   for_each        = var.services_to_chart
   repository      = "https://cdcgov.github.io/phdi-charts/"
   name            = "phdi-playground-${terraform.workspace}-${each.key}"
