@@ -371,23 +371,23 @@ data "aws_ecrpublic_authorization_token" "token" {
 
 data "aws_iam_policy_document" "eks_assume_role_policy" {
   statement {
-    sid       = ""
-    effect    = "Allow"
+    sid     = ""
+    effect  = "Allow"
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
-  condition {
-    test     = "StringEquals" 
-    variable = "${local.oidc_provider}:aud" 
-    values   = ["sts.amazonaws.com"]
-  }
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_provider}:aud"
+      values   = ["sts.amazonaws.com"]
+    }
 
-  condition {
-    test     = "StringEquals" 
-    variable = "${local.oidc_provider}:sub" 
-    values   = ["system:serviceaccount:${local.namespace}:${local.service_account_name}"]
-  }
-  
-  principals {
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_provider}:sub"
+      values   = ["system:serviceaccount:${local.namespace}:${local.service_account_name}"]
+    }
+
+    principals {
       type        = "Federated"
       identifiers = ["arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_provider}"]
     }
