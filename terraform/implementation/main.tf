@@ -21,6 +21,7 @@ locals {
   }))
 }
 
+# Note: The chart names are limited to 15 characters
 variable "services_to_chart" {
   type = map(string)
   default = {

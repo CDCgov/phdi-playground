@@ -39,6 +39,8 @@ module "eks" {
   smarty_auth_id          = var.smarty_auth_id
   smarty_auth_token       = var.smarty_auth_token
   aws_acm_certificate_arn = module.route53.aws_acm_certificate_arn
+  orchestration_s3_role_arn = module.s3.orchestration_s3_role_arn
+  ecr_viewer_s3_role_arn  = module.s3.ecr_viewer_s3_role_arn
 }
 
 module "route53" {
@@ -48,7 +50,6 @@ module "route53" {
 }
 
 module "s3" {
-  depends_on = [module.eks]
   source     = "./modules/s3"
   region     = var.region
   eks_assume_role_policy = module.eks.eks_assume_role_policy

@@ -142,13 +142,21 @@ resource "aws_iam_role_policy_attachment" "load_balancer_controller" {
   policy_arn = aws_iam_policy.load_balancer_controller.arn
 }
 
-resource "kubectl_manifest" "service_account" {
-  yaml_body = data.kubectl_file_documents.service_account.documents[0]
+resource "kubectl_manifest" "load_balancer_service_account" {
+  yaml_body = data.kubectl_file_documents.load_balancer_service_account.documents[0]
+}
+
+resource "kubectl_manifest" "ecr_viewer_service_account" {
+  yaml_body = data.kubectl_file_documents.ecr_viewer_service_account.documents[0]
+}
+
+resource "kubectl_manifest" "orchestration_service_account" {
+  yaml_body = data.kubectl_file_documents.orchestration_service_account.documents[0]
 }
 
 # kubectl auth to EKS
 resource "terraform_data" "kubeconfig" {
-  depends_on = [module.eks-cluster, kubectl_manifest.cluster_role_binding, kubectl_manifest.service_account]
+  depends_on = [module.eks-cluster, kubectl_manifest.cluster_role_binding, kubectl_manifest.load_balancer_service_account]
 
   provisioner "local-exec" {
     command = "aws eks update-kubeconfig --name ${module.eks-cluster.cluster_name} --region ${var.region}"
@@ -220,7 +228,7 @@ resource "terraform_data" "wait_for_load_balancer_controller" {
 # Building blocks
 
 resource "helm_release" "building_blocks" {
-  depends_on      = [terraform_data.wait_for_load_balancer_controller]
+  depends_on      = [terraform_data.wait_for_load_balancer_controller, kubectl_manifest.ecr_viewer_service_account, kubectl_manifest.orchestration_service_account]
   for_each        = var.services_to_chart
   repository      = "https://cdcgov.github.io/phdi-charts/"
   name            = "phdi-playground-${terraform.workspace}-${each.key}"
@@ -242,6 +250,16 @@ resource "helm_release" "building_blocks" {
   set {
     name  = "smartyToken"
     value = var.smarty_auth_token
+  }
+
+  set {
+    name  = "ecrViewerS3RoleArn"
+    value = var.ecr_viewer_s3_role_arn
+  }
+
+  set {
+    name  = "orchestrationS3RoleArn"
+    value = var.orhestration_s3_role_arn
   }
 
   #  Values needed for orchestration service
