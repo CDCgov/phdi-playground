@@ -259,7 +259,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "orchestrationS3RoleArn"
-    value = var.orhestration_s3_role_arn
+    value = var.orchestration_s3_role_arn
   }
 
   #  Values needed for orchestration service
