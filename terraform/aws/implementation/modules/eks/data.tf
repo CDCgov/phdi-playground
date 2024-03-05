@@ -323,9 +323,21 @@ data "kubectl_path_documents" "cluster_role_binding" {
   pattern = "./manifests/clusterRoleBinding.yaml"
 }
 
-data "kubectl_file_documents" "service_account" {
-  content = templatefile("./manifests/serviceAccount.yaml", {
+data "kubectl_file_documents" "load_balancer_service_account" {
+  content = templatefile("./manifests/loadBalancerControllerServiceAccount.yaml", {
     service_account_role_arn = aws_iam_role.eks_service_account.arn
+  })
+}
+
+data "kubectl_file_documents" "ecr_viewer_service_account" {
+  content = templatefile("./manifests/ecrViewerServiceAccount.yaml", {
+    ecr_viewer_service_account_role_arn = var.ecr_viewer_s3_role_arn
+  })
+}
+
+data "kubectl_file_documents" "orchestration_service_account" {
+  content = templatefile("./manifests/orchestrationServiceAccount.yaml", {
+    orchestration_service_account_role_arn = var.orchestration_s3_role_arn
   })
 }
 
@@ -359,23 +371,23 @@ data "aws_ecrpublic_authorization_token" "token" {
 
 data "aws_iam_policy_document" "eks_assume_role_policy" {
   statement {
-    sid       = ""
-    effect    = "Allow"
+    sid     = ""
+    effect  = "Allow"
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
-  condition {
-    test     = "StringEquals" 
-    variable = "${local.oidc_provider}:aud" 
-    values   = ["sts.amazonaws.com"]
-  }
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_provider}:aud"
+      values   = ["sts.amazonaws.com"]
+    }
 
-  condition {
-    test     = "StringEquals" 
-    variable = "${local.oidc_provider}:sub" 
-    values   = ["system:serviceaccount:${local.namespace}:${local.service_account_name}"]
-  }
-  
-  principals {
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_provider}:sub"
+      values   = ["system:serviceaccount:${local.namespace}:${local.service_account_name}"]
+    }
+
+    principals {
       type        = "Federated"
       identifiers = ["arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_provider}"]
     }
