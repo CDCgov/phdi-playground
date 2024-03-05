@@ -34,3 +34,4 @@ data "aws_iam_policy_document" "orchestration_s3_policy" {
       "${aws_s3_bucket.s3.arn}/*",
     ]
   }
+}

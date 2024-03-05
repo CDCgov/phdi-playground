@@ -23,6 +23,7 @@ variable "private_subnet_ids" {
   description = "List of private subnet IDs"
 }
 
+# Note: The chart names are limited to 15 characters
 variable "services_to_chart" {
   type = map(string)
   default = {
@@ -45,4 +46,12 @@ variable "smarty_auth_token" {
 
 variable "aws_acm_certificate_arn" {
   description = "The ARN of the ACM certificate"
+}
+
+variable "orhestration_s3_role_arn" {
+  description = "The s3 Role ARN for the Orchestration Service"
+}
+
+variable "ecr_viewer_s3_role_arn" {
+  description = "The s3 Role ARN for the ECR Viewer Service"
 }
