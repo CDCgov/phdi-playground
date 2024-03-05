@@ -9,5 +9,5 @@ variable "s3_name" {
 }
 
 variable "eks_assume_role_policy" {
-  type    = string
+  type = string
 }
