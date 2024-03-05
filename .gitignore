@@ -102,3 +102,5 @@ terraform.tfstate.backup
 *.tfvars
 .vscode/settings.json
 credentials.json
+.bash_profile
+awscli-bundle/
