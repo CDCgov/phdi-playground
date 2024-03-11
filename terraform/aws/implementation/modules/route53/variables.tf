@@ -4,7 +4,8 @@ variable "domain_name" {
   default     = "dibbs.cloud"
 }
 
-variable "alb_hostname" {
-  description = "The hostname of the ALB"
+variable "ingress_created" {
+  description = "The ID of the Kubernetes Ingress resource"
   type        = string
 }
+
