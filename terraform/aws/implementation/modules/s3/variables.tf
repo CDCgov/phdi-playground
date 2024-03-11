@@ -7,3 +7,7 @@ variable "s3_name" {
   type    = string
   default = "processed-ecr-files"
 }
+
+variable "eks_assume_role_policy" {
+  type = string
+}

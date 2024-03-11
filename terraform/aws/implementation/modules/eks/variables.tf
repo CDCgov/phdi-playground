@@ -23,6 +23,7 @@ variable "private_subnet_ids" {
   description = "List of private subnet IDs"
 }
 
+# Note: The chart names are limited to 15 characters
 variable "services_to_chart" {
   type = map(string)
   default = {
@@ -47,6 +48,24 @@ variable "aws_acm_certificate_arn" {
   description = "The ARN of the ACM certificate"
 }
 
+variable "orchestration_s3_role_arn" {
+  description = "The s3 Role ARN for the Orchestration Service"
+}
+
+variable "ecr_viewer_s3_role_arn" {
+  description = "The s3 Role ARN for the ECR Viewer Service"
+}
+
+variable "domain_name" {
+  description = "The domain name to use"
+  type        = string
+}
+
+variable "ecr_bucket_name" {
+  description = "The name of the ECR bucket"
+  type        = string
+}
+
 variable "cognito_user_pool_arn" {
   description = "The ARN of the Cognito user pool"
 }
@@ -57,8 +76,4 @@ variable "cognito_client_id" {
 
 variable "cognito_domain" {
   description = "The domain of the Cognito user pool"
-}
-
-variable "domain_name" {
-  description = "The domain name of the application"
 }

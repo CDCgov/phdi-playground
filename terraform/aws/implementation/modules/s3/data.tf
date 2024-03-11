@@ -1,10 +1,7 @@
 data "aws_iam_policy_document" "ecr_viewer_s3_policy" {
   statement {
-    principals {
-      type        = "AWS"
-      identifiers = ["ecrViewerPutPostGetS3Policy"]
-    }
-
+    sid    = ""
+    effect = "Allow"
     actions = [
       "s3:PutObject",
       "s3:PutObjectAcl",
@@ -23,11 +20,8 @@ data "aws_iam_policy_document" "ecr_viewer_s3_policy" {
 
 data "aws_iam_policy_document" "orchestration_s3_policy" {
   statement {
-    principals {
-      type        = "AWS"
-      identifiers = ["orchestrationPutAndPostS3Policy"]
-    }
-
+    sid    = ""
+    effect = "Allow"
     actions = [
       "s3:PutObject",
       "s3:PutObjectAcl",

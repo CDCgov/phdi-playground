@@ -57,4 +57,4 @@ spec:
               service:
                 name: phdi-playground-${terraform_workspace}-ecr-viewer-ecr-viewer-service
                 port:
-                  number: 8080
+                  number: 3000

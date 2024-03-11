@@ -7,6 +7,12 @@ terraform {
   }
 }
 
+resource "aws_iam_policy" "cloudwatch_policy" {
+  name        = "AWSObservabilityLoggingPolicy"
+  description = "Policy for AWS Observability"
+  policy      = data.aws_iam_policy_document.cloudwatch_policy.json
+}
+
 module "eks-cluster" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.21.0"
@@ -31,12 +37,18 @@ module "eks-cluster" {
         { namespace = "default" }
       ]
       subnet_ids = var.private_subnet_ids
+      iam_role_additional_policies = {
+        logging = aws_iam_policy.cloudwatch_policy.arn
+      }
     }
     karpenter = {
       selectors = [
         { namespace = "karpenter" }
       ]
       subnet_ids = var.private_subnet_ids
+      iam_role_additional_policies = {
+        logging = aws_iam_policy.cloudwatch_policy.arn
+      }
     }
     kube_system = {
       name = "kube-system"
@@ -44,6 +56,9 @@ module "eks-cluster" {
         { namespace = "kube-system" }
       ]
       subnet_ids = var.private_subnet_ids
+      iam_role_additional_policies = {
+        logging = aws_iam_policy.cloudwatch_policy.arn
+      }
     }
   }
 
@@ -130,29 +145,27 @@ locals {
     Blueprint  = var.eks_name
     GithubRepo = "github.com/aws-ia/terraform-aws-eks-blueprints"
   }
+  nbs_public_key = <<-EOT
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqjrH9PprQCB5dX15zYfd
+S6K2ezNi/ZOu8vKEhQuLqwHACy1iUt1Yyp2PZLIV7FVDgBHMMVWPVx3GJ2wEyaJw
+MHkv6XNpUpWLhbs0V1T7o/OZfEIqcNua07OEoBxX9vhKIHtaksWdoMyKRXQJz0js
+oWpawfOWxETnLqGvybT4yvY2RJhquTXLcLu90L4LdvIkADIZshaOtAU/OwI5ATcb
+fE3ip15E6jIoUm7FAtfRiuncpI5l/LJPP6fvwf8QCbbUJBZklLqcUuf4qe/L/nIq
+pIONb8KZFWPhnGeRZ9bwIcqYWt3LAAshQLSGEYl2PGXaqbkUD2XLETSKDjisxd0g
+9j8bIMPgBKi+dBYcmBZnR7DxJe+vEDDw8prHG/+HRy5fim/BcibTKnIl8PR5yqHa
+mWQo7N+xXhILdD9e33KLRgbg97+erHqvHlNMdwDhAfrBT+W6GCdPwp3cePPsbhsc
+oGSHOUDhzyAujr0J8h5WmZDGUNWjGzWqubNZD8dBXB8x+9dDoWhfM82nw0pvAeKf
+wJodvn3Qo8/S5hxJ6HyGkUTANKN8IxWh/6R5biET5BuztZP6jfPEaOAnt6sq+C38
+hR9rUr59dP2BTlcJ19ZXobLwuJEa81S5BrcbDwYNOAzC8jl2EV1i4bQIwJJaY27X
+Iynom6unaheZpS4DFIh2w9UCAwEAAQ==
+-----END PUBLIC KEY-----
+EOT
 }
 
 resource "aws_iam_role" "eks_service_account" {
-  name = "AmazonEKSLoadBalancerControllerRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRoleWithWebIdentity"
-        Effect = "Allow"
-        Principal = {
-          Federated = "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_provider}"
-        }
-        Condition = {
-          StringEquals = {
-            "${local.oidc_provider}:aud" = "sts.amazonaws.com"
-            "${local.oidc_provider}:sub" = "system:serviceaccount:${local.namespace}:${local.service_account_name}"
-          }
-        }
-      },
-    ]
-  })
+  name               = "AmazonEKSLoadBalancerControllerRole"
+  assume_role_policy = data.aws_iam_policy_document.eks_assume_role_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "load_balancer_controller" {
@@ -160,17 +173,37 @@ resource "aws_iam_role_policy_attachment" "load_balancer_controller" {
   policy_arn = aws_iam_policy.load_balancer_controller.arn
 }
 
-resource "kubectl_manifest" "service_account" {
-  yaml_body = data.kubectl_file_documents.service_account.documents[0]
+resource "kubectl_manifest" "load_balancer_service_account" {
+  yaml_body = data.kubectl_file_documents.load_balancer_service_account.documents[0]
 }
 
 # kubectl auth to EKS
 resource "terraform_data" "kubeconfig" {
-  depends_on = [module.eks-cluster, kubectl_manifest.cluster_role_binding, kubectl_manifest.service_account]
+  depends_on = [module.eks-cluster, kubectl_manifest.cluster_role_binding, kubectl_manifest.load_balancer_service_account]
 
   provisioner "local-exec" {
     command = "aws eks update-kubeconfig --name ${module.eks-cluster.cluster_name} --region ${var.region}"
   }
+}
+
+# Logging
+
+resource "kubernetes_namespace_v1" "aws_observability" {
+  metadata {
+    name = "aws-observability"
+    annotations = {
+      name = "aws-observability"
+    }
+
+    labels = {
+      aws-observability = "enabled"
+    }
+  }
+}
+
+resource "kubectl_manifest" "logging_config_map" {
+  depends_on = [kubernetes_namespace_v1.aws_observability]
+  yaml_body  = data.kubectl_file_documents.logging_config_map.documents[0]
 }
 
 # Load Balancer Controller
@@ -249,7 +282,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "image.tag"
-    value = "v1.2.1"
+    value = "v1.2.6"
   }
 
   set {
@@ -260,6 +293,16 @@ resource "helm_release" "building_blocks" {
   set {
     name  = "smartyToken"
     value = var.smarty_auth_token
+  }
+
+  set {
+    name  = "ecrViewerS3RoleArn"
+    value = var.ecr_viewer_s3_role_arn
+  }
+
+  set {
+    name  = "orchestrationS3RoleArn"
+    value = var.orchestration_s3_role_arn
   }
 
   #  Values needed for orchestration service
@@ -286,6 +329,21 @@ resource "helm_release" "building_blocks" {
   set {
     name  = "ecrViewerUrl"
     value = "https://${var.domain_name}/ecr-viewer"
+  }
+
+  set {
+    name  = "ecrBucketName"
+    value = var.ecr_bucket_name
+  }
+
+  set {
+    name  = "nbsPubKey"
+    value = local.nbs_public_key
+  }
+
+  set {
+    name  = "source"
+    value = "s3"
   }
 }
 

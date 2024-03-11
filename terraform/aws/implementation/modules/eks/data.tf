@@ -323,8 +323,8 @@ data "kubectl_path_documents" "cluster_role_binding" {
   pattern = "./manifests/clusterRoleBinding.yaml"
 }
 
-data "kubectl_file_documents" "service_account" {
-  content = templatefile("./manifests/serviceAccount.yaml", {
+data "kubectl_file_documents" "load_balancer_service_account" {
+  content = templatefile("./manifests/loadBalancerControllerServiceAccount.yaml", {
     service_account_role_arn = aws_iam_role.eks_service_account.arn
   })
 }
@@ -346,16 +346,65 @@ data "kubectl_file_documents" "ingress" {
   })
 }
 
-data "kubernetes_ingress_v1" "ingress" {
-  depends_on = [kubectl_manifest.ingress]
-  metadata {
-    name = "ingress"
-    annotations = {
-      "alb.ingress.kubernetes.io/group.name" = "phdi-playground-${terraform.workspace}"
+data "aws_ecrpublic_authorization_token" "token" {
+  provider = aws
+}
+
+data "aws_iam_policy_document" "eks_assume_role_policy" {
+  statement {
+    sid     = ""
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_provider}:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_provider}:sub"
+      values   = ["system:serviceaccount:${local.namespace}:${local.service_account_name}"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_provider}:sub"
+      values   = ["system:serviceaccount:default:orchestration"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${local.oidc_provider}:sub"
+      values   = ["system:serviceaccount:default:ecr-viewer"]
+    }
+
+    principals {
+      type        = "Federated"
+      identifiers = ["arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_provider}"]
     }
   }
 }
 
-data "aws_ecrpublic_authorization_token" "token" {
-  provider = aws
+data "kubectl_file_documents" "logging_config_map" {
+  content = templatefile("./manifests/loggingConfigMap.yaml", {
+    aws_region = var.region
+  })
+}
+
+data "aws_iam_policy_document" "cloudwatch_policy" {
+  statement {
+    sid       = ""
+    effect    = "Allow"
+    resources = ["*"]
+
+    actions = [
+      "logs:CreateLogStream",
+      "logs:CreateLogGroup",
+      "logs:DescribeLogStreams",
+      "logs:PutLogEvents",
+      "logs:PutRetentionPolicy",
+    ]
+  }
 }
