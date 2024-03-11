@@ -11,3 +11,9 @@ variable "smarty_auth_id" {
 variable "smarty_auth_token" {
   description = "value of the SmartyStreets Auth Token"
 }
+
+variable "enable_cognito" {
+  description = "Enable Cognito"
+  type        = bool
+  default     = true
+}

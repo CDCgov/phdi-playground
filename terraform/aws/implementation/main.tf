@@ -44,9 +44,10 @@ module "eks" {
   ecr_viewer_s3_role_arn    = module.s3.ecr_viewer_s3_role_arn
   domain_name               = local.domain_name
   ecr_bucket_name           = module.s3.ecr_bucket_name
-  cognito_user_pool_arn   = module.cognito.cognito_user_pool_arn
-  cognito_client_id       = module.cognito.cognito_client_id
-  cognito_domain          = module.cognito.cognito_domain
+  enable_cognito            = var.enable_cognito
+  cognito_user_pool_arn     = module.cognito.cognito_user_pool_arn
+  cognito_client_id         = module.cognito.cognito_client_id
+  cognito_domain            = module.cognito.cognito_domain
 }
 
 module "route53" {
@@ -61,13 +62,7 @@ module "cognito" {
 }
 
 module "s3" {
-  depends_on = [module.eks]
-  source     = "./modules/s3"
-  region     = var.region
-}
-
-module "s3" {
-  depends_on = [module.eks]
-  source     = "./modules/s3"
-  region     = var.region
+  source                 = "./modules/s3"
+  region                 = var.region
+  eks_assume_role_policy = module.eks.eks_assume_role_policy
 }
