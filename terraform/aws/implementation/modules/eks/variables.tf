@@ -65,3 +65,21 @@ variable "ecr_bucket_name" {
   description = "The name of the ECR bucket"
   type        = string
 }
+
+variable "enable_cognito" {
+  description = "Enable Cognito"
+  type        = bool
+  default     = true
+}
+
+variable "cognito_user_pool_arn" {
+  description = "The ARN of the Cognito user pool"
+}
+
+variable "cognito_client_id" {
+  description = "The ID of the Cognito user pool client"
+}
+
+variable "cognito_domain" {
+  description = "The domain of the Cognito user pool"
+}
