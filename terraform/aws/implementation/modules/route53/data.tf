@@ -3,6 +3,7 @@ data "aws_route53_zone" "domain" {
 }
 
 data "aws_lb" "alb" {
+  depends_on = [var.ingress_created]
   tags = {
     "ingress.k8s.aws/stack" = "phdi-playground-${terraform.workspace}"
   }
