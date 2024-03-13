@@ -48,10 +48,6 @@ variable "aws_acm_certificate_arn" {
   description = "The ARN of the ACM certificate"
 }
 
-variable "orchestration_s3_role_arn" {
-  description = "The s3 Role ARN for the Orchestration Service"
-}
-
 variable "ecr_viewer_s3_role_arn" {
   description = "The s3 Role ARN for the ECR Viewer Service"
 }

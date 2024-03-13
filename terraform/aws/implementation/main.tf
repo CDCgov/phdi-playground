@@ -40,7 +40,6 @@ module "eks" {
   smarty_auth_id            = var.smarty_auth_id
   smarty_auth_token         = var.smarty_auth_token
   aws_acm_certificate_arn   = module.route53.aws_acm_certificate_arn
-  orchestration_s3_role_arn = module.s3.orchestration_s3_role_arn
   ecr_viewer_s3_role_arn    = module.s3.ecr_viewer_s3_role_arn
   domain_name               = local.domain_name
   ecr_bucket_name           = module.s3.ecr_bucket_name
