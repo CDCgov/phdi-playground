@@ -55,3 +55,13 @@ variable "orchestration_s3_role_arn" {
 variable "ecr_viewer_s3_role_arn" {
   description = "The s3 Role ARN for the ECR Viewer Service"
 }
+
+variable "domain_name" {
+  description = "The domain name to use"
+  type        = string
+}
+
+variable "ecr_bucket_name" {
+  description = "The name of the ECR bucket"
+  type        = string
+}

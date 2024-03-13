@@ -1,5 +1,6 @@
 locals {
-  name = "phdi-playground-${terraform.workspace}"
+  name        = "phdi-playground-${terraform.workspace}"
+  domain_name = "dibbs.cloud"
 }
 
 module "vpc" {
@@ -41,12 +42,14 @@ module "eks" {
   aws_acm_certificate_arn   = module.route53.aws_acm_certificate_arn
   orchestration_s3_role_arn = module.s3.orchestration_s3_role_arn
   ecr_viewer_s3_role_arn    = module.s3.ecr_viewer_s3_role_arn
+  domain_name               = local.domain_name
+  ecr_bucket_name           = module.s3.ecr_bucket_name
 }
 
 module "route53" {
-  source       = "./modules/route53"
-  domain_name  = "dibbs.cloud"
-  alb_hostname = module.eks.alb_hostname
+  source          = "./modules/route53"
+  domain_name     = local.domain_name
+  ingress_created = module.eks.ingress_created
 }
 
 module "s3" {
