@@ -31,22 +31,22 @@ module "vpc" {
 }
 
 module "eks" {
-  source                    = "./modules/eks"
-  region                    = var.region
-  eks_name                  = local.name
-  vpc_id                    = module.vpc.vpc_id
-  public_subnet_ids         = module.vpc.public_subnets
-  private_subnet_ids        = module.vpc.private_subnets
-  smarty_auth_id            = var.smarty_auth_id
-  smarty_auth_token         = var.smarty_auth_token
-  aws_acm_certificate_arn   = module.route53.aws_acm_certificate_arn
-  ecr_viewer_s3_role_arn    = module.s3.ecr_viewer_s3_role_arn
-  domain_name               = local.domain_name
-  ecr_bucket_name           = module.s3.ecr_bucket_name
-  enable_cognito            = var.enable_cognito
-  cognito_user_pool_arn     = module.cognito.cognito_user_pool_arn
-  cognito_client_id         = module.cognito.cognito_client_id
-  cognito_domain            = module.cognito.cognito_domain
+  source                  = "./modules/eks"
+  region                  = var.region
+  eks_name                = local.name
+  vpc_id                  = module.vpc.vpc_id
+  public_subnet_ids       = module.vpc.public_subnets
+  private_subnet_ids      = module.vpc.private_subnets
+  smarty_auth_id          = var.smarty_auth_id
+  smarty_auth_token       = var.smarty_auth_token
+  aws_acm_certificate_arn = module.route53.aws_acm_certificate_arn
+  ecr_viewer_s3_role_arn  = module.s3.ecr_viewer_s3_role_arn
+  domain_name             = local.domain_name
+  ecr_bucket_name         = module.s3.ecr_bucket_name
+  enable_cognito          = var.enable_cognito
+  cognito_user_pool_arn   = module.cognito.cognito_user_pool_arn
+  cognito_client_id       = module.cognito.cognito_client_id
+  cognito_domain          = module.cognito.cognito_domain
 }
 
 module "route53" {
