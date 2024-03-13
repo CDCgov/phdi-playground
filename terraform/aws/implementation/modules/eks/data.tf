@@ -337,7 +337,13 @@ data "kubectl_file_documents" "load_balancer_controller_crds" {
 
 # Ingress
 data "kubectl_file_documents" "ingress" {
-  content = templatefile("./manifests/ingress.yaml", {
+  content = var.enable_cognito ? templatefile("./manifests/ingressWithCognito.yaml", {
+    terraform_workspace     = terraform.workspace,
+    aws_acm_certificate_arn = var.aws_acm_certificate_arn,
+    cognito_user_pool_arn   = var.cognito_user_pool_arn,
+    cognito_client_id       = var.cognito_client_id,
+    cognito_domain          = var.cognito_domain
+    }) : templatefile("./manifests/ingressWithoutCognito.yaml", {
     terraform_workspace     = terraform.workspace,
     aws_acm_certificate_arn = var.aws_acm_certificate_arn
   })
