@@ -282,7 +282,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "image.tag"
-    value = "v1.2.6"
+    value = "v1.2.8"
   }
 
   set {
@@ -298,11 +298,6 @@ resource "helm_release" "building_blocks" {
   set {
     name  = "ecrViewerS3RoleArn"
     value = var.ecr_viewer_s3_role_arn
-  }
-
-  set {
-    name  = "orchestrationS3RoleArn"
-    value = var.orchestration_s3_role_arn
   }
 
   #  Values needed for orchestration service
