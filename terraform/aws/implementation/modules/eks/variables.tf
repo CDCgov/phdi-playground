@@ -31,8 +31,9 @@ variable "services_to_chart" {
     ingestion      = "ingestion-chart",
     message-parser = "message-parser-chart",
     orchestration  = "orchestration",
-    validation     = "validation-chart"
-    ecr-viewer     = "ecr-viewer"
+    validation     = "validation-chart",
+    ecr-viewer     = "ecr-viewer",
+    tefca-viewer   = "tefca-viewer",
   }
 }
 
