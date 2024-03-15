@@ -5,8 +5,6 @@ data "aws_iam_policy_document" "ecr_viewer_s3_policy" {
     actions = [
       "s3:PutObject",
       "s3:PutObjectAcl",
-      "s3:PostObject",
-      "s3:PostObjectAcl",
       "s3:GetObject",
       "s3:GetObjectAcl",
     ]
