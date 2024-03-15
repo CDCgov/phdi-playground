@@ -25,13 +25,12 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./terraform/implementation
+        working-directory: ./terraform/azure/implementation
     outputs:
       tf_env: ${{ steps.set-environment.outputs.tf_env }}
       short_cid: ${{ steps.set-environment.outputs.short_cid }}
       record_linkage_container_url:
-        ${{ steps.terraform.outputs.record_linkage_container_url
-        }}
+        ${{ steps.terraform.outputs.record_linkage_container_url }}
     steps:
       - name: Check Out Changes
         uses: actions/checkout@v3

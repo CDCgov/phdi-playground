@@ -1,0 +1,74 @@
+---
+name: Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to deploy to
+        type: environment
+        required: true
+  # add back in when ready to add the terraform
+  # push:
+  #   branches:
+  #     - main
+
+permissions:
+  id-token: write
+  contents: read
+  packages: write
+jobs:
+  terraform:
+    name: Run Terraform
+    runs-on: ubuntu-latest
+    environment: main
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform/aws/implementation
+    outputs:
+      tf_env: ${{ steps.set-environment.outputs.tf_env }}
+    steps:
+      - name: Check Out Changes
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: githubDeploymentWorkflow
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Load input variables
+        env:
+          SMARTY_AUTH_ID: ${{ secrets.SMARTY_AUTH_ID }}
+          SMARTY_AUTH_TOKEN: ${{ secrets.SMARTY_AUTH_TOKEN }}
+          ENABLE_COGNITO: false
+          BUCKET: phdi-playground-tfstate-${{ github.event.inputs.environment }}
+          DYNAMODB_TABLE: phdi-playground-tfstate-lock-${{ github.event.inputs.environment }}
+
+        run: |
+          echo smarty_auth_id=\""$SMARTY_AUTH_ID"\" >> terraform.tfvars
+          echo smarty_auth_token=\""$SMARTY_AUTH_TOKEN"\" >> terraform.tfvars
+          echo enable_cognito=\""$ENABLE_COGNITO"\" >> terraform.tfvars
+          echo bucket=\""$BUCKET"\" >> backend.tfvars
+          echo dynamodb_table=\""$DYNAMODB_TABLE"\" >> backend.tfvars
+
+      - name: Set environment
+        id: set-environment
+        run: |-
+          echo "tf_env=$(
+            echo ${{ github.event.inputs.environment }}
+          )" >> $GITHUB_OUTPUT
+
+      - name: terraform
+        env:
+          TF_ENV: ${{ steps.set-environment.outputs.tf_env }}
+        run: |
+          terraform init -backend-config=backend.tfvars
+          terraform workspace select -or-create $TF_ENV
+          terraform apply -auto-approve -lock-timeout=30m
+          
