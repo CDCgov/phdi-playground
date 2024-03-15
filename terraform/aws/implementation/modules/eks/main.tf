@@ -296,7 +296,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "image.tag"
-    value = "v1.2.8"
+    value = "v1.2.9"
   }
 
   set {
