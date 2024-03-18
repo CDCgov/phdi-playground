@@ -31,7 +31,7 @@ jobs:
       tf_env: ${{ steps.set-environment.outputs.tf_env }}
     steps:
       - name: Check Out Changes
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
