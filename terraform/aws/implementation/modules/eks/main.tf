@@ -284,7 +284,7 @@ resource "terraform_data" "helm_setup" {
 data "external" "chart_versions" {
   depends_on = [terraform_data.helm_setup]
 
-  program = ["/bin/bash", "-c", "helm search repo phdi-charts -o json | jq -r 'reduce .[] as $item ({}; .[$item.name | sub(\"^phdi-charts/\";\"\")] |= if . == null then $item.version else if . < $item.version then $item.version else . end end)'"]
+  program = ["/bin/bash", "-c", "helm search repo phdi-charts -o json | jq 'reduce .[] as $item ({}; .[$item.name | sub(\"^phdi-charts/\";\"\")] |= if . == null then $item.version else if . < $item.version then $item.version else . end end)'"]
 }
 
 
