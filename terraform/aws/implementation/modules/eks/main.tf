@@ -25,6 +25,9 @@ module "eks-cluster" {
   cloudwatch_log_group_retention_in_days = 7
 
   kms_key_enable_default_policy = true
+  kms_key_administrators = [
+    "arn:aws:iam::339712971032:role/Developer"
+  ]
 
   vpc_id     = var.vpc_id
   subnet_ids = flatten([var.private_subnet_ids, var.public_subnet_ids])
