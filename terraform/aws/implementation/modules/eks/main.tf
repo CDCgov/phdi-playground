@@ -24,6 +24,8 @@ module "eks-cluster" {
   cluster_enabled_log_types              = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   cloudwatch_log_group_retention_in_days = 7
 
+  kms_key_enable_default_policy = true
+
   vpc_id     = var.vpc_id
   subnet_ids = flatten([var.private_subnet_ids, var.public_subnet_ids])
 
