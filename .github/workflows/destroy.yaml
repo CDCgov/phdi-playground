@@ -27,7 +27,7 @@ jobs:
       short_cid: ${{ steps.set-environment.outputs.short_cid }}
     steps:
       - name: Check Out Changes
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
