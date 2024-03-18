@@ -31,7 +31,10 @@ jobs:
         working-directory: ./terraform
     env:
       TERRAFORM_DIRS: |
-        setup implementation
+        aws/setup 
+        aws/implementation
+        azure/setup 
+        azure/implementation
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
