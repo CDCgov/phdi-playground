@@ -36,6 +36,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Setup Helm
+        uses: azure/setup-helm@v4.1.0
+
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
