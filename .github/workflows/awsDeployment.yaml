@@ -72,6 +72,13 @@ jobs:
           echo bucket=\""$BUCKET"\" >> backend.tfvars
           echo dynamodb_table=\""$DYNAMODB_TABLE"\" >> backend.tfvars
 
+      - name: Check versions
+        run: |
+          terraform version
+          helm version
+          bash --version
+          jq --version
+
       - name: terraform
         env:
           TF_ENV: ${{ steps.set-environment.outputs.tf_env }}
