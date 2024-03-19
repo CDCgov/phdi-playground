@@ -73,7 +73,7 @@ jobs:
         env:
           TF_ENV: ${{ steps.set-environment.outputs.tf_env }}
         run: |
-          terraform init -backend-config=backend.tfvars -reconfigure
+          terraform init -backend-config=backend.tfvars
           terraform workspace select -or-create $TF_ENV
           terraform apply -auto-approve -lock-timeout=30m
           
