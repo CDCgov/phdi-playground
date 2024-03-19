@@ -281,13 +281,21 @@ resource "terraform_data" "helm_setup" {
   }
 }
 
+data "external" "chart_versions" {
+  depends_on = [terraform_data.helm_setup]
+
+  program = ["/bin/bash", "-c", "helm search repo phdi-charts -o json | jq -f filter.jq"]
+}
+
+
 # Building blocks
 resource "helm_release" "building_blocks" {
-  depends_on      = [terraform_data.wait_for_load_balancer_controller, terraform_data.helm_setup]
+  depends_on      = [terraform_data.wait_for_load_balancer_controller]
   for_each        = var.services_to_chart
   repository      = "https://cdcgov.github.io/phdi-charts/"
   name            = "phdi-playground-${terraform.workspace}-${each.key}"
   chart           = each.value
+  version         = data.external.chart_versions.result[each.value]
   force_update    = true
   recreate_pods   = true
   cleanup_on_fail = true
