@@ -284,7 +284,7 @@ resource "terraform_data" "helm_setup" {
 data "external" "chart_versions" {
   depends_on = [terraform_data.helm_setup]
 
-  program = ["/bin/bash", "-c", "helm search repo phdi-charts -o json | jq -f filter.jq"]
+  program = ["bash", "-c", "helm search repo phdi-charts -o json | jq -f filter.jq"]
 }
 
 
