@@ -39,6 +39,11 @@ jobs:
       - name: Setup Helm
         uses: azure/setup-helm@v4.1.0
 
+      - name: Setup jq
+        uses: dcarbone/install-jq-action@v2
+        with:
+          version: '1.7'
+
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -71,13 +76,6 @@ jobs:
           echo enable_cognito=\""$ENABLE_COGNITO"\" >> terraform.tfvars
           echo bucket=\""$BUCKET"\" >> backend.tfvars
           echo dynamodb_table=\""$DYNAMODB_TABLE"\" >> backend.tfvars
-
-      - name: Check versions
-        run: |
-          terraform version
-          helm version
-          bash --version
-          jq --version
 
       - name: terraform
         env:
