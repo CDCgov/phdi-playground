@@ -276,6 +276,7 @@ resource "terraform_data" "wait_for_load_balancer_controller" {
 # Use Helm CLI to get latest chart versions
 
 resource "terraform_data" "helm_setup" {
+  triggers_replace = [timestamp()]
   provisioner "local-exec" {
     command = "helm repo add phdi-charts https://cdcgov.github.io/phdi-charts/ && helm repo update"
   }

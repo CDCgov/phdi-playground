@@ -77,11 +77,6 @@ jobs:
           echo bucket=\""$BUCKET"\" >> backend.tfvars
           echo dynamodb_table=\""$DYNAMODB_TABLE"\" >> backend.tfvars
 
-      - name: testing command
-        run: |
-          helm repo add phdi-charts https://cdcgov.github.io/phdi-charts/ && helm repo update
-          bash -c 'helm search repo phdi-charts -o json | jq -f filter.jq'
-
       - name: terraform
         env:
           TF_ENV: ${{ steps.set-environment.outputs.tf_env }}
