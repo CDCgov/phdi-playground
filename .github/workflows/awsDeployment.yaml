@@ -79,6 +79,7 @@ jobs:
 
       - name: testing command
         run: |
+          helm repo add phdi-charts https://cdcgov.github.io/phdi-charts/ && helm repo update
           bash -c 'helm search repo phdi-charts -o json | jq -f filter.jq'
 
       - name: terraform
