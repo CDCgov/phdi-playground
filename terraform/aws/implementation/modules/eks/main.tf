@@ -24,6 +24,11 @@ module "eks-cluster" {
   cluster_enabled_log_types              = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   cloudwatch_log_group_retention_in_days = 7
 
+  kms_key_enable_default_policy = true
+  kms_key_administrators = [
+    "arn:aws:iam::339712971032:role/Developer"
+  ]
+
   vpc_id     = var.vpc_id
   subnet_ids = flatten([var.private_subnet_ids, var.public_subnet_ids])
 
@@ -268,21 +273,42 @@ resource "terraform_data" "wait_for_load_balancer_controller" {
   }
 }
 
-# Building blocks
+# Use Helm CLI to get latest chart versions
 
+resource "terraform_data" "helm_setup" {
+  triggers_replace = [timestamp()]
+  provisioner "local-exec" {
+    command = "helm repo add phdi-charts https://cdcgov.github.io/phdi-charts/ && helm repo update"
+  }
+}
+
+data "external" "chart_versions" {
+  depends_on = [terraform_data.helm_setup]
+
+  program = ["bash", "-c", "helm search repo phdi-charts -o json | jq -f filter.jq"]
+}
+
+# Grab latest release tag from phdi
+
+data "external" "latest_phdi_release" {
+  program = ["gh", "-R", "CDCgov/phdi", "release", "list", "-L", "1", "--json", "tagName", "--jq", ".[0]"]
+}
+
+# Building blocks
 resource "helm_release" "building_blocks" {
   depends_on      = [terraform_data.wait_for_load_balancer_controller]
   for_each        = var.services_to_chart
   repository      = "https://cdcgov.github.io/phdi-charts/"
   name            = "phdi-playground-${terraform.workspace}-${each.key}"
   chart           = each.value
+  version         = data.external.chart_versions.result[each.value]
   force_update    = true
   recreate_pods   = true
   cleanup_on_fail = true
 
   set {
     name  = "image.tag"
-    value = "v1.2.8"
+    value = data.external.latest_phdi_release.result.tagName
   }
 
   set {
