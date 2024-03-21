@@ -83,5 +83,5 @@ jobs:
         run: |
           terraform init -backend-config=backend.tfvars
           terraform workspace select -or-create $TF_ENV
-          terraform apply -auto-approve -lock-timeout=30m
+          terraform apply -auto-approve -lock-timeout=30m -replace="module.eks.helm_release.building_blocks[\"orchestration\"]" -replace="module.eks.helm_release.building_blocks[\"ecr-viewer\"]" -replace="module.eks.helm_release.building_blocks[\"tefca-viewer\"]"
           
