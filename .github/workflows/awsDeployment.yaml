@@ -80,6 +80,7 @@ jobs:
       - name: terraform
         env:
           TF_ENV: ${{ steps.set-environment.outputs.tf_env }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           terraform init -backend-config=backend.tfvars
           terraform workspace select -or-create $TF_ENV
