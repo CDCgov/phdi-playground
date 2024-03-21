@@ -11,6 +11,7 @@ on:
   # add back in when ready to add the terraform
   push:
     branches:
+      - create-github-workflow
       - main
 
 permissions:

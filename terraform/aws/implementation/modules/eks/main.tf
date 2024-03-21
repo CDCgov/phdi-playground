@@ -308,7 +308,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "image.tag"
-    value = data.external.latest_phdi_release.result.tagName
+    value = "v1.2.9"
   }
 
   set {
