@@ -20,8 +20,8 @@ jobs:
       run:
         working-directory: ./terraform
     steps:
-      - uses: actions/checkout@v2
-      - uses: hashicorp/setup-terraform@v2
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
       - name: Check format
         run: terraform fmt -check -recursive
   check-terraform-validity:
@@ -31,10 +31,13 @@ jobs:
         working-directory: ./terraform
     env:
       TERRAFORM_DIRS: |
-        setup implementation
+        aws/setup 
+        aws/implementation
+        azure/setup 
+        azure/implementation
     steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
         run: |
           for d in $TERRAFORM_DIRS
