@@ -288,6 +288,11 @@ data "external" "chart_versions" {
   program = ["bash", "-c", "helm search repo phdi-charts -o json | jq -f filter.jq"]
 }
 
+# Grab latest release tag from phdi
+
+data "external" "latest_phdi_release" {
+  program = ["bash", "-c", "gh -R CDCgov/phdi release list -L 1 --json tagName | jq '.[0]'"]
+}
 
 # Building blocks
 resource "helm_release" "building_blocks" {
@@ -303,7 +308,7 @@ resource "helm_release" "building_blocks" {
 
   set {
     name  = "image.tag"
-    value = "v1.2.11"
+    value = data.external.latest_phdi_release.result.tagName
   }
 
   set {
