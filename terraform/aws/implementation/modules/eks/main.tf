@@ -291,7 +291,7 @@ data "external" "chart_versions" {
 # Grab latest release tag from phdi
 
 data "external" "latest_phdi_release" {
-  program = ["bash", "-c", "gh -R CDCgov/phdi release list -L 1 --json tagName | jq '.[0]'"]
+  program = ["gh", "-R", "CDCgov/phdi", "release", "list", "-L", "1", "--json", "tagName", "--jq", ".[0]"]
 }
 
 # Building blocks
