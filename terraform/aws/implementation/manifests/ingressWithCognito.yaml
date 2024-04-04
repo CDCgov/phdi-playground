@@ -65,24 +65,24 @@ spec:
                 name: phdi-playground-${terraform_workspace}-tefca-viewer-tefca-viewer-service
                 port:
                   number: 8080
-          - path: /otel-collector # not sure if we actually need to expose otel or prom
+          - path: /otel-collector
             pathType: Prefix
             backend:
               service:
                 name: phdi-playground-${terraform_workspace}-otel-collector-otel-collector-service
                 port:
                   number: 4317                  
-          - path: /prometheus
-            pathType: Prefix
-            backend:
-              service:
-                name: phdi-playground-${terraform_workspace}-prometheus-prometheus-service
-                port:
-                  number: 9090
-          - path: /grafana
-            pathType: Prefix
-            backend:
-              service:
-                name: phdi-playground-${terraform_workspace}-grafana-grafana-service
-                port:
-                  number: 4000
+          # - path: /prometheus
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: phdi-playground-${terraform_workspace}-prometheus-prometheus-service
+          #       port:
+          #         number: 9090
+          # - path: /grafana
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: phdi-playground-${terraform_workspace}-grafana-grafana-service
+          #       port:
+          #         number: 4000
