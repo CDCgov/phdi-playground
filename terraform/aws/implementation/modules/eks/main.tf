@@ -444,6 +444,6 @@ resource "helm_release" "otel_collector" {
 
   set {
     name  = "otelCollector.config"
-    value = data.external.fetch_otel_config.result.stdout
+    value = file("${path.module}/otel_collector_config.yaml")
   }
 }
