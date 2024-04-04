@@ -432,6 +432,10 @@ module "eks_blueprints_addons" {
   tags = local.tags
 }
 
+data "external" "fetch_otel_config" {
+  program = ["bash", "-c", "curl -s https://raw.githubusercontent.com/CDCgov/phdi/main/containers/orchestration/otel-collector-config.yaml"]
+}
+
 resource "helm_release" "otel_collector" {
   name       = "otel-collector"
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
@@ -440,166 +444,6 @@ resource "helm_release" "otel_collector" {
 
   set {
     name  = "otelCollector.config"
-    value = <<-EOF
-receivers:
-  otlp:
-    protocols:
-      grpc:
-        endpoint: "0.0.0.0:4317"
-      http:
-        endpoint: "0.0.0.0:4318"
-exporters:
-  logging:
-    loglevel: debug
-  prometheus:
-    endpoint: "otel-collector:8889"
-processors:
-  batch:
-service:
-  pipelines:
-    traces:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [logging, prometheus]
-    metrics:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [logging, prometheus]
-    logs:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [logging]
-    EOF
+    value = data.external.fetch_otel_config.result.stdout
   }
 }
-
-
-resource "helm_release" "prometheus" {
-  name       = "prometheus"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = "kube-prometheus-stack"
-  version    = "14.5.0"
-
-  values = [<<EOF
-    prometheus:
-      prometheusSpec:
-        serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelectorNilUsesHelmValues: false
-        ruleSelectorNilUsesHelmValues: false
-        scrapeInterval: "10s"
-        additionalScrapeConfigs:
-          - job_name: "aggregated-otel-collection"
-            static_configs:
-              - targets: ["otel-collector:8889"]
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: "standard"  # replace with your storage class
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 10Gi  # adjust storage size as needed
-  EOF
-  ]
-}
-resource "helm_release" "grafana" {
-  name       = "grafana"
-  repository = "https://grafana.github.io/helm-charts"
-  chart      = "grafana"
-  version    = "6.1.17"
-
-  set {
-    name  = "grafana.ini.paths.data"
-    value = "/var/lib/grafana"
-  }
-
-  set {
-    name  = "grafana.ini.paths.logs"
-    value = "/var/log/grafana"
-  }
-
-  set {
-    name  = "grafana.ini.paths.plugins"
-    value = "/var/lib/grafana/plugins"
-  }
-
-  set {
-    name  = "grafana.ini.server.http_port"
-    value = "3000"
-  }
-
-  set {
-    name  = "grafana.ini.server.domain"
-    value = "localhost"
-  }
-
-  set {
-    name  = "grafana.ini.server.root_url"
-    value = "%(protocol)s://%(domain)s:%(http_port)s/"
-  }
-
-  set {
-    name  = "grafana.ini.database.type"
-    value = "sqlite3"
-  }
-
-  set {
-    name  = "grafana.ini.database.path"
-    value = "grafana.db"
-  }
-
-  set {
-    name  = "grafana.ini.log.mode"
-    value = "console"
-  }
-
-  set {
-    name  = "grafana.ini.log.level"
-    value = "info"
-  }
-
-  set {
-    name  = "grafana.ini.security.admin_user"
-    value = "admin"
-  }
-
-  set {
-    name  = "grafana.ini.security.admin_password"
-    value = "DIBBsTest1!"
-  }
-
-  set {
-    name  = "grafana.ini.users.allow_sign_up"
-    value = "true"
-  }
-
-  set {
-    name  = "datasources.datasources.yaml"
-    value = <<-EOF
-apiVersion: 1
-datasources:
-  - name: Prometheus
-    type: prometheus
-    access: proxy
-    url: http://prometheus:9090
-    isDefault: true
-EOF
-  }
-
-  set {
-    name  = "dashboardsProvider.dashboards.yaml"
-    value = <<-EOF
-apiVersion: 1
-providers:
-  - name: "default"
-    orgId: 1
-    folder: ""
-    type: file
-    disableDeletion: false
-    editable: true
-    options:
-      path: /etc/grafana/provisioning/dashboards
-EOF
-  }
-}
-
