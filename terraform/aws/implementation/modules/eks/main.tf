@@ -432,10 +432,6 @@ module "eks_blueprints_addons" {
   tags = local.tags
 }
 
-data "external" "fetch_otel_config" {
-  program = ["bash", "-c", "curl -s https://raw.githubusercontent.com/CDCgov/phdi/main/containers/orchestration/otel-collector-config.yaml"]
-}
-
 resource "helm_release" "otel_collector" {
   name       = "otel-collector"
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
