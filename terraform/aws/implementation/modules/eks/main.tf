@@ -475,7 +475,7 @@ resource "helm_release" "otel_collector" {
 
   set {
     name  = "otelCollector.config.service.pipelines.traces.exporters"
-    value = "[logging, prometheus]"
+    value = "[logging]" #add prometheus back to array, eventually
   }
 
   set {
@@ -490,7 +490,7 @@ resource "helm_release" "otel_collector" {
 
   set {
     name  = "otelCollector.config.service.pipelines.metrics.exporters"
-    value = "[logging, prometheus]"
+    value = "[logging]" #add prometheus back to array, eventually
   }
 
   set {
