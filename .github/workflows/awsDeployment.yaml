@@ -11,7 +11,7 @@ on:
   # add back in when ready to add the terraform
   push:
     branches:
-      - rob/1568-deploy-the-dibbs-demo-stack-to-aws
+      - main
 
 permissions:
   id-token: write
