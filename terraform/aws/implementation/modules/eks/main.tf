@@ -436,7 +436,7 @@ resource "helm_release" "prometheus" {
   name       = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "prometheus"
-  version    = "14.6.0" 
+  version    = "14.6.0"
 
   # Add set blocks for configuration
   set {
