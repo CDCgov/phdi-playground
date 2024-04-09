@@ -432,31 +432,25 @@ module "eks_blueprints_addons" {
   tags = local.tags
 }
 
-resource "helm_repository" "prometheus" {
-  name = "prometheus-community"
-  url  = "https://prometheus-community.github.io/helm-charts"
-}
-
 resource "helm_release" "prometheus" {
-  depends_on = [helm_repository.prometheus]
-
   name       = "prometheus"
-  repository = helm_repository.prometheus.metadata[0].name
+  repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "prometheus"
-  version    = "14.6.0"  
+  version    = "14.6.0" 
 
-set {
-  name  = "serverFiles.prometheus.yml.scrape_configs[0].job_name"
-  value = "aggregated-otel-collection"
-}
+  # Add set blocks for configuration
+  set {
+    name  = "serverFiles.prometheus.yml.scrape_configs[0].job_name"
+    value = "aggregated-otel-collection"
+  }
 
-set {
-  name  = "serverFiles.prometheus.yml.scrape_configs[0].static_configs[0].targets[0]"
-  value = "otel-collector:8889"
-}
+  set {
+    name  = "serverFiles.prometheus.yml.scrape_configs[0].static_configs[0].targets[0]"
+    value = "otel-collector:8889"
+  }
 
-set {
-  name  = "serverFiles.prometheus.yml.global.scrape_interval"
-  value = "10s"
-}
+  set {
+    name  = "serverFiles.prometheus.yml.global.scrape_interval"
+    value = "10s"
+  }
 }
