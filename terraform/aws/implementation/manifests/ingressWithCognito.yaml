@@ -65,3 +65,10 @@ spec:
                 name: phdi-playground-${terraform_workspace}-tefca-viewer-tefca-viewer-service
                 port:
                   number: 8080
+          - path: /prometheus
+            pathType: Prefix
+            backend:
+              service:
+                name: phdi-playground-${terraform_workspace}-prometheus-prometheus-service
+                port:
+                  number: 9090
