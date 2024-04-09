@@ -453,4 +453,19 @@ resource "helm_release" "prometheus" {
     name  = "serverFiles.prometheus.yml.global.scrape_interval"
     value = "10s"
   }
+
+  set {
+    name  = "server.image.tag"
+    value = "v2.26.0" 
+  }
+
+  set {
+    name  = "server.persistentVolume.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "server.persistentVolume.size"
+    value = "10Gi"  # ?? No idea what we'll need
+  }  
 }
