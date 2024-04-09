@@ -456,7 +456,7 @@ resource "helm_release" "prometheus" {
 
   set {
     name  = "server.image.tag"
-    value = "v2.26.0" 
+    value = "v2.26.0"
   }
 
   set {
@@ -466,6 +466,6 @@ resource "helm_release" "prometheus" {
 
   set {
     name  = "server.persistentVolume.size"
-    value = "10Gi"  # ?? No idea what we'll need
-  }  
+    value = "10Gi" # ?? No idea what we'll need
+  }
 }
