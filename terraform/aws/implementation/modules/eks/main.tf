@@ -507,4 +507,15 @@ resource "helm_release" "otel_collector" {
     name  = "otelCollector.config.service.pipelines.logs.exporters"
     value = "[logging]"
   }
+
+  set {
+    name  = "serviceEnabled"
+    value = "true"
+  }
+
+  set {
+    name  = "ingress.enabled"
+    value = "true"
+  }
+
 }
