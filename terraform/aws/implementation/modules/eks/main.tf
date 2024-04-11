@@ -449,32 +449,67 @@ resource "helm_release" "otel_collector" {
   }
 
   set {
+    name  = "otelCollector.config.exporters.logging.loglevel"
+    value = "debug"
+  }
+
+  set {
     name  = "otelCollector.config.exporters.prometheus.endpoint"
     value = "otel-collector:8889"
   }
 
   set {
-    name  = "config.service.telemetry.metrics.address"
-    value = "0.0.0.0:8888"
+    name  = "otelCollector.config.processors.batch"
+    value = ""
   }
 
   set {
-    name  = "ports.metrics.enabled"
-    value = "true"
+    name  = "otelCollector.config.service.pipelines.traces.receivers"
+    value = "[otlp]"
   }
 
   set {
-    name  = "ports.otlp.enabled"
-    value = "true"
+    name  = "otelCollector.config.service.pipelines.traces.processors"
+    value = "[batch]"
   }
 
   set {
-    name  = "ports.otlp-http.enabled"
-    value = "true"
+    name  = "otelCollector.config.service.pipelines.traces.exporters"
+    value = "[logging]" #add prometheus back to array, eventually
   }
 
   set {
-    name  = "service.enabled"
+    name  = "otelCollector.config.service.pipelines.metrics.receivers"
+    value = "[otlp]"
+  }
+
+  set {
+    name  = "otelCollector.config.service.pipelines.metrics.processors"
+    value = "[batch]"
+  }
+
+  set {
+    name  = "otelCollector.config.service.pipelines.metrics.exporters"
+    value = "[logging]" #add prometheus back to array, eventually
+  }
+
+  set {
+    name  = "otelCollector.config.service.pipelines.logs.receivers"
+    value = "[otlp]"
+  }
+
+  set {
+    name  = "otelCollector.config.service.pipelines.logs.processors"
+    value = "[batch]"
+  }
+
+  set {
+    name  = "otelCollector.config.service.pipelines.logs.exporters"
+    value = "[logging]"
+  }
+
+  set {
+    name  = "serviceEnabled"
     value = "true"
   }
 
