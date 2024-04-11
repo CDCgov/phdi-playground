@@ -432,12 +432,16 @@ module "eks_blueprints_addons" {
   tags = local.tags
 }
 
+locals {
+  otel_collector_values = file("${path.module}/otel_collector_values.yaml")
+}
+
 resource "helm_release" "otel_collector" {
   name       = "otel-collector"
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
   chart      = "opentelemetry-collector"
   version    = "0.6.0"
-  values     = [file("${path.module}/otel-collector-config.yaml")]
+  values     = [local.otel_collector_values]
   # set {
   #   name  = "service.type"
   #   value = "ClusterIP"
