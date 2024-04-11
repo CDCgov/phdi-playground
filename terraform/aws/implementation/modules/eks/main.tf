@@ -437,7 +437,7 @@ resource "helm_release" "otel_collector" {
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
   chart      = "opentelemetry-collector"
   version    = "0.6.0"
-  values = [yamldecode(file("${path.module}/otel-collector-config.yaml"))]
+  values = [file("${path.module}/otel_collector_values.yaml")]
   # set {
   #   name  = "service.type"
   #   value = "ClusterIP"
