@@ -439,6 +439,11 @@ resource "helm_release" "otel_collector" {
   version    = "0.6.0"
 
   set {
+    name  = "service.type"
+    value = "ClusterIP"
+  }
+
+  set {
     name  = "otelCollector.config.receivers.otlp.protocols.grpc.endpoint"
     value = "0.0.0.0:4317"
   }
