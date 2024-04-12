@@ -1,5 +1,3 @@
-mode: deployment
-
 receivers:
   otlp:
     protocols:
@@ -9,25 +7,33 @@ receivers:
         endpoint: "0.0.0.0:4318"
 
 exporters:
-  debug:
-    verbosity: detailed
+  logging:
+    loglevel: "debug"
   prometheus:
-    endpoint: 0.0.0.0:8889
+    endpoint: "0.0.0.0:8889"
 
 processors:
   batch:
 
+extensions:
+  health_check: {}
+
 service:
+  extensions: [health_check]
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [debug]
+      exporters: [logging]
       processors: [batch]
     metrics:
       receivers: [otlp]
-      exporters: [debug, prometheus]
+      exporters: [logging, prometheus]
       processors: [batch]
     logs:
       receivers: [otlp]
-      exporters: [debug]
+      exporters: [logging]
       processors: [batch]
+
+  telemetry:
+    metrics:
+      address: "0.0.0.0:8888"
