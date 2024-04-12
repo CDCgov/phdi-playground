@@ -438,89 +438,42 @@ resource "helm_release" "otel_collector" {
   chart      = "opentelemetry-collector"
   version    = "0.6.0"
   values     = [(file("${path.module}/otel-collector-config.yaml"))]
-  # set {
-  #   name  = "service.type"
-  #   value = "ClusterIP"
-  # }
+}
 
-  # set {
-  #   name  = "otelCollector.config.receivers.otlp.protocols.grpc.endpoint"
-  #   value = "0.0.0.0:4317"
-  # }
+resource "helm_release" "prometheus" {
+  name       = "prometheus"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "prometheus"
+  version    = "14.6.0"
 
-  # set {
-  #   name  = "otelCollector.config.receivers.otlp.protocols.http.endpoint"
-  #   value = "0.0.0.0:4318"
-  # }
+  # Add set blocks for configuration
+  set {
+    name  = "serverFiles.prometheus.yml.scrape_configs[0].job_name"
+    value = "aggregated-otel-collection"
+  }
 
-  # set {
-  #   name  = "otelCollector.config.exporters.logging.loglevel"
-  #   value = "debug"
-  # }
+  set {
+    name  = "serverFiles.prometheus.yml.scrape_configs[0].static_configs[0].targets[0]"
+    value = "otel-collector:8889"
+  }
 
-  # set {
-  #   name  = "otelCollector.config.exporters.prometheus.endpoint"
-  #   value = "otel-collector:8889"
-  # }
+  set {
+    name  = "serverFiles.prometheus.yml.global.scrape_interval"
+    value = "10s"
+  }
 
-  # set {
-  #   name  = "otelCollector.config.processors.batch"
-  #   value = ""
-  # }
+  set {
+    name  = "server.image.tag"
+    value = "v2.26.0"
+  }
 
-  # set {
-  #   name  = "otelCollector.config.service.pipelines.traces.receivers"
-  #   value = "[otlp]"
-  # }
+  set {
+    name  = "server.persistentVolume.enabled"
+    value = "true"
+  }
 
-  # set {
-  #   name  = "otelCollector.config.service.pipelines.traces.processors"
-  #   value = "[batch]"
-  # }
-
-  # set {
-  #   name  = "otelCollector.config.service.pipelines.traces.exporters"
-  #   value = "[logging]" #add prometheus back to array, eventually
-  # }
-
-  # set {
-  #   name  = "otelCollector.config.service.pipelines.metrics.receivers"
-  #   value = "[otlp]"
-  # }
-
-  # set {
-  #   name  = "otelCollector.config.service.pipelines.metrics.processors"
-  #   value = "[batch]"
-  # }
-
-  # set {
-  #   name  = "otelCollector.config.service.pipelines.metrics.exporters"
-  #   value = "[logging]" #add prometheus back to array, eventually
-  # }
-
-  # set {
-  #   name  = "otelCollector.config.service.pipelines.logs.receivers"
-  #   value = "[otlp]"
-  # }
-
-  # set {
-  #   name  = "otelCollector.config.service.pipelines.logs.processors"
-  #   value = "[batch]"
-  # }
-
-  # set {
-  #   name  = "otelCollector.config.service.pipelines.logs.exporters"
-  #   value = "[logging]"
-  # }
-
-  # set {
-  #   name  = "serviceEnabled"
-  #   value = "true"
-  # }
-
-  # set {
-  #   name  = "ingress.enabled"
-  #   value = "true"
-  # }
-
+  set {
+    name  = "server.persistentVolume.size"
+    value = "10Gi" # ?? No idea what we'll need
+  }
 }
