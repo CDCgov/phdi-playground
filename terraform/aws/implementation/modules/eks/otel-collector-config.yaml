@@ -1,15 +1,4 @@
-mode: daemonset
-
-presets:
-  # enables the k8sattributesprocessor and adds it to the traces, metrics, and logs pipelines
-  kubernetesAttributes:
-    enabled: true
-  # enables the kubeletstatsreceiver and adds it to the metrics pipelines
-  kubeletMetrics:
-    enabled: false
-  # Enables the filelogreceiver and adds it to the logs pipelines
-  logsCollection:
-    enabled: true
+mode: deployment
 
 receivers:
   otlp:
@@ -22,8 +11,8 @@ receivers:
 exporters:
   debug:
     verbosity: detailed
-  # prometheus:
-  #   endpoint: 0.0.0.0:8889
+  prometheus:
+    endpoint: 0.0.0.0:8889
 
 processors:
   batch:
@@ -36,7 +25,7 @@ service:
       processors: [batch]
     metrics:
       receivers: [otlp]
-      exporters: [debug] #, prometheus]
+      exporters: [debug, prometheus]
       processors: [batch]
     logs:
       receivers: [otlp]
