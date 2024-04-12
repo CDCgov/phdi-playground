@@ -439,7 +439,7 @@ resource "helm_release" "otel_collector" {
   version    = "0.54.0"
   values     = [(file("${path.module}/otel-collector-config.yaml"))]
   set {
-    name = "opentelemetry-collector.serviceEnabled"
+    name  = "opentelemetry-collector.serviceEnabled"
     value = true
   }
 }
