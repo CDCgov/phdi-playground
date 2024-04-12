@@ -1,4 +1,4 @@
-mode: daemonset
+mode: deployment
 
 presets:
   # enables the k8sattributesprocessor and adds it to the traces, metrics, and logs pipelines
@@ -6,7 +6,7 @@ presets:
     enabled: true
   # enables the kubeletstatsreceiver and adds it to the metrics pipelines
   kubeletMetrics:
-    enabled: true
+    enabled: false
   # Enables the filelogreceiver and adds it to the logs pipelines
   logsCollection:
     enabled: true
