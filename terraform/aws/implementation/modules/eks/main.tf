@@ -436,8 +436,7 @@ resource "helm_release" "otel_collector" {
   name       = "otel-collector"
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
   chart      = "opentelemetry-collector"
-  version    = "0.6.0"
-  namespace  = "kube-system"
+  version    = "0.86.2"
   values     = [(file("${path.module}/otel-collector-config.yaml"))]
   set {
     name  = "opentelemetry-collector.serviceEnabled"
