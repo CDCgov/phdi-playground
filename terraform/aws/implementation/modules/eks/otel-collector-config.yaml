@@ -1,4 +1,4 @@
-mode: deployment
+mode: daemonset
 
 presets:
   # enables the k8sattributesprocessor and adds it to the traces, metrics, and logs pipelines
@@ -22,8 +22,8 @@ receivers:
 exporters:
   debug:
     verbosity: detailed
-  prometheus:
-    endpoint: 0.0.0.0:8889
+  # prometheus:
+  #   endpoint: 0.0.0.0:8889
 
 processors:
   batch:
@@ -36,7 +36,7 @@ service:
       processors: [batch]
     metrics:
       receivers: [otlp]
-      exporters: [debug, prometheus]
+      exporters: [debug] #, prometheus]
       processors: [batch]
     logs:
       receivers: [otlp]

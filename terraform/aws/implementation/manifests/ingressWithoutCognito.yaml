@@ -89,13 +89,13 @@ spec:
                 name: otel-collector
                 port:
                   number: 8888  # Prometheus metrics exposed by collector                
-          - path: /prometheus
-            pathType: Prefix
-            backend:
-              service:
-                name: phdi-playground-${terraform_workspace}-prometheus-prometheus-service
-                port:
-                  number: 9090
+          # - path: /prometheus
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: phdi-playground-${terraform_workspace}-prometheus-prometheus-service
+          #       port:
+          #         number: 9090
           # - path: /grafana
           #   pathType: Prefix
           #   backend:
