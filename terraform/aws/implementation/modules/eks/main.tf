@@ -433,14 +433,14 @@ module "eks_blueprints_addons" {
 }
 
 resource "helm_release" "otel_collector" {
-  name       = "otel-collector"
-  repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
-  chart      = "opentelemetry-collector"
-  version    = "0.6.0"
-  values     = [(file("${path.module}/otel-collector-config.yaml"))]
+  name            = "otel-collector"
+  repository      = "https://open-telemetry.github.io/opentelemetry-helm-charts"
+  chart           = "opentelemetry-collector"
+  version         = "0.6.0"
+  values          = [(file("${path.module}/otel-collector-config.yaml"))]
   force_update    = true
   recreate_pods   = true
-  cleanup_on_fail = true  
+  cleanup_on_fail = true
   set {
     name  = "opentelemetry-collector.serviceEnabled"
     value = true
