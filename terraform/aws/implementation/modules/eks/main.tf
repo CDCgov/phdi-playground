@@ -438,6 +438,9 @@ resource "helm_release" "otel_collector" {
   chart      = "opentelemetry-collector"
   version    = "0.6.0"
   values     = [(file("${path.module}/otel-collector-config.yaml"))]
+  force_update    = true
+  recreate_pods   = true
+  cleanup_on_fail = true  
   set {
     name  = "opentelemetry-collector.serviceEnabled"
     value = true

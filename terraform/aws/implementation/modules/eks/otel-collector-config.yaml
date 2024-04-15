@@ -6,7 +6,7 @@ presets:
     enabled: true
   # enables the kubeletstatsreceiver and adds it to the metrics pipelines
   kubeletMetrics:
-    enabled: true
+    enabled: false
   # Enables the filelogreceiver and adds it to the logs pipelines
   logsCollection:
     enabled: true
@@ -23,7 +23,7 @@ exporters:
   debug:
     verbosity: detailed
   prometheus:
-    endpoint: 0.0.0.0:8889
+   endpoint: 0.0.0.0:8889
 
 processors:
   batch:
@@ -36,7 +36,7 @@ service:
       processors: [batch]
     metrics:
       receivers: [otlp]
-      exporters: [debug] #, prometheus]
+      exporters: [debug, prometheus]
       processors: [batch]
     logs:
       receivers: [otlp]
