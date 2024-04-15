@@ -1,4 +1,4 @@
-mode: deployment
+mode: daemonset
 
 presets:
   # enables the k8sattributesprocessor and adds it to the traces, metrics, and logs pipelines
@@ -29,6 +29,7 @@ processors:
   batch:
 
 service:
+  enabled: true
   pipelines:
     traces:
       receivers: [otlp]
