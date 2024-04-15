@@ -1,93 +1,39 @@
-# Values for OpenTelemetry Collector Helm chart.
-mode: "deployment"  # Choose "deployment" for a scalable setup.
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
 
-namespaceOverride: "monitoring"  # Use a custom namespace or default/kube-system based on need.
+exporters:
+  logging:
+    loglevel: "debug"
+  prometheus:
+    endpoint: "0.0.0.0:8889"
 
-presets:
-  kubernetesAttributes:
-    enabled: true
-  logsCollection:
-    enabled: true
-  kubeletMetrics:
-    enabled: true
+processors:
+  batch:
 
-# Base configuration
-config:
-  receivers:
-    otlp:
-      protocols:
-        grpc:
-          endpoint: "${env:MY_POD_IP}:4317"
-        http:
-          endpoint: "${env:MY_POD_IP}:4318"
+extensions:
+  health_check: {}
 
-  exporters:
-    logging:
-      loglevel: "debug"
-    prometheus:
-      endpoint: "${env:MY_POD_IP}:8889"
-
-  processors:
-    batch: {}
-
-  extensions:
-    health_check:
-      endpoint: "${env:MY_POD_IP}:13133"
-
-  service:
-    extensions: [health_check]
-    pipelines:
-      traces:
-        receivers: [otlp]
-        exporters: [logging]
-        processors: [batch]
-      metrics:
-        receivers: [otlp]
-        exporters: [logging, prometheus]
-        processors: [batch]
-      logs:
-        receivers: [otlp]
-        exporters: [logging]
-        processors: [batch]
-
-    telemetry:
-      metrics:
-        address: "${env:MY_POD_IP}:8888"
-
-# Deployment specifics
-image:
-  repository: otel/opentelemetry-collector-contrib
-  pullPolicy: IfNotPresent
-  tag: ""  # Use a specific version if needed, otherwise it defaults to chart's appVersion.
-
-serviceAccount:
-  create: true
-
-# Customizations as needed
-resources:
-  limits:
-    cpu: "500m"
-    memory: "1024Mi"
-  requests:
-    cpu: "200m"
-    memory: "400Mi"
-
-# You might need to add annotations or labels specifically tailored to your environment.
-annotations:
-  my-annotation: "value"
-
-# If you are deploying in a secure environment, consider defining security contexts.
-securityContext:
-  runAsUser: 1000
-  runAsNonRoot: true
-
-# Networking and exposure details
 service:
-  type: ClusterIP
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [logging]
+      processors: [batch]
+    metrics:
+      receivers: [otlp]
+      exporters: [logging, prometheus]
+      processors: [batch]
+    logs:
+      receivers: [otlp]
+      exporters: [logging]
+      processors: [batch]
 
-# If Prometheus monitoring is set up in the cluster, you might want to enable serviceMonitor.
-serviceMonitor:
-  enabled: true
-  metricsEndpoints:
-    - port: metrics
-      interval: "15s"
+  telemetry:
+    metrics:
+      address: "0.0.0.0:8888"
