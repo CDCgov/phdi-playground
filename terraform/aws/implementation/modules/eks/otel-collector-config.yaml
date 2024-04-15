@@ -1,39 +1,30 @@
-receivers:
-  otlp:
-    protocols:
-      grpc:
-        endpoint: "0.0.0.0:4317"
-      http:
-        endpoint: "0.0.0.0:4318"
-
-exporters:
-  logging:
-    loglevel: "debug"
-  prometheus:
-    endpoint: "0.0.0.0:8889"
-
-processors:
-  batch:
-
-extensions:
-  health_check: {}
-
-service:
-  extensions: [health_check]
-  pipelines:
-    traces:
-      receivers: [otlp]
-      exporters: [logging]
-      processors: [batch]
-    metrics:
-      receivers: [otlp]
-      exporters: [logging, prometheus]
-      processors: [batch]
-    logs:
-      receivers: [otlp]
-      exporters: [logging]
-      processors: [batch]
-
-  telemetry:
-    metrics:
-      address: "0.0.0.0:8888"
+config:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: "${env:MY_POD_IP}:4317"
+        http:
+          endpoint: "${env:MY_POD_IP}:4318"
+  processors:
+    batch: {}
+  exporters:
+    logging:
+      loglevel: "debug"
+  extensions:
+    health_check:
+      endpoint: "${env:MY_POD_IP}:13133"
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        processors: [batch]
+        exporters: [logging]
+      metrics:
+        receivers: [otlp]
+        processors: [batch]
+        exporters: [logging]
+      logs:
+        receivers: [otlp]
+        processors: [batch]
+        exporters: [logging]
