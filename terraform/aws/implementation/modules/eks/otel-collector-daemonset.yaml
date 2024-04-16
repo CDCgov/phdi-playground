@@ -11,35 +11,35 @@ presets:
   logsCollection:
     enabled: true
 
-receivers:
-  otlp:
-    protocols:
-      grpc:
-        endpoint: "0.0.0.0:4317"
-      http:
-        endpoint: "0.0.0.0:4318"
+# receivers:
+#   otlp:
+#     protocols:
+#       grpc:
+#         endpoint: "0.0.0.0:4317"
+#       http:
+#         endpoint: "0.0.0.0:4318"
 
-exporters:
-  debug:
-    verbosity: detailed
-  prometheus:
-   endpoint: 0.0.0.0:8889
+# exporters:
+#   debug:
+#     verbosity: detailed
+#   prometheus:
+#    endpoint: 0.0.0.0:8889
 
-processors:
-  batch:
+# processors:
+#   batch:
 
-service:
-  enabled: true
-  pipelines:
-    traces:
-      receivers: [otlp]
-      exporters: [debug]
-      processors: [batch]
-    metrics:
-      receivers: [otlp]
-      exporters: [debug, prometheus]
-      processors: [batch]
-    logs:
-      receivers: [otlp]
-      exporters: [debug]
-      processors: [batch]
+# service:
+#   enabled: true
+#   pipelines:
+#     traces:
+#       receivers: [otlp]
+#       exporters: [debug]
+#       processors: [batch]
+#     metrics:
+#       receivers: [otlp]
+#       exporters: [debug, prometheus]
+#       processors: [batch]
+#     logs:
+#       receivers: [otlp]
+#       exporters: [debug]
+#       processors: [batch]
