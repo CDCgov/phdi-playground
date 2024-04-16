@@ -433,7 +433,7 @@ module "eks_blueprints_addons" {
 }
 
 resource "helm_release" "otel_collector" {
-  depends_on      = [terraform_data.wait_for_load_balancer_controller]  
+  depends_on      = [terraform_data.wait_for_load_balancer_controller]
   name            = "otel-collector"
   repository      = "https://open-telemetry.github.io/opentelemetry-helm-charts"
   chart           = "opentelemetry-collector"
