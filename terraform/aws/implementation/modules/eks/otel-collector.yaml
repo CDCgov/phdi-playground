@@ -1,34 +1,20 @@
-mode: daemonset
+mode: deployment
 fullnameOverride: otel-collector
-
-service:
-  enabled: true
-
-presets:
-  # enables the k8sattributesprocessor and adds it to the traces, metrics, and logs pipelines
-  kubernetesAttributes:
-    enabled: true
-  # enables the kubeletstatsreceiver and adds it to the metrics pipelines
-  kubeletMetrics:
-    enabled: false
-  # Enables the filelogreceiver and adds it to the logs pipelines
-  logsCollection:
-    enabled: true
 
 config:
   receivers:
     otlp:
       protocols:
         grpc:
-          endpoint: "0.0.0.0:4317"
+          endpoint: "${env:MY_POD_IP}:4317"
         http:
-          endpoint: "0.0.0.0:4318"
+          endpoint: "${env:MY_POD_IP}:4318"
 
   exporters:
     debug:
       verbosity: detailed
     prometheus:
-      endpoint: 0.0.0.0:8889
+      endpoint: ${env:MY_POD_IP}:8889
 
   processors:
     batch:
@@ -47,3 +33,17 @@ config:
         receivers: [otlp]
         exporters: [debug]
         processors: [batch]
+
+ports:
+  metrics:
+    # The metrics port is disabled by default. However you need to enable the port
+    # in order to use the ServiceMonitor (serviceMonitor.enabled) or PodMonitor (podMonitor.enabled).
+    enabled: true
+    containerPort: 8888
+    servicePort: 8888
+    protocol: TCP
+  prometheus:
+    enabled: true
+    containerPort: 8889
+    servicePort: 8889
+    protocol: TCP

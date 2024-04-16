@@ -368,6 +368,20 @@ resource "helm_release" "building_blocks" {
   }
 }
 
+# OpenTelemetry Collector
+
+resource "helm_release" "otel_collector" {
+  depends_on      = [terraform_data.wait_for_load_balancer_controller]
+  name            = "otel-collector"
+  repository      = "https://open-telemetry.github.io/opentelemetry-helm-charts"
+  chart           = "opentelemetry-collector"
+  version         = "0.87.2"
+  values          = [file("${path.module}/otel-collector.yaml")]
+  force_update    = true
+  recreate_pods   = true
+  cleanup_on_fail = true
+}
+
 # Ingress
 
 resource "kubectl_manifest" "ingress" {
@@ -430,16 +444,4 @@ module "eks_blueprints_addons" {
   }
 
   tags = local.tags
-}
-
-resource "helm_release" "otel_collector" {
-  depends_on      = [terraform_data.wait_for_load_balancer_controller]
-  name            = "otel-collector"
-  repository      = "https://open-telemetry.github.io/opentelemetry-helm-charts"
-  chart           = "opentelemetry-collector"
-  version         = "0.6.0"
-  values          = ["${file("./modules/eks/otel-collector-daemonset.yaml")}"]
-  force_update    = true
-  recreate_pods   = true
-  cleanup_on_fail = true
 }
