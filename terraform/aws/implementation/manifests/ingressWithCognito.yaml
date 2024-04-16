@@ -71,7 +71,7 @@ spec:
               service:
                 name: otel-collector-opentelemetry-collector-agent
                 port:
-                  number: 8888  # Prometheus metrics exposed by collector                
+                  number: 4318  # Prometheus metrics exposed by collector                
           # - path: /prometheus
           #   pathType: Prefix
           #   backend:
