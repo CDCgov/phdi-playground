@@ -29,6 +29,7 @@ processors:
   batch:
 
 service:
+  enabled: true
   pipelines:
     traces:
       receivers: [otlp]
@@ -61,8 +62,6 @@ service:
 # processors:
 #   batch:
 
-service:
-  enabled: true
 #   pipelines:
 #     traces:
 #       receivers: [otlp]

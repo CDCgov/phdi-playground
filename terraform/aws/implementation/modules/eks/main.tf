@@ -438,7 +438,7 @@ resource "helm_release" "otel_collector" {
   repository      = "https://open-telemetry.github.io/opentelemetry-helm-charts"
   chart           = "opentelemetry-collector"
   version         = "0.6.0"
-  values          = [(file("${path.module}/otel-collector-daemonset.yaml"))]
+  values          = ["${file("./modules/eks/otel-collector-daemonset.yaml")}"]
   force_update    = true
   recreate_pods   = true
   cleanup_on_fail = true
