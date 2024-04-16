@@ -1,28 +1,78 @@
-# Generic or global settings can go here
-config:
-  receivers:
-    otlp:
-      protocols:
-        grpc:
-          endpoint: "0.0.0.0:4317"
-        http:
-          endpoint: "0.0.0.0:4318"
-  exporters:
-    logging:
-      loglevel: "debug"
-  processors:
-    batch: {}
+mode: daemonset
 
-# Deployment-specific settings
-deployment:
-  enabled: true
-  replicas: 2
+presets:
+  # enables the k8sattributesprocessor and adds it to the traces, metrics, and logs pipelines
+  kubernetesAttributes:
+    enabled: true
+  # enables the kubeletstatsreceiver and adds it to the metrics pipelines
+  kubeletMetrics:
+    enabled: false
+  # Enables the filelogreceiver and adds it to the logs pipelines
+  logsCollection:
+    enabled: true
 
-# DaemonSet-specific settings
-daemonSet:
-  enabled: true
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
+
+exporters:
+  debug:
+    verbosity: detailed
+  prometheus:
+    endpoint: 0.0.0.0:8889
+
+processors:
+  batch:
 
 service:
-  telemetry:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [debug]
+      processors: [batch]
     metrics:
-      address: "0.0.0.0:8888"
+      receivers: [otlp]
+      exporters: [debug, prometheus]
+      processors: [batch]
+    logs:
+      receivers: [otlp]
+      exporters: [debug]
+      processors: [batch]
+
+
+# receivers:
+#   otlp:
+#     protocols:
+#       grpc:
+#         endpoint: "0.0.0.0:4317"
+#       http:
+#         endpoint: "0.0.0.0:4318"
+
+# exporters:
+#   debug:
+#     verbosity: detailed
+#   prometheus:
+#    endpoint: 0.0.0.0:8889
+
+# processors:
+#   batch:
+
+service:
+  enabled: true
+#   pipelines:
+#     traces:
+#       receivers: [otlp]
+#       exporters: [debug]
+#       processors: [batch]
+#     metrics:
+#       receivers: [otlp]
+#       exporters: [debug, prometheus]
+#       processors: [batch]
+#     logs:
+#       receivers: [otlp]
+#       exporters: [debug]
+#       processors: [batch]
