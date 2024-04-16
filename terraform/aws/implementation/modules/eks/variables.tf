@@ -66,7 +66,7 @@ variable "ecr_bucket_name" {
 variable "enable_cognito" {
   description = "Enable Cognito"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "cognito_user_pool_arn" {
