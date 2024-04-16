@@ -446,4 +446,8 @@ resource "helm_release" "otel_collector" {
     name  = "opentelemetry-collector.serviceEnabled"
     value = true
   }
+  set {
+    name  = "fullNameOverride"
+    value = "otel-collector"
+  }  
 }
