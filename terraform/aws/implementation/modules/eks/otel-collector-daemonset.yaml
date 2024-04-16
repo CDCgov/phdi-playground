@@ -11,6 +11,18 @@ presets:
   logsCollection:
     enabled: true
 
+components: # trying: https://opentelemetry.io/docs/demo/kubernetes-deployment/
+  frontendProxy:
+    ingress:
+      enabled: true
+      annotations: {}
+      hosts:
+        - host: dibbs.cloud
+          paths:
+            - path: /otel-collector
+              pathType: Prefix
+              port: 8888
+
 # receivers:
 #   otlp:
 #     protocols:
@@ -28,8 +40,8 @@ presets:
 # processors:
 #   batch:
 
-# service:
-#   enabled: true
+service:
+  enabled: true
 #   pipelines:
 #     traces:
 #       receivers: [otlp]
