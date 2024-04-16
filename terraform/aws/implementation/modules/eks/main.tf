@@ -442,12 +442,4 @@ resource "helm_release" "otel_collector" {
   force_update    = true
   recreate_pods   = true
   cleanup_on_fail = true
-  set {
-    name  = "opentelemetry-collector.serviceEnabled"
-    value = true
-  }
-  set {
-    name  = "fullNameOverride"
-    value = "otel-collector"
-  }
 }
