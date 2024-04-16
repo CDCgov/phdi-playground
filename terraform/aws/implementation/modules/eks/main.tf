@@ -449,5 +449,5 @@ resource "helm_release" "otel_collector" {
   set {
     name  = "fullNameOverride"
     value = "otel-collector"
-  }  
+  }
 }
