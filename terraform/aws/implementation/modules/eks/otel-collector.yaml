@@ -1,6 +1,5 @@
 mode: deployment
 fullnameOverride: otel-collector
-
 config:
   receivers:
     otlp:
@@ -9,31 +8,31 @@ config:
           endpoint: "${env:MY_POD_IP}:4317"
         http:
           endpoint: "${env:MY_POD_IP}:4318"
-
   exporters:
     debug:
       verbosity: detailed
     prometheus:
       endpoint: ${env:MY_POD_IP}:8889
-
+    otlp/jaeger: # Jaeger is natively OTLP, so just route the collector here
+      endpoint: jaeger:4317
+      tls:
+        insecure: true
   processors:
     batch:
-
   service:
     pipelines:
       traces:
         receivers: [otlp]
-        exporters: [debug]
         processors: [batch]
+        exporters: [debug, otlp/jaeger]
       metrics:
         receivers: [otlp]
-        exporters: [debug, prometheus]
         processors: [batch]
+        exporters: [debug, prometheus]
       logs:
         receivers: [otlp]
-        exporters: [debug]
         processors: [batch]
-
+        exporters: [debug]
 ports:
   metrics:
     # The metrics port is disabled by default. However you need to enable the port
