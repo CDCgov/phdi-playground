@@ -71,7 +71,7 @@ spec:
               service:
                 name: otel-collector
                 port:
-                  number: 8889 # Prometheus metrics exposed by collector
+                  number: 8888 # Prometheus metrics exposed by collector
           # - path: /prometheus
           #   pathType: Prefix
           #   backend:
