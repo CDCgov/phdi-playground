@@ -65,7 +65,7 @@ spec:
                 name: phdi-playground-${terraform_workspace}-tefca-viewer-tefca-viewer-service
                 port:
                   number: 8080
-          - path: /otel-collector/metrics
+          - path: /metrics
             pathType: Prefix
             backend:
               service:
