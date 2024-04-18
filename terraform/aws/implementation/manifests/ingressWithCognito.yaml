@@ -65,24 +65,12 @@ spec:
                 name: phdi-playground-${terraform_workspace}-tefca-viewer-tefca-viewer-service
                 port:
                   number: 8080
-          - path: /metrics
-            pathType: Prefix
-            backend:
-              service:
-                name: otel-collector
-                port:
-                  number: 8888 # Prometheus metrics exposed by collector
-          # - path: /prometheus
+          # DO NOT NEED; keeping for the purposes of testing/confirming 
+          # via dibbs.cloud that the pod spun up correctly
+          # - path: /metrics
           #   pathType: Prefix
           #   backend:
           #     service:
-          #       name: phdi-playground-${terraform_workspace}-prometheus-prometheus-service
+          #       name: otel-collector
           #       port:
-          #         number: 9090
-          # - path: /grafana
-          #   pathType: Prefix
-          #   backend:
-          #     service:
-          #       name: phdi-playground-${terraform_workspace}-grafana-grafana-service
-          #       port:
-          #         number: 4000
+          #         number: 8888 # Prometheus metrics exposed by collector
