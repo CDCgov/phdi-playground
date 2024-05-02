@@ -64,4 +64,4 @@ spec:
               service:
                 name: phdi-playground-${terraform_workspace}-tefca-viewer-tefca-viewer-service
                 port:
-                  number: 8080
+                  number: 3000
