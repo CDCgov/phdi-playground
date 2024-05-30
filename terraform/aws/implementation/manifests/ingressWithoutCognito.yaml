@@ -47,6 +47,20 @@ spec:
                 name: phdi-playground-${terraform_workspace}-orchestration-orchestration-service
                 port:
                   number: 8080
+          - path: /message-refiner
+            pathType: Prefix
+            backend:
+              service:
+                name: phdi-playground-${terraform_workspace}-message-refiner-message-refiner-service
+                port:
+                  number: 8080
+          - path: /trigger-code-reference
+            pathType: Prefix
+            backend:
+              service:
+                name: phdi-playground-${terraform_workspace}-trigger-code-reference-trigger-code-reference-service
+                port:
+                  number: 8080
           - path: /ecr-viewer
             pathType: Prefix
             backend:

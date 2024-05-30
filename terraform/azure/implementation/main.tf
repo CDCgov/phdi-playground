@@ -25,13 +25,15 @@ locals {
 variable "services_to_chart" {
   type = map(string)
   default = {
-    fhir-converter = "fhir-converter-chart",
-    ingestion      = "ingestion-chart",
-    ingress        = "ingress-chart",
-    message-parser = "message-parser-chart",
-    orchestration  = "orchestration",
-    validation     = "validation-chart"
-    tefca-viewer   = "tefca-viewer"
+    fhir-converter         = "fhir-converter-chart",
+    ingestion              = "ingestion-chart",
+    ingress                = "ingress-chart",
+    message-parser         = "message-parser-chart",
+    orchestration          = "orchestration",
+    validation             = "validation-chart"
+    tefca-viewer           = "tefca-viewer",
+    message-refiner        = "message-refiner",
+    trigger-code-reference = "trigger-code-reference"
   }
 }
 
