@@ -62,7 +62,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: phdi-playground-${terraform_workspace}-trigger-code-trigger-code-reference-service
+                name: phdi-playground-${terraform_workspace}-trigger-code-reference-trigger-code-service
                 port:
                   number: 8080
           - path: /ecr-viewer
