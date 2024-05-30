@@ -353,6 +353,16 @@ resource "helm_release" "building_blocks" {
   }
 
   set {
+    name  = "triggerCodeReferenceUrl"
+    value = "https://${var.domain_name}/trigger-code-reference"
+  }
+
+  set {
+    name  = "messageRefiner"
+    value = "https://${var.domain_name}/message-refiner"
+  }
+
+  set {
     name  = "ecrBucketName"
     value = var.ecr_bucket_name
   }

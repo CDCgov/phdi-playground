@@ -27,13 +27,15 @@ variable "private_subnet_ids" {
 variable "services_to_chart" {
   type = map(string)
   default = {
-    fhir-converter = "fhir-converter",
-    ingestion      = "ingestion",
-    message-parser = "message-parser",
-    orchestration  = "orchestration",
-    validation     = "validation",
-    ecr-viewer     = "ecr-viewer",
-    tefca-viewer   = "tefca-viewer",
+    fhir-converter         = "fhir-converter",
+    ingestion              = "ingestion",
+    message-parser         = "message-parser",
+    orchestration          = "orchestration",
+    validation             = "validation",
+    ecr-viewer             = "ecr-viewer",
+    tefca-viewer           = "tefca-viewer",
+    message-refiner        = "message-refiner",
+    trigger-code-reference = "trigger-code-reference"
   }
 }
 
