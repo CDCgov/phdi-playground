@@ -357,7 +357,7 @@ resource "helm_release" "building_blocks" {
     value = "https://${var.domain_name}/trigger-code-reference"
   }
 
-   set {
+  set {
     name  = "messageRefiner"
     value = "https://${var.domain_name}/message-refiner"
   }
