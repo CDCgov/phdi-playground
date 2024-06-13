@@ -1,6 +1,6 @@
 # PHDI Charts
 
-Part of the helm charts used in order to deploy are based on services created and maintained by DIBBs in the [phdi repository](https://github.com/CDCgov/phdi). A helm chart for these respective services is subsequently created in the [phdi-charts repository](https://github.com/CDCgov/phdi-charts) These helm charts ensure that Terraform can build each of these services to be able to deployed online for any individual to access without needing to install and run a given service locally.
+Deployment of DIBBs services in the [phdi repository](https://github.com/CDCgov/phdi) relies on helm charts. A helm chart for each DIBBs service is created in the [phdi-charts repository](https://github.com/CDCgov/phdi-charts) These helm charts ensure that Terraform can build each of these services to be able to deployed online for any individual to access without needing to install and run a given service locally.
 
 ## Version
 
