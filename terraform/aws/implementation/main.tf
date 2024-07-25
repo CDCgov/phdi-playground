@@ -65,3 +65,10 @@ module "s3" {
   region                 = var.region
   eks_assume_role_policy = module.eks.eks_assume_role_policy
 }
+
+module "rds" {
+  source             = "./modules/rds"
+  region             = var.region
+  vpc_id             = module.vpc.vpc_id
+  private_subnet_ids = module.vpc.private_subnets
+}
