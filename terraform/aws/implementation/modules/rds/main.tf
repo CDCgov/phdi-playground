@@ -12,7 +12,6 @@ resource "aws_db_instance" "query-templates" {
   publicly_accessible       = false
   skip_final_snapshot       = true
   final_snapshot_identifier = true
-
 }
 
 resource "aws_db_parameter_group" "this" {
