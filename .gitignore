@@ -104,3 +104,5 @@ terraform.tfstate.backup
 credentials.json
 .bash_profile
 awscli-bundle/
+
+.secrets.txt

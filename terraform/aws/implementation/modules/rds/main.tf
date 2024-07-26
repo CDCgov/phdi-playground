@@ -10,5 +10,5 @@ resource "aws_db_instance" "query-templates" {
   vpc_security_group_ids = var.private_subnet_ids
   #parameter_group_name   = aws_db_parameter_group.education.name
   publicly_accessible = false
-  #skip_final_snapshot    = true
+  skip_final_snapshot = true
 }
