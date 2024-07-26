@@ -14,9 +14,7 @@ variable "db_username" {
 variable "db_password" {
   type        = string
   description = "Password of RDS Instance"
-  # TODO: Turn on sensitive once the database is fully up and save real pwd 
-  # as a variable to ingest from the pipeline (i.e. Github Secrets)
-  sensitive = true
+  sensitive   = true
 }
 
 variable "private_subnet_ids" {

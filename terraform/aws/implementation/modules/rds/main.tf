@@ -7,7 +7,7 @@ resource "aws_db_instance" "query-templates" {
   username          = var.db_username
   password          = var.db_password
   #db_subnet_group_name   = aws_db_subnet_group.this.name
-  # vpc_security_group_ids    = var.private_subnet_ids
+  #vpc_security_group_ids    = var.private_subnet_ids
   parameter_group_name      = aws_db_parameter_group.this.name
   publicly_accessible       = false
   skip_final_snapshot       = true
