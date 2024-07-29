@@ -68,6 +68,7 @@ jobs:
           ENABLE_COGNITO: false
           BUCKET: phdi-playground-tfstate-${{ steps.set-environment.outputs.tf_env }}
           DYNAMODB_TABLE: phdi-playground-tfstate-lock-${{ steps.set-environment.outputs.tf_env }}
+          RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
 
         run: |
           echo smarty_auth_id=\""$SMARTY_AUTH_ID"\" >> terraform.tfvars
