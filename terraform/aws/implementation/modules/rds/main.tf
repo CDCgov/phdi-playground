@@ -64,10 +64,10 @@ resource "aws_db_subnet_group" "this" {
 
 }
 
-
+# TODO: Consider updating for Production to AWS Secrets Manager 
+# This resource's attribute(s) default value is true 
 resource "random_string" "setup_rds_password" {
   length = 13 #update as needed
-  #upper  = false
 
   # Character set that excludes problematic characters like quotes, backslashes, etc.
   override_special = "_!@#-$%^&*()[]{}"
