@@ -13,8 +13,6 @@ resource "aws_db_instance" "query-templates" {
   publicly_accessible       = false
   skip_final_snapshot       = true
   final_snapshot_identifier = true
-  # backup_window             = var.backup_window
-  # maintenance_window        = var.maintenance_window
 }
 
 # Create a parameter group to configure Postgres RDS parameters

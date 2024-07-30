@@ -1,10 +1,3 @@
-#Must be in the format of "hh24:mi-hh24:mi"
-variable "backup_window" {
-  type        = string
-  description = "Backup Window for RDS Instance"
-  default     = "03:00-06:00"
-}
-
 # Note: only lowercase alphanumeric characters and hyphens allowed in "identifier"
 variable "db_identifier" {
   type        = string
@@ -38,13 +31,6 @@ variable "family" {
   type        = string
   description = "RDS Family"
   default     = "postgres16"
-}
-
-# Must be in the format of "ddd:hh24:mi-ddd:hh24:mi"
-variable "maintenance_window" {
-  type        = string
-  description = "Maintenance Window for RDS Instance"
-  default     = "Mon:00:00mi-Mon:3:00:mi"
 }
 
 variable "private_subnet_ids" {
