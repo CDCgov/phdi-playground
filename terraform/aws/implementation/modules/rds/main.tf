@@ -6,7 +6,7 @@ resource "aws_db_instance" "query-templates" {
   engine            = var.engine_type
   engine_version    = var.engine_version
   username          = var.db_username
-  password          = var.db_password
+  password          = random_string.setup_rds_password.result
   #db_subnet_group_name   = aws_db_subnet_group.this.name
   #vpc_security_group_ids    = var.private_subnet_ids
   parameter_group_name      = aws_db_parameter_group.this.name
@@ -34,7 +34,7 @@ resource "aws_db_parameter_group" "this" {
 
 # Security group for RDS
 resource "aws_security_group" "ds_sg" {
-  vpc_id = module.vpc.vpc_id
+  vpc_id = var.vpc_id
 
   # Allow inbound traffic on port 5432 for PostgreSQL from within the VPC
   ingress {
@@ -60,6 +60,15 @@ resource "aws_security_group" "ds_sg" {
 # Create a DB subnet group
 resource "aws_db_subnet_group" "this" {
   name       = "${var.db_identifier}-subnet-group"
-  subnet_ids = module.vpc.private_subnet_ids
+  subnet_ids = var.private_subnet_ids
 
+}
+
+
+resource "random_string" "setup_rds_password" {
+  length = 13 #update as needed
+  #upper  = false
+
+  # Character set that excludes problematic characters like quotes, backslashes, etc.
+  override_special = "_!@#-$%^&*()[]{}"
 }

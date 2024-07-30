@@ -68,7 +68,7 @@ jobs:
           ENABLE_COGNITO: false
           BUCKET: phdi-playground-tfstate-${{ steps.set-environment.outputs.tf_env }}
           DYNAMODB_TABLE: phdi-playground-tfstate-lock-${{ steps.set-environment.outputs.tf_env }}
-          TF_VAR_db_password: ${{ secrets.RDS_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.RDS_PASSWORD }}
 
         run: |
           echo smarty_auth_id=\""$SMARTY_AUTH_ID"\" >> terraform.tfvars
@@ -76,6 +76,7 @@ jobs:
           echo enable_cognito=\""$ENABLE_COGNITO"\" >> terraform.tfvars
           echo bucket=\""$BUCKET"\" >> backend.tfvars
           echo dynamodb_table=\""$DYNAMODB_TABLE"\" >> backend.tfvars
+          echo db_password=\""$DB_PASSWORD"\" >> terraform.tfvars
 
       - name: terraform
         env:

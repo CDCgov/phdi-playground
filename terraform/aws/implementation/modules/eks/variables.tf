@@ -55,6 +55,10 @@ variable "ecr_viewer_s3_role_arn" {
   description = "The s3 Role ARN for the ECR Viewer Service"
 }
 
+variable "tefca_viewer_db_role_arn" {
+  description = "The db Role ARN for the Tefca Viewer Service"
+}
+
 variable "domain_name" {
   description = "The domain name to use"
   type        = string

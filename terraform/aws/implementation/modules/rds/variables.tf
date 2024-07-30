@@ -18,10 +18,8 @@ variable "db_username" {
   default     = "tefcaViewerDbUser"
 }
 
-variable "db_password" {
-  type        = string
-  description = "Password of RDS Instance"
-  sensitive   = true
+variable "eks_assume_role_policy" {
+  type = string
 }
 
 variable "engine_type" {
