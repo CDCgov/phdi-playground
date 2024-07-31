@@ -2,7 +2,7 @@
 variable "db_identifier" {
   type        = string
   description = "Name of RDS Instance"
-  default     = "query-templates"
+  default     = "tefca-viewer-db"
 }
 
 variable "db_username" {

@@ -11,8 +11,8 @@ data "aws_iam_policy_document" "tefca_viewer_db_policy" {
     ]
 
     resources = [
-      aws_db_instance.query-templates.arn,
-      "${aws_db_instance.query-templates.arn}/*",
+      aws_db_instance.tefca-viewer-db.arn,
+      "${aws_db_instance.tefca-viewer-db.arn}/*",
     ]
   }
 }
