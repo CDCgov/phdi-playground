@@ -75,7 +75,6 @@ jobs:
           echo enable_cognito=\""$ENABLE_COGNITO"\" >> terraform.tfvars
           echo bucket=\""$BUCKET"\" >> backend.tfvars
           echo dynamodb_table=\""$DYNAMODB_TABLE"\" >> backend.tfvars
-          echo db_password=\""$DB_PASSWORD"\" >> terraform.tfvars
 
       - name: terraform
         env:
