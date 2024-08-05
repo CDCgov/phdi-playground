@@ -8,7 +8,7 @@ resource "aws_db_instance" "tefca-viewer-db" {
   username                  = var.db_username
   password                  = random_string.setup_rds_password.result
   db_subnet_group_name      = aws_db_subnet_group.this.name
-  vpc_security_group_ids    = var.private_subnet_ids
+  vpc_security_group_ids    = [aws_security_group.ds_sg.id]
   parameter_group_name      = aws_db_parameter_group.this.name
   publicly_accessible       = false
   skip_final_snapshot       = true
