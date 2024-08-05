@@ -374,7 +374,10 @@ data "aws_iam_policy_document" "eks_assume_role_policy" {
     condition {
       test     = "StringEquals"
       variable = "${local.oidc_provider}:sub"
-      values   = ["system:serviceaccount:default:ecr-viewer"]
+      values = [
+        "system:serviceaccount:default:ecr-viewer",
+        "system:serviceaccount:default:tefca-viewer",
+      ]
     }
 
     principals {

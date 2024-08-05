@@ -326,6 +326,11 @@ resource "helm_release" "building_blocks" {
     value = var.ecr_viewer_s3_role_arn
   }
 
+  set {
+    name  = "tefcaViewerDBRoleArn"
+    value = var.tefca_viewer_db_role_arn
+  }
+
   #  Values needed for orchestration service
   set {
     name  = "fhirConverterUrl"
