@@ -309,7 +309,6 @@ resource "helm_release" "building_blocks" {
   set {
     name  = "databaseUrl"
     value = var.tefca_db_connection_string
-    # postgres://postgres:pw@db:5432/tefca_db
   }
 
   set {

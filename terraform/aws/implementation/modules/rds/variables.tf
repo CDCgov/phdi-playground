@@ -50,7 +50,7 @@ variable "vpc_id" {
 
 
 variable "tefca_db_name" {
-  type = string
+  type        = string
   description = "The name of the tefca database"
-  default = "tefca_db"
+  default     = "tefca_db"
 }
