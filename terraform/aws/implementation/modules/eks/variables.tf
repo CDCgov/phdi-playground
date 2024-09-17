@@ -86,3 +86,7 @@ variable "cognito_client_id" {
 variable "cognito_domain" {
   description = "The domain of the Cognito user pool"
 }
+
+variable "tefca_db_connection_string" {
+  description = "Connection string to the tefca database"
+}

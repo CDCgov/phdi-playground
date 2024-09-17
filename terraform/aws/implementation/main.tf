@@ -42,6 +42,7 @@ module "eks" {
   aws_acm_certificate_arn  = module.route53.aws_acm_certificate_arn
   ecr_viewer_s3_role_arn   = module.s3.ecr_viewer_s3_role_arn
   tefca_viewer_db_role_arn = module.rds.tefca_viewer_db_role_arn
+  tefca_db_connection_string = module.rds.tefca_db_connection_string
   domain_name              = local.domain_name
   ecr_bucket_name          = module.s3.ecr_bucket_name
   enable_cognito           = var.enable_cognito

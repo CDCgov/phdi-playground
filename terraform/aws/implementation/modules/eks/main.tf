@@ -298,13 +298,19 @@ data "external" "latest_phdi_release" {
 resource "helm_release" "building_blocks" {
   depends_on      = [terraform_data.wait_for_load_balancer_controller]
   for_each        = var.services_to_chart
-  repository      = "https://cdcgov.github.io/phdi-charts/"
+  repository      = "https://github.com/CDCgov/phdi-charts/tree/alis/upgrades/2565/85"
   name            = "phdi-playground-${terraform.workspace}-${each.key}"
   chart           = each.value
   version         = data.external.chart_versions.result[each.value]
   force_update    = true
   recreate_pods   = true
   cleanup_on_fail = true
+
+  set {
+    name  = "databaseUrl"
+    value = var.tefca_db_connection_string
+    # postgres://postgres:pw@db:5432/tefca_db
+  }
 
   set {
     name  = "image.tag"
