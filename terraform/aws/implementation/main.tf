@@ -43,6 +43,9 @@ module "eks" {
   ecr_viewer_s3_role_arn     = module.s3.ecr_viewer_s3_role_arn
   tefca_viewer_db_role_arn   = module.rds.tefca_viewer_db_role_arn
   tefca_db_connection_string = module.rds.tefca_db_connection_string
+  tefca_jdbc_db_url          = module.rds.tefca_jdbc_db_url
+  tefca_jdbc_db_password     = module.rds.tefca_jdbc_db_password
+  tefca_jdbc_db_user         = module.rds.tefca_jdbc_db_user
   domain_name                = local.domain_name
   ecr_bucket_name            = module.s3.ecr_bucket_name
   enable_cognito             = var.enable_cognito

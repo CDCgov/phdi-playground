@@ -79,6 +79,9 @@
 | <a name="input_smarty_auth_id"></a> [smarty\_auth\_id](#input\_smarty\_auth\_id) | value of the SmartyStreets Auth ID | `any` | n/a | yes |
 | <a name="input_smarty_auth_token"></a> [smarty\_auth\_token](#input\_smarty\_auth\_token) | value of the SmartyStreets Auth Token | `any` | n/a | yes |
 | <a name="input_tefca_db_connection_string"></a> [tefca\_db\_connection\_string](#input\_tefca\_db\_connection\_string) | Connection string to the tefca database | `any` | n/a | yes |
+| <a name="input_tefca_jdbc_db_password"></a> [tefca\_jdbc\_db\_password](#input\_tefca\_jdbc\_db\_password) | JDBC password for flyway to the tefca database | `any` | n/a | yes |
+| <a name="input_tefca_jdbc_db_url"></a> [tefca\_jdbc\_db\_url](#input\_tefca\_jdbc\_db\_url) | JDBC connection string for flyway to the tefca database | `any` | n/a | yes |
+| <a name="input_tefca_jdbc_db_user"></a> [tefca\_jdbc\_db\_user](#input\_tefca\_jdbc\_db\_user) | JDBC username for flyway to the tefca database | `any` | n/a | yes |
 | <a name="input_tefca_viewer_db_role_arn"></a> [tefca\_viewer\_db\_role\_arn](#input\_tefca\_viewer\_db\_role\_arn) | The db Role ARN for the Tefca Viewer Service | `any` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | ID of the VPC | `string` | n/a | yes |
 

@@ -90,3 +90,15 @@ variable "cognito_domain" {
 variable "tefca_db_connection_string" {
   description = "Connection string to the tefca database"
 }
+
+variable "tefca_jdbc_db_url" {
+  description = "JDBC connection string for flyway to the tefca database"
+}
+
+variable "tefca_jdbc_db_password" {
+  description = "JDBC password for flyway to the tefca database"
+}
+
+variable "tefca_jdbc_db_user" {
+  description = "JDBC username for flyway to the tefca database"
+}

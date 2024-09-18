@@ -48,5 +48,8 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_tefca_db_connection_string"></a> [tefca\_db\_connection\_string](#output\_tefca\_db\_connection\_string) | n/a |
+| <a name="output_tefca_jdbc_db_password"></a> [tefca\_jdbc\_db\_password](#output\_tefca\_jdbc\_db\_password) | n/a |
+| <a name="output_tefca_jdbc_db_url"></a> [tefca\_jdbc\_db\_url](#output\_tefca\_jdbc\_db\_url) | n/a |
+| <a name="output_tefca_jdbc_db_user"></a> [tefca\_jdbc\_db\_user](#output\_tefca\_jdbc\_db\_user) | n/a |
 | <a name="output_tefca_viewer_db_role_arn"></a> [tefca\_viewer\_db\_role\_arn](#output\_tefca\_viewer\_db\_role\_arn) | n/a |
 <!-- END_TF_DOCS -->
