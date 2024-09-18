@@ -381,6 +381,11 @@ resource "helm_release" "building_blocks" {
     name  = "source"
     value = "s3"
   }
+
+  set {
+    name  = "db.connectionString"
+    value = module.rds.tefca_db_connection_string
+  }
 }
 
 # Ingress
