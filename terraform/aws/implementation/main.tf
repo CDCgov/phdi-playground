@@ -74,3 +74,29 @@ module "rds" {
   private_subnet_ids     = module.vpc.private_subnets
   eks_assume_role_policy = module.eks.eks_assume_role_policy
 }
+
+module "helm" {
+  source = "terraform-helm-release"
+
+  set {
+    name  = "db.connectionString"
+    value = module.rds.tefca_db_connection_string
+  }
+
+  # Anything else need to go here???
+}
+
+# not sure what the difference is between this and the above module
+resource "helm_release" "flyway" {
+  name       = "flyway"
+  repository = "https://charts.example.com" # Replace with your chart repository URL
+  chart      = "flyway"
+  version    = "1.0.0" # Replace with the chart version you are using
+
+  set {
+    name  = "db.connectionString"
+    value = module.rds.tefca_db_connection_string
+  }
+
+  # Other settings for the Helm release
+}

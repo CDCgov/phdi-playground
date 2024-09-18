@@ -1,6 +1,7 @@
 # Define the RDS instance for Postgres
 resource "aws_db_instance" "tefca-viewer-db" {
   identifier                = var.db_identifier
+  db_name                   = var.tefca_db_name
   instance_class            = "db.t3.micro"
   allocated_storage         = 5
   engine                    = var.engine_type
