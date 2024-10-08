@@ -6,7 +6,7 @@ resource "aws_db_instance" "tefca-viewer-db" {
   engine                    = var.engine_type
   engine_version            = var.engine_version
   username                  = var.db_username
-  password                  = random_string.setup_rds_password.result
+  password                  = random_password.setup_rds_password.result
   db_subnet_group_name      = aws_db_subnet_group.this.name
   vpc_security_group_ids    = [aws_security_group.ds_sg.id]
   parameter_group_name      = aws_db_parameter_group.this.name
@@ -64,7 +64,7 @@ resource "aws_db_subnet_group" "this" {
 
 # TODO: Update for Production to AWS Secrets Manager 
 # This resource's attribute(s) default value is true 
-resource "random_string" "setup_rds_password" {
+resource "random_password" "setup_rds_password" {
   length = 13 #update as needed
 
   # Character set that excludes problematic characters like quotes, backslashes, etc.
