@@ -17,7 +17,7 @@
     "autoprefixer": "10.4.15",
     "change-case": "^5.1.2",
     "eslint": "8.47.0",
-    "eslint-config-next": "13.4.15",
+    "eslint-config-next": "13.5.7",
     "lodash": "^4.17.21",
     "next": "13.4.15",
     "postcss": "8.4.27",
