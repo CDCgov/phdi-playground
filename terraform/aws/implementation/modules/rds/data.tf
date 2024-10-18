@@ -3,7 +3,7 @@ data "aws_iam_policy_document" "tefca_viewer_db_policy" {
     sid    = ""
     effect = "Allow"
     actions = [
-      "rds:Connect",
+      "rds-db:connect",
       "rds:DescribeDBInstances",
       "rds:DescribeDBClusters",
       "rds:DescribeDBSnapshots",

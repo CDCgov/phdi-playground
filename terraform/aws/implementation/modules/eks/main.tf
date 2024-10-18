@@ -306,17 +306,38 @@ resource "helm_release" "building_blocks" {
   recreate_pods   = true
   cleanup_on_fail = true
 
-  set {
-    name  = "image.tag"
-    value = data.external.latest_phdi_release.result.tagName
+  set_sensitive {
+    name  = "jdbcDatabaseUrl"
+    value = var.tefca_jdbc_db_url
+  }
+
+  set_sensitive {
+    name  = "jdbcDatabasePassword"
+    value = var.tefca_jdbc_db_password
+  }
+
+  set_sensitive {
+    name  = "jdbcDatabaseUser"
+    value = var.tefca_jdbc_db_user
+  }
+
+  set_sensitive {
+    name  = "databaseConnectionString"
+    value = var.tefca_db_connection_string
   }
 
   set {
+    name = "image.tag"
+    # value = data.external.latest_phdi_release.result.tagName
+    value = "v1.6.7"
+  }
+
+  set_sensitive {
     name  = "smartyAuthId"
     value = var.smarty_auth_id
   }
 
-  set {
+  set_sensitive {
     name  = "smartyToken"
     value = var.smarty_auth_token
   }
@@ -332,6 +353,8 @@ resource "helm_release" "building_blocks" {
   }
 
   #  Values needed for orchestration service
+  # "phdi-playground-${terraform.workspace}-${each.key}-${each.key}-service"
+  # phdi-playground-dev-ecr-viewer-ecr-viewer-service
   set {
     name  = "fhirConverterUrl"
     value = "https://${var.domain_name}/fhir-converter"
