@@ -13,11 +13,11 @@ output "tefca_jdbc_db_url" {
 }
 
 output "tefca_jdbc_db_user" {
-  value = aws_db_instance.tefca-viewer-db.username
+  value     = aws_db_instance.tefca-viewer-db.username
   sensitive = true
 }
 
 output "tefca_jdbc_db_password" {
-  value = aws_db_instance.tefca-viewer-db.password
+  value     = aws_db_instance.tefca-viewer-db.password
   sensitive = true
 }

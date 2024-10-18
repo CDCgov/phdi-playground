@@ -1,20 +1,20 @@
 # Define the RDS instance for Postgres
 resource "aws_db_instance" "tefca-viewer-db" {
-  db_name                   = var.tefca_db_name
-  identifier                = var.db_identifier
-  instance_class            = "db.t3.micro"
-  allocated_storage         = 5
-  engine                    = var.engine_type
-  engine_version            = var.engine_version
+  db_name                         = var.tefca_db_name
+  identifier                      = var.db_identifier
+  instance_class                  = "db.t3.micro"
+  allocated_storage               = 5
+  engine                          = var.engine_type
+  engine_version                  = var.engine_version
   enabled_cloudwatch_logs_exports = ["postgresql"]
-  username                  = var.db_username
-  password                  = random_password.setup_rds_password.result
-  db_subnet_group_name      = aws_db_subnet_group.this.name
-  vpc_security_group_ids    = [aws_security_group.ds_sg.id]
-  parameter_group_name      = aws_db_parameter_group.this.name
-  publicly_accessible       = false
-  skip_final_snapshot       = true
-  final_snapshot_identifier = true
+  username                        = var.db_username
+  password                        = random_password.setup_rds_password.result
+  db_subnet_group_name            = aws_db_subnet_group.this.name
+  vpc_security_group_ids          = [aws_security_group.ds_sg.id]
+  parameter_group_name            = aws_db_parameter_group.this.name
+  publicly_accessible             = false
+  skip_final_snapshot             = true
+  final_snapshot_identifier       = true
 }
 
 # Create a parameter group to configure Postgres RDS parameters
@@ -26,11 +26,11 @@ resource "aws_db_parameter_group" "this" {
     name  = "log_connections"
     value = "1"
   }
-   parameter {
+  parameter {
     name  = "rds.force_ssl"
     value = "0"
   }
-   
+
 
   lifecycle {
     create_before_destroy = true
