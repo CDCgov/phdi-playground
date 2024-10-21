@@ -6,7 +6,7 @@ resource "aws_db_instance" "tefca-viewer-db" {
   allocated_storage               = 5
   engine                          = var.engine_type
   engine_version                  = var.engine_version
-  enabled_cloudwatch_logs_exports = ["postgresql"]
+  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   username                        = var.db_username
   password                        = random_password.setup_rds_password.result
   db_subnet_group_name            = aws_db_subnet_group.this.name
