@@ -75,5 +75,5 @@ resource "random_password" "setup_rds_password" {
   length = 13 #update as needed
 
   # Character set that excludes problematic characters like quotes, backslashes, etc.
-  override_special = "()[]{}"
+  override_special = "[]{}"
 }

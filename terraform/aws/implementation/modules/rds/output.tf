@@ -8,7 +8,7 @@ output "tefca_db_connection_string" {
 }
 
 output "tefca_jdbc_db_url" {
-  value     = "jdbc:postgres://${aws_db_instance.tefca-viewer-db.endpoint}/${aws_db_instance.tefca-viewer-db.db_name}"
+  value     = "jdbc:postgresql://${aws_db_instance.tefca-viewer-db.endpoint}/${aws_db_instance.tefca-viewer-db.db_name}"
   sensitive = true
 }
 
