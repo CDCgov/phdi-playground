@@ -20,14 +20,22 @@ jobs:
     outputs:
             tf_env: ${{ steps.set-environment.outputs.tf_env }}
     steps:
-      - name: Checkout code
-    
+      - name: Checkout code 
         uses: actions/checkout@v4
         with:
          ref: ${{ github.event.client_payload.sha }}
 
-      - name: Check Out Changes
-        uses: actions/checkout@v4
+    
+      - name : Extract Service Name & Version
+        run: |
+          # Parse the service name from the payload
+          service_name=${{ github.event.client_payload.service }}
+          echo "Service Name: $service_name"
+
+          # Parse the version from the payload
+          version=${{ github.event.client_payload.version }}
+          echo "Version: $version"
+
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
