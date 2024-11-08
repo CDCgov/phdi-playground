@@ -72,7 +72,7 @@ spec:
                 name: phdi-playground-${terraform_workspace}-ecr-viewer-ecr-viewer-service
                 port:
                   number: 3000
-          - path: /tefca-viewer
+          - path: /query-connector
             pathType: Prefix
             backend:
               service:
