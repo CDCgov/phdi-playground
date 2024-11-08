@@ -11,6 +11,7 @@ metadata:
     alb.ingress.kubernetes.io/auth-idp-cognito: '{"userPoolARN":"${cognito_user_pool_arn}","userPoolClientID":"${cognito_client_id}","userPoolDomain":"${cognito_domain}"}'
     alb.ingress.kubernetes.io/auth-on-unauthenticated-request: authenticate
     alb.ingress.kubernetes.io/auth-scope: openid
+    alb.ingress.kubernetes.io/actions.redirect-to-new-url: '{"type":"redirect"}, "redirectConfig":"Path"        : "/new-url",'
 spec:
   ingressClassName: alb
   rules:
@@ -79,3 +80,4 @@ spec:
                 name: phdi-playground-${terraform_workspace}-tefca-viewer-tefca-viewer-service
                 port:
                   number: 3000
+          
